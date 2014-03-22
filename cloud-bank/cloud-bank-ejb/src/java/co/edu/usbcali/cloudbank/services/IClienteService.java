@@ -43,7 +43,7 @@ public interface IClienteService {
      * @throws java.lang.Exception
      */
     public List<Clientes> consultarPorPalabraClave(String palabraClave) throws CloudBankException, Exception;
-    
+
     /**
      * Método que consulta clientes por diferentes filtros
      *
@@ -59,38 +59,28 @@ public interface IClienteService {
     /**
      * Método que crea un cliente
      *
-     * @param id Identificación del Cliente
-     * @param tipoDocumento Tipo de Documento
-     * @param nombre
-     * @param direccion
-     * @param telefono
-     * @param email
+     * @param cliente
      * @return Cuenta creada para el cliente
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */
-    public Cuentas crear(Long id, Long tipoDocumento, String nombre, String direccion, String telefono, String email) throws CloudBankException, Exception;
+    public Clientes crear(Clientes cliente) throws CloudBankException, Exception;
 
     /**
      * Método que modifica un cliente
      *
-     * @param id Identificación del Cliente
-     * @param tipoDocumento Tipo de Documento
-     * @param nombre
-     * @param direccion
-     * @param telefono
-     * @param email
+     * @param cliente
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */
-    public void modificar(Long id, Long tipoDocumento, String nombre, String direccion, String telefono, String email) throws CloudBankException, Exception;
+    public void modificar(Clientes cliente) throws CloudBankException, Exception;
 
     /**
      * Método que elimina un cliente
      *
-     * @param id Identificación del Cliente
+     * @param cliente
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */
-    public void eliminar(Long id) throws CloudBankException, Exception;
+    public void eliminar(Clientes cliente) throws CloudBankException, Exception;
 }

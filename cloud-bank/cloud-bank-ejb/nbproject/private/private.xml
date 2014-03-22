@@ -3,35 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/services/ICuentaService.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/impl/RetiroDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/IClienteDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/bundles/TipoDocumentoBundle.properties</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/util/UtilRegExp.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/bundles/CuentaBundle.properties</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/test/co/edu/usbcali/cloudbank/services/impl/CuentaServiceTest.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/impl/TipoDocumentoDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/bundles/ClienteBundle.properties</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/services/impl/TipoDocumentoService.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/IBaseDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/impl/ClienteDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/conf/persistence.xml</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/services/impl/CuentaService.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/impl/ConsignacionDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/util/UtilString.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/test/co/edu/usbcali/cloudbank/services/impl/ClienteServiceTest.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/impl/BaseJpaDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/util/ResourceBundles.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/impl/CuentaDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/test/co/edu/usbcali/cloudbank/services/impl/TipoDocumentoServiceTest.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/services/impl/ClienteService.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/util/UtilBundle.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/setup/sun-resources.xml</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/services/ITipoDocumentoService.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/services/IClienteService.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/ICuentaDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/IBaseReadOnlyDAO.java</file>
-            <file>file:/C:/Users/Felipe/Documents/NetBeansProjects/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/bundles/ComunBundle.properties</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/impl/TipoDocumentoDAO.java</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-ejb/test/co/edu/usbcali/cloudbank/services/impl/TipoDocumentoServiceTest.java</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/services/ITipoDocumentoService.java</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/IBaseDAO.java</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/services/impl/TipoDocumentoService.java</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/services/impl/CuentaService.java</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/impl/BaseJpaDAO.java</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-ejb/src/java/co/edu/usbcali/cloudbank/dao/IBaseReadOnlyDAO.java</file>
         </group>
     </open-files>
 </project-private>

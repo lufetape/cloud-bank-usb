@@ -1,7 +1,7 @@
 package co.edu.usbcali.cloudbank.services.impl;
 
 import co.edu.usbcali.cloudbank.model.Clientes;
-import co.edu.usbcali.cloudbank.model.Cuentas;
+import co.edu.usbcali.cloudbank.model.TiposDocumentos;
 import co.edu.usbcali.cloudbank.services.IClienteService;
 import java.util.List;
 import javax.ejb.embeddable.EJBContainer;
@@ -93,8 +93,8 @@ public class ClienteServiceTest {
     @Test
     public void testEliminar() throws Exception {
         System.out.println("eliminar");
-        Long id = 0L;
-        instance.eliminar(id);
+        Clientes cliente = new Clientes(851234L);
+        instance.eliminar(cliente);
     }
 
     /**
@@ -105,13 +105,14 @@ public class ClienteServiceTest {
     @Test
     public void testModificar() throws Exception {
         System.out.println("modificar");
-        Long id = 851234L;
-        Long tipoDocumento = 10L;
-        String nombre = "Luis Felipe Tabares Pérez";
-        String direccion = "Calle 4 73 91";
-        String telefono = "317-657-2183";
-        String email = "lufetape@gmail.com";
-        instance.modificar(id, tipoDocumento, nombre, direccion, telefono, email);
+        Clientes cliente = new Clientes();
+        cliente.setCliId(851234L);
+        cliente.setTdocCodigo(new TiposDocumentos(10L));
+        cliente.setCliNombre("Felipe Tabares");
+        cliente.setCliDireccion("Calle 4 73 91");
+        cliente.setCliTelefono("317-657-2183");
+        cliente.setCliMail("lufetape@gmail.com");
+        instance.modificar(cliente);
     }
 
     /**
@@ -122,15 +123,16 @@ public class ClienteServiceTest {
     @Test
     public void testCrear() throws Exception {
         System.out.println("crear");
-        Long id = 851234L;
-        Long tipoDocumento = 10L;
-        String nombre = "Felipe Tabares";
-        String direccion = "Calle 4 73 91";
-        String telefono = "123";
-        String email = "lufetape@gmail.com";
-        String expResult = "4008-5305-0081";
-        Cuentas result = instance.crear(id, tipoDocumento, nombre, direccion, telefono, email);
-        assertEquals(expResult, result.getCueNumero());
+        Clientes cliente = new Clientes();
+        cliente.setCliId(851234L);
+        cliente.setTdocCodigo(new TiposDocumentos(10L));
+        cliente.setCliNombre("Luis Felipe Tabares Pérez");
+        cliente.setCliDireccion("Calle 4 73 91");
+        cliente.setCliTelefono("317-657-2183");
+        cliente.setCliMail("lufetape@gmail.com");
+        Clientes result = instance.crear(cliente);
+        Long expResult = 851234L;
+        assertEquals(expResult, result.getCliId());
     }
 
     /**

@@ -1,7 +1,9 @@
 package co.edu.usbcali.cloudbank.services.impl;
 
+import co.edu.usbcali.cloudbank.model.Clientes;
 import co.edu.usbcali.cloudbank.model.Cuentas;
 import co.edu.usbcali.cloudbank.services.ICuentaService;
+import java.math.BigDecimal;
 import java.util.List;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.NamingException;
@@ -92,9 +94,10 @@ public class CuentaServiceTest {
     @Test
     public void testCrear() throws Exception {
         System.out.println("crear");
-        Long idCliente = 301234L;
-        String expResult = "4008-5305-0081";
-        Cuentas result = instance.crear(idCliente);
+        Cuentas cuenta = new Cuentas();
+        cuenta.setCliId(new Clientes(301234L));
+        String expResult = "4008-5305-0082";
+        Cuentas result = instance.crear(cuenta);
         assertEquals(expResult, result.getCueNumero());
     }
     
@@ -106,23 +109,13 @@ public class CuentaServiceTest {
     @Test
     public void testModificar() throws Exception {
         System.out.println("modificar");
-        String numero = "4008-5305-0081";
-        Long idCliente = 301234L;
-        String cuentaActiva = "N";
-        String clave = "1234";
-        instance.modificar(numero, idCliente, cuentaActiva, clave);
-    }
-
-    /**
-     * Test of modificarEstado method, of class CuentaService.
-     * @throws java.lang.Exception
-     */
-    @Test
-    public void testModificarEstado() throws Exception {
-        System.out.println("modificarEstado");
-        String numero = "4008-5305-0081";
-        String cuentaActiva = "S";
-        instance.modificarEstado(numero, cuentaActiva);
+        Cuentas cuenta = new Cuentas();
+        cuenta.setCueNumero("4008-5305-0081");
+        cuenta.setCliId(new Clientes(301234L));
+        cuenta.setCueSaldo(BigDecimal.valueOf(100000D));
+        cuenta.setCueActiva("S");
+        cuenta.setCueClave("1234");
+        instance.modificar(cuenta);
     }
     
     /**
@@ -133,8 +126,8 @@ public class CuentaServiceTest {
     @Test
     public void testEliminar() throws Exception {
         System.out.println("eliminar");
-        String id = "4008-5305-0081";
-        instance.eliminar(id);
+        Cuentas cuenta = new Cuentas("4008-5305-0081");
+        instance.eliminar(cuenta);
     }
 
     /**

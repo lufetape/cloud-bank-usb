@@ -58,44 +58,28 @@ public interface ICuentaService {
     /**
      * Método que crea una cuenta
      *
-     *
-     * @param idCliente
+     * @param cuenta
      * @return Cuenta creada
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */
-    public Cuentas crear(Long idCliente) throws CloudBankException, Exception;
+    public Cuentas crear(Cuentas cuenta) throws CloudBankException, Exception;
 
     /**
      * Método que modifica una cuenta
      *
-     *
-     * @param numero
-     * @param idCliente
-     * @param cuentaActiva Indica si la cuenta se encuentra activa o no
-     * @param clave
+     * @param cuenta
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */
-    public void modificar(String numero, Long idCliente, String cuentaActiva, String clave) throws CloudBankException, Exception;
-
-    /**
-     * Método que activa/desactiva una cuenta (es una variante a la modificación para
-     * hacerlo más sencillo)
-     *
-     * @param numero
-     * @param cuentaActiva
-     * @throws co.edu.usbcali.cloudbank.util.CloudBankException
-     * @throws java.lang.Exception
-     */
-    public void modificarEstado(String numero, String cuentaActiva) throws CloudBankException, Exception;
+    public void modificar(Cuentas cuenta) throws CloudBankException, Exception;
 
     /**
      * Método que elimina una cuenta
      *
-     * @param numero
+     * @param cuenta
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */
-    public void eliminar(String numero) throws CloudBankException, Exception;
+    public void eliminar(Cuentas cuenta) throws CloudBankException, Exception;
 }

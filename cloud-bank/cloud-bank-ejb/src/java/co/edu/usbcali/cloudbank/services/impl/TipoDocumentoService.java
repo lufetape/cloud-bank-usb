@@ -21,7 +21,7 @@ import org.apache.logging.log4j.Logger;
  */
 @Stateless
 public class TipoDocumentoService implements ITipoDocumentoService {
-    
+
     private static final Logger logger = LogManager.getLogger(TipoDocumentoService.class);
 
     @EJB
@@ -44,46 +44,46 @@ public class TipoDocumentoService implements ITipoDocumentoService {
     }
 
     @Override
-    public void eliminar(Long id) throws Exception {
+    public void eliminar(TiposDocumentos tipoDocumento) throws Exception {
 
-        if (id == null) {
+        if (tipoDocumento.getTdocCodigo() == null) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "idTipoDocumentoNulo"));
         }
 
-        tipoDocumentoDAO.remove(new TiposDocumentos(), id);
+        tipoDocumentoDAO.remove(new TiposDocumentos(), tipoDocumento.getTdocCodigo());
     }
 
     @Override
-    public void modificar(Long id, String descripcion) throws CloudBankException, Exception {
+    public void modificar(TiposDocumentos tipoDocumento) throws CloudBankException, Exception {
 
         //Se validan los datos de entrada
-        validarTipoDocumento(id, descripcion);
+        validarTipoDocumento(tipoDocumento);
 
         //Se consulta el tipo de documento
-        TiposDocumentos tipoDocumentoModificar = consultarPorId(id);
+        TiposDocumentos tipoDocumentoModificar = consultarPorId(tipoDocumento.getTdocCodigo());
 
         //Se hidrata el objeto con los nuevos valores
-        tipoDocumentoModificar.setTdocNombre(descripcion.trim().toUpperCase());
+        tipoDocumentoModificar.setTdocNombre(tipoDocumento.getTdocNombre().trim().toUpperCase());
 
         //Se realiza la actualizacion            
         tipoDocumentoDAO.modify(tipoDocumentoModificar);
     }
 
     @Override
-    public TiposDocumentos crear(Long id, String descripcion) throws CloudBankException, Exception {
+    public TiposDocumentos crear(TiposDocumentos tipoDocumento) throws CloudBankException, Exception {
 
         //Se validan los datos de entrada
-        validarTipoDocumento(id, descripcion);
+        validarTipoDocumento(tipoDocumento);
 
         //Se verifica si el tipo de documento ya existe
-        if (consultarPorId(id) != null) {
+        if (consultarPorId(tipoDocumento.getTdocCodigo()) != null) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "yaExiste"));
         }
 
         //Se hidrata el objeto con los nuevos valores  
         TiposDocumentos tipoDocumentoCrear = new TiposDocumentos();
-        tipoDocumentoCrear.setTdocCodigo(id);
-        tipoDocumentoCrear.setTdocNombre(descripcion.trim().toUpperCase());
+        tipoDocumentoCrear.setTdocCodigo(tipoDocumento.getTdocCodigo());
+        tipoDocumentoCrear.setTdocNombre(tipoDocumento.getTdocNombre().trim().toUpperCase());
 
         //Se realiza la creacion            
         return tipoDocumentoDAO.create(tipoDocumentoCrear);
@@ -92,24 +92,23 @@ public class TipoDocumentoService implements ITipoDocumentoService {
     /**
      * Metodo que valida el formulario para crear/editar tipos de documentos
      *
-     * @param id
-     * @param descripcion
+     * @param tipoDocumento
      */
-    private void validarTipoDocumento(Long id, String descripcion) throws CloudBankException {
+    private void validarTipoDocumento(TiposDocumentos tipoDocumento) throws CloudBankException {
 
-        if (id == null) {
+        if (tipoDocumento.getTdocCodigo() == null) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "idTipoDocumentoNulo"));
         }
-        if (id <= 0) {
+        if (tipoDocumento.getTdocCodigo() <= 0) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "idTipoDocumentoMenorIgualCero"));
         }
-        if (descripcion == null) {
+        if (tipoDocumento.getTdocNombre() == null) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "descripcionTipoDocumentoNula"));
         }
-        if (descripcion.trim().equals("")) {
+        if (tipoDocumento.getTdocNombre().trim().equals("")) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "descripcionTipoDocumentoVacia"));
         }
-        if (!UtilRegExp.isAlphanumeric(descripcion)) {
+        if (!UtilRegExp.isAlphanumeric(tipoDocumento.getTdocNombre())) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "descripcionTipoDocumentoInvalida"));
         }
     }

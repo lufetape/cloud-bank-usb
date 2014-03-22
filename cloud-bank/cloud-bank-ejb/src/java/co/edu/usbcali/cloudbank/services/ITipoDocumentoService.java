@@ -36,32 +36,28 @@ public interface ITipoDocumentoService {
     /**
      * Método que crea un tipo de documento
      *
-     *
-     * @param id Identificación del Tipo de documento
-     * @param descripcion
+     * @param tipoDocumento
      * @return Tipo de documento creado
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */
-    public TiposDocumentos crear(Long id, String descripcion) throws CloudBankException, Exception;
+    public TiposDocumentos crear(TiposDocumentos tipoDocumento) throws CloudBankException, Exception;
 
     /**
      * Método que modifica un tipo de documento
-     *
-     *
-     * @param id Identificación del Tipo de documento
-     * @param descripcion
+     * 
+     * @param tipoDocumento
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */
-    public void modificar(Long id, String descripcion) throws CloudBankException, Exception;
+    public void modificar(TiposDocumentos tipoDocumento) throws CloudBankException, Exception;
 
     /**
      * Método que elimina un tipo de documento
      *
-     * @param id Identificación del Tipo de documento
+     * @param tipoDocumento
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */
-    public void eliminar(Long id) throws CloudBankException, Exception;
+    public void eliminar(TiposDocumentos tipoDocumento) throws CloudBankException, Exception;
 }

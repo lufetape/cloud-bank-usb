@@ -78,8 +78,8 @@ public class TipoDocumentoServiceTest {
     @Test
     public void testEliminar() throws Exception {
         System.out.println("eliminar");
-        Long id = 40L;
-        instance.eliminar(id);
+        TiposDocumentos tipoDocumento = new TiposDocumentos(40L);
+        instance.eliminar(tipoDocumento);
     }
 
     /**
@@ -90,9 +90,8 @@ public class TipoDocumentoServiceTest {
     @Test
     public void testModificar() throws Exception {
         System.out.println("modificar");
-        Long id = 40L;
-        String descripcion = "Otro EditadO";
-        instance.modificar(id, descripcion);
+        TiposDocumentos tipoDocumento = new TiposDocumentos(40L, "Otro EditaDo");
+        instance.modificar(tipoDocumento);
     }
 
     /**
@@ -103,10 +102,9 @@ public class TipoDocumentoServiceTest {
     @Test
     public void testCrear() throws Exception {
         System.out.println("crear");
-        Long id = 40L;
-        String descripcion = "OTRO";
-        String expResult = descripcion;
-        TiposDocumentos result = instance.crear(id, descripcion);
+        TiposDocumentos tipoDocumento = new TiposDocumentos(40L, "Otro");
+        String expResult = "OTRO";
+        TiposDocumentos result = instance.crear(tipoDocumento);
         assertEquals(expResult, result.getTdocNombre());
     }
 }

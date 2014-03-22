@@ -39,7 +39,7 @@ public class ClienteService implements IClienteService {
     public List<Clientes> consultarTodos() throws Exception {
 
         logger.entry();
-        
+
         return logger.exit(clienteDAO.findAll());
     }
 
@@ -47,7 +47,7 @@ public class ClienteService implements IClienteService {
     public Clientes consultarPorId(Long id) throws CloudBankException, Exception {
 
         logger.entry();
-        
+
         logger.info("Validando id");
         if (id == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "idClienteNulo")));
@@ -83,37 +83,37 @@ public class ClienteService implements IClienteService {
     }
 
     @Override
-    public void eliminar(Long id) throws Exception {
+    public void eliminar(Clientes cliente) throws Exception {
 
         logger.entry();
-        
+
         logger.info("Validando id");
-        if (id == null) {
+        if (cliente.getCliId() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "idClienteNulo")));
         }
 
-        clienteDAO.remove(new Clientes(), id);
+        clienteDAO.remove(new Clientes(), cliente.getCliId());
         logger.exit();
     }
 
     @Override
-    public void modificar(Long id, Long tipoDocumento, String nombre, String direccion, String telefono, String email) throws CloudBankException, Exception {
+    public void modificar(Clientes cliente) throws CloudBankException, Exception {
 
         logger.entry();
         //Se validan los datos de entrada
-        validarCliente(id, tipoDocumento, nombre, direccion, telefono, email);
+        validarCliente(cliente);
 
         logger.info("Modificando cliente");
         //Se consulta el cliente
-        Clientes clienteModificar = consultarPorId(id);
+        Clientes clienteModificar = consultarPorId(cliente.getCliId());
 
         //Se hidrata el objeto con los nuevos valores
-        clienteModificar.setCliNombre(nombre);
-        clienteModificar.setTdocCodigo(tipoDocumentoService.consultarPorId(tipoDocumento));
-        clienteModificar.setCliNombre(nombre);
-        clienteModificar.setCliDireccion(direccion.trim().toUpperCase());
-        clienteModificar.setCliTelefono(telefono);
-        clienteModificar.setCliMail(email);
+        clienteModificar.setCliNombre(cliente.getCliNombre());
+        clienteModificar.setTdocCodigo(cliente.getTdocCodigo());
+        clienteModificar.setCliNombre(cliente.getCliNombre());
+        clienteModificar.setCliDireccion(cliente.getCliDireccion().trim().toUpperCase());
+        clienteModificar.setCliTelefono(cliente.getCliTelefono());
+        clienteModificar.setCliMail(cliente.getCliMail());
 
         //Se realiza la actualizacion            
         clienteDAO.modify(clienteModificar);
@@ -121,87 +121,80 @@ public class ClienteService implements IClienteService {
     }
 
     @Override
-    public Cuentas crear(Long id, Long tipoDocumento, String nombre, String direccion, String telefono, String email) throws CloudBankException, Exception {
+    public Clientes crear(Clientes cliente) throws CloudBankException, Exception {
 
         logger.entry();
         //Se validan los datos de entrada
-        validarCliente(id, tipoDocumento, nombre, direccion, telefono, email);
+        validarCliente(cliente);
 
         //Se verifica si el cliente ya existe
         logger.info("Verificando si el cliente existe");
-        if (consultarPorId(id) != null) {
+        if (consultarPorId(cliente.getCliId()) != null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "yaExiste")));
         }
 
         logger.info("Creando cliente");
-        //Se hidrata el objeto con los nuevos valores  
-        Clientes clienteCrear = new Clientes();
-        clienteCrear.setCliId(id);
-        clienteCrear.setCliNombre(nombre);
-        clienteCrear.setTdocCodigo(tipoDocumentoService.consultarPorId(tipoDocumento));
-        clienteCrear.setCliNombre(nombre);
-        clienteCrear.setCliDireccion(direccion.trim().toUpperCase());
-        clienteCrear.setCliTelefono(telefono);
-        clienteCrear.setCliMail(email);
+        Clientes clienteCreado = clienteDAO.create(cliente);
 
-        //Se realiza la creacion del cliente
-        clienteDAO.create(clienteCrear);
+        logger.info("Creando cuenta asociada al cliente");
+        Cuentas cuenta = new Cuentas();
+        cuenta.setCliId(cliente);
+        cuentaService.crear(cuenta);
 
         //Se realiza la creacion de la cuenta asociada al cliente y se retorna
-        return logger.exit(cuentaService.crear(id));
+        return logger.exit(clienteCreado);
     }
 
     /**
      * Metodo que valida el formulario para crear/editar clientes
      *
-     * @param id
-     * @param tipoDocumento
-     * @param nombre
-     * @param direccion
-     * @param telefono
-     * @param email
+     * @param cliente
      */
-    private void validarCliente(Long id, Long tipoDocumento, String nombre, String direccion, String telefono, String email) throws CloudBankException {
+    private void validarCliente(Clientes cliente) throws CloudBankException, Exception {
 
         logger.entry();
-        if (id == null) {
+        if (cliente.getCliId() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "idClienteNulo")));
         }
-        if (id <= 0) {
+        if (cliente.getCliId() <= 0) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "idClienteMenorIgualCero")));
         }
-        if (tipoDocumento == null) {
+        if (cliente.getTdocCodigo() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "idTipoDocumentoNulo")));
         }
-        if (nombre == null) {
+        cliente.setTdocCodigo(tipoDocumentoService.consultarPorId(cliente.getTdocCodigo().getTdocCodigo()));
+        if (cliente.getTdocCodigo() == null) {
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "tipoDocumentoNoExiste")));
+        }
+        if (cliente.getCliNombre() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "nombreClienteNulo")));
         }
-        if (nombre.trim().equals("")) {
+        if (cliente.getCliNombre().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "nombreClienteVacio")));
         }
-        if (!UtilRegExp.isAlphanumeric(nombre)) {
+        if (!UtilRegExp.isAlphanumeric(cliente.getCliNombre())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "nombreClienteInvalido")));
         }
-        if (direccion == null) {
+        if (cliente.getCliDireccion() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "direccionClienteNula")));
         }
-        if (direccion.trim().equals("")) {
+        if (cliente.getCliDireccion().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "direccionClienteVacia")));
         }
-        if (!UtilRegExp.isAlphanumeric(direccion)) {
+        if (!UtilRegExp.isAlphanumeric(cliente.getCliDireccion())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "direccionClienteInvalida")));
         }
-        if (telefono == null) {
+        if (cliente.getCliTelefono() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "telefonoClienteNulo")));
         }
-        if (telefono.trim().equals("")) {
+        if (cliente.getCliTelefono().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "telefonoClienteVacio")));
         }
-        if (!UtilRegExp.isAlphanumeric(telefono)) {
+        if (!UtilRegExp.isAlphanumeric(cliente.getCliTelefono())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "telefonoClienteInvalido")));
         }
-        if (email != null) {
-            if (!UtilRegExp.isEmail(email)) {
+        if (cliente.getCliMail() != null) {
+            if (!UtilRegExp.isEmail(cliente.getCliMail())) {
                 throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "emailClienteInvalido")));
             }
         }

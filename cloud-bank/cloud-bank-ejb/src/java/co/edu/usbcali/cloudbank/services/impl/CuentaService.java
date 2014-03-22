@@ -23,7 +23,7 @@ import org.apache.logging.log4j.Logger;
  */
 @Stateless
 public class CuentaService implements ICuentaService {
-    
+
     private static final Logger logger = LogManager.getLogger(ClienteService.class);
 
     @EJB
@@ -69,69 +69,48 @@ public class CuentaService implements ICuentaService {
     }
 
     @Override
-    public void eliminar(String numero) throws CloudBankException, Exception {
+    public void eliminar(Cuentas cuenta) throws CloudBankException, Exception {
 
-        if (numero == null) {
+        if (cuenta.getCueNumero() == null) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "numeroCuentaNulo"));
         }
 
-        cuentaDAO.remove(new Cuentas(), numero);
+        cuentaDAO.remove(new Cuentas(), cuenta.getCueNumero());
     }
-    
-    @Override
-    public void modificarEstado(String numero, String cuentaActiva) throws CloudBankException, Exception {
 
-        if (numero == null) {
-            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "numeroCuentaNulo"));
-        }
-        if (cuentaActiva == null) {
-            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "estadoCuentaNulo"));
-        }
+    @Override
+    public void modificar(Cuentas cuenta) throws CloudBankException, Exception {
+
+        //Se validan los datos de entrada
+        validarCuenta(cuenta);
 
         //Se consulta la cuenta
-        Cuentas cuentaModificar = consultarPorNumero(numero);
-        
+        Cuentas cuentaModificar = consultarPorNumero(cuenta.getCueNumero());
+
         //Se hidrata el objeto con los nuevos valores
-        cuentaModificar.setCueActiva(cuentaActiva);
+        cuentaModificar.setCliId(cuenta.getCliId());
+        cuentaModificar.setCueActiva(cuenta.getCueActiva());
+        cuentaModificar.setCueSaldo(cuenta.getCueSaldo());
+        cuentaModificar.setCueClave(cuenta.getCueClave());
 
         //Se realiza la actualizacion            
         cuentaDAO.modify(cuentaModificar);
     }
 
     @Override
-    public void modificar(String numero, Long idCliente, String cuentaActiva, String clave) throws CloudBankException, Exception {
+    public Cuentas crear(Cuentas cuenta) throws CloudBankException, Exception {
 
         //Se validan los datos de entrada
-        validarCuentaEditar(idCliente, cuentaActiva, clave);
+        validarCliente(cuenta);
 
-        //Se consulta la cuenta
-        Cuentas cuentaModificar = consultarPorNumero(numero);
-
-        //Se hidrata el objeto con los nuevos valores
-        cuentaModificar.setCliId(clienteService.consultarPorId(idCliente));
-        cuentaModificar.setCueActiva(cuentaActiva);
-        cuentaModificar.setCueClave(clave);
-
-        //Se realiza la actualizacion            
-        cuentaDAO.modify(cuentaModificar);
-    }
-
-    @Override
-    public Cuentas crear(Long idCliente) throws CloudBankException, Exception {
-
-        //Se validan los datos de entrada
-        validarCuentaCrear(idCliente);
-
-        //Se hidrata el objeto con los nuevos valores  
-        Cuentas cuentaCrear = new Cuentas();
-        cuentaCrear.setCueNumero(generarNumeroCuenta());
-        cuentaCrear.setCliId(clienteService.consultarPorId(idCliente));
-        cuentaCrear.setCueSaldo(BigDecimal.ZERO);
-        cuentaCrear.setCueActiva("N"); //Siempre se crea inactiva
-        cuentaCrear.setCueClave(generarClaveCuenta(cuentaCrear));
+        //Se hidrata el objeto con los nuevos valores 
+        cuenta.setCueNumero(generarNumeroCuenta());
+        cuenta.setCueSaldo(BigDecimal.ZERO);
+        cuenta.setCueActiva("N"); //Siempre se crea inactiva
+        cuenta.setCueClave(generarClaveCuenta(cuenta));
 
         //Se realiza la creacion            
-        return cuentaDAO.create(cuentaCrear);
+        return cuentaDAO.create(cuenta);
     }
 
     /**
@@ -169,41 +148,37 @@ public class CuentaService implements ICuentaService {
     /**
      * Metodo que valida el formulario para crear cuentas
      *
-     * @param idCliente
-     * @param saldo
+     * @param cuenta
      */
-    private void validarCuentaCrear(Long idCliente) throws CloudBankException {
+    private void validarCliente(Cuentas cuenta) throws CloudBankException, Exception {
 
-        if (idCliente == null) {
+        if (cuenta.getCliId().getCliId() == null) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "idClienteNulo"));
         }
-        if (idCliente <= 0) {
-            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "idClienteMenorIgualCero"));
+        cuenta.setCliId(clienteService.consultarPorId(cuenta.getCliId().getCliId()));
+        if (cuenta.getCliId() == null) {
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "clienteNoExiste")));
         }
     }
 
     /**
      * Metodo que valida el formulario para crear/editar cuentas
      *
-     * @param numero
-     * @param idCliente
-     * @param saldo
-     * @param cuentaActiva
-     * @param clave
+     * @param cuenta
      */
-    private void validarCuentaEditar(Long idCliente, String cuentaActiva, String clave) throws CloudBankException {
+    private void validarCuenta(Cuentas cuenta) throws CloudBankException, Exception {
 
-        validarCuentaCrear(idCliente);
-        if (cuentaActiva == null) {
+        validarCliente(cuenta);
+        if (cuenta.getCueActiva() == null) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "estadoCuentaNulo"));
         }
-        if (clave == null) {
+        if (cuenta.getCueClave() == null) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "claveCuentaNula"));
         }
-        if (clave.trim().equals("")) {
+        if (cuenta.getCueClave().trim().equals("")) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "claveCuentaVacia"));
         }
-        if (!(UtilRegExp.isNumeric(clave) && clave.length() == 4)) {
+        if (!(UtilRegExp.isNumeric(cuenta.getCueClave()) && cuenta.getCueClave().length() == 4)) {
             throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "claveCuentaInvalida"));
         }
     }
