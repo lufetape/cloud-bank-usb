@@ -134,15 +134,23 @@ public class ClienteService implements IClienteService {
         }
 
         logger.info("Creando cliente");
-        Clientes clienteCreado = clienteDAO.create(cliente);
+        //Se hidrata el objeto con los nuevos valores
+        Clientes clienteCrear = new Clientes(cliente.getCliId());
+        clienteCrear.setCliNombre(cliente.getCliNombre());
+        clienteCrear.setTdocCodigo(cliente.getTdocCodigo());
+        clienteCrear.setCliNombre(cliente.getCliNombre());
+        clienteCrear.setCliDireccion(cliente.getCliDireccion().trim().toUpperCase());
+        clienteCrear.setCliTelefono(cliente.getCliTelefono());
+        clienteCrear.setCliMail(cliente.getCliMail());
+        clienteCrear = clienteDAO.create(clienteCrear);
 
         logger.info("Creando cuenta asociada al cliente");
         Cuentas cuenta = new Cuentas();
-        cuenta.setCliId(cliente);
+        cuenta.setCliId(clienteCrear);
         cuentaService.crear(cuenta);
 
         //Se realiza la creacion de la cuenta asociada al cliente y se retorna
-        return logger.exit(clienteCreado);
+        return logger.exit(clienteCrear);
     }
 
     /**

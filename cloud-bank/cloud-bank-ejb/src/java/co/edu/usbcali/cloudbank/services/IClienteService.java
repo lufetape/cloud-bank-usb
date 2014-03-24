@@ -1,7 +1,6 @@
 package co.edu.usbcali.cloudbank.services;
 
 import co.edu.usbcali.cloudbank.model.Clientes;
-import co.edu.usbcali.cloudbank.model.Cuentas;
 import co.edu.usbcali.cloudbank.util.CloudBankException;
 import java.util.List;
 import javax.ejb.Local;
@@ -60,7 +59,7 @@ public interface IClienteService {
      * Método que crea un cliente
      *
      * @param cliente
-     * @return Cuenta creada para el cliente
+     * @return Cliente creado
      * @throws co.edu.usbcali.cloudbank.util.CloudBankException
      * @throws java.lang.Exception
      */

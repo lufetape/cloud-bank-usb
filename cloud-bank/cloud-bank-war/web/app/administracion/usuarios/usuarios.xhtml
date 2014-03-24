@@ -1,0 +1,381 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/base/templates/main-gui.xhtml">
+    <ui:define name="content">
+        <h:form id="formGestion">
+            <p:growl id="messages" showSummary="false" showDetail="true" life="3000" />
+            <table width="100%" cellpadding="0" cellspacing="0">
+                <tr> 
+                    <td width="80%" valign="top">
+                        <p:panel id="panel" header="#{bundle_usuario.label_panel_titulo}" style="border: none; padding: 0px">
+                            <br />
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td width="180" valign="top">
+                                        <ui:include src="menuUsuarios.xhtml"/>
+                                    </td>
+                                    <td>
+                                        <p:fieldset legend="#{bundle_usuario.label_filtro_titulo}" 
+                                                    toggleable="true" collapsed="true" >
+                                            <table cellpadding="0" cellspacing="0" width="100%">
+                                                <tr>
+                                                    <td>
+                                                        <p:panelGrid columns="4" style="width: 100%">
+
+                                                            <h:outputLabel value="#{bundle_usuario.label_filtro_codigo}" />
+                                                            <p:inputText size="30"
+                                                                         label="#{bundle_usuario.label_filtro_codigo}"
+                                                                         maxlength="12"
+                                                                         value="#{usuarioBacking.codigo}" />
+
+                                                            <h:outputLabel value="#{bundle_usuario.label_filtro_tipo}" />
+                                                            <p:selectOneMenu label="#{bundle_usuario.label_filtro_tipo}"
+                                                                             value="#{usuarioBacking.tipoUsuario}" 
+                                                                             converter="converterTipoUsuario"
+                                                                             style="width: 240px"> 
+                                                                <f:selectItem itemLabel="#{bundle_comun.label_seleccione_registro}" itemValue="#{null}" />
+                                                                <f:selectItems value="#{tipoUsuarioBacking.tiposUsuariosList}" 
+                                                                               var="tu"
+                                                                               itemLabel="#{tu.tusuCodigo} - #{tu.tusuNombre}" 
+                                                                               itemValue="#{tu}" /> 
+                                                            </p:selectOneMenu>
+
+                                                            <h:outputLabel value="#{bundle_usuario.label_filtro_login}" />
+                                                            <p:inputText size="30"
+                                                                         label="#{bundle_usuario.label_filtro_login}"
+                                                                         maxlength="30"
+                                                                         value="#{usuarioBacking.login}" />
+
+                                                            <h:outputLabel value="#{bundle_usuario.label_filtro_nombre}" />
+                                                            <p:inputText size="30"
+                                                                         label="#{bundle_usuario.label_filtro_nombre}"
+                                                                         required="false"
+                                                                         maxlength="50"
+                                                                         value="#{usuarioBacking.nombre}" />                                                
+
+                                                        </p:panelGrid>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right" height="40">
+                                                        <p:commandButton value="#{bundle_comun.button_consultar}" 
+                                                                         title="#{bundle_comun.button_consultar}" 
+                                                                         actionListener="#{usuarioBacking.listarPorFiltros}" 
+                                                                         update=":formGestion:messages, panel, msg"
+                                                                         icon="find"
+                                                                         style="margin:0"/>
+                                                        &nbsp;
+                                                        <p:commandButton value="#{bundle_comun.button_limpiar}" 
+                                                                         title="#{bundle_comun.button_limpiar}" 
+                                                                         actionListener="#{usuarioBacking.resetFiltros}"
+                                                                         update=":formGestion:messages, panel, msg"
+                                                                         icon="reset" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </p:fieldset>
+                                        <br />
+                                        <p:fieldset legend="#{bundle_usuario.label_resultados_titulo}">
+                                            <table cellpadding="0" cellspacing="0" width="100%" border="0">
+                                                <tr>
+                                                    <td height="40">
+                                                        <table cellpadding="0" cellspacing="0" width="100%">
+                                                            <tr>
+                                                                <td align="left">
+                                                                    <p:graphicImage id="help" url="/resources/images/24x24/Help-icon.png" style="vertical-align: middle" />
+                                                                    <p:tooltip for="help" showEffect="slide" hideEffect="slide" >
+                                                                        <b>#{bundle_usuario.label_resultados_ayuda_titulo}</b>
+                                                                        #{bundle_usuario.label_resultados_ayuda_descripcion}
+                                                                    </p:tooltip>                                                                    
+                                                                </td>
+                                                                <td align="right">
+                                                                    <p:commandButton value="#{bundle_comun.button_modificar}"
+                                                                                     title="#{bundle_usuario.label_modificar_titulo}"
+                                                                                     actionListener="#{usuarioBacking.lanzarModificar}" 
+                                                                                     id="lanzarModificar"   
+                                                                                     update=":formModificar, :formGestion:messages, :formGestion:msg"
+                                                                                     icon="modificar"
+                                                                                     style="margin:0"/>
+                                                                    &nbsp;
+                                                                    <p:commandButton value="#{bundle_comun.button_eliminar}"
+                                                                                     title="#{bundle_usuario.label_eliminar_titulo}"
+                                                                                     actionListener="#{usuarioBacking.lanzarEliminar}" 
+                                                                                     id="lanzarEliminar"   
+                                                                                     update=":formEliminar, :formGestion:messages, :formGestion:msg"
+                                                                                     icon="eliminar"
+                                                                                     style="margin:0"/>
+                                                                    <p:spacer width="20" />
+                                                                    <p:commandButton id="crear" 
+                                                                                     value="#{bundle_comun.button_nuevo}" 
+                                                                                     title="#{bundle_usuario.button_resultados_nuevo}" 
+                                                                                     actionListener="#{usuarioBacking.lanzarCrear}" 
+                                                                                     oncomplete="crearDlg.show();" 
+                                                                                     update=":formCrear"
+                                                                                     icon="crear"/>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr> 
+                                                <tr>
+                                                    <td>
+                                                        <p:dataTable id="usuarios"  
+                                                                     widgetVar="widgetUsuarios"
+                                                                     var="usuario" 
+                                                                     value="#{usuarioBacking.usuariosList}"    
+                                                                     rowKey ="#{usuario.usuCedula}" 
+                                                                     paginator="true"
+                                                                     paginatorPosition="bottom"
+                                                                     rows="10" 
+                                                                     selectionMode="single"
+                                                                     selection="#{usuarioBacking.selectedUsuario}"
+                                                                     emptyMessage="#{bundle_comun.label_paginador_empty}"
+                                                                     paginatorTemplate="#{bundle_comun.label_paginador_template}"  
+                                                                     currentPageReportTemplate="#{bundle_comun.label_paginador_currentTemplate}"
+                                                                     rowsPerPageTemplate="#{bundle_comun.label_paginador_rowsTemplate}"
+                                                                     filteredValue="#{usuarioBacking.filteredUsuariosList}">
+
+                                                            <p:column headerText="&nbsp;#{bundle_usuario.label_resultados_tabla_codigo}" 
+                                                                      sortBy="#{usuario.usuCedula}"
+                                                                      filterBy="#{usuario.usuCedula}"
+                                                                      filterMatchMode="contains"
+                                                                      filterStyle="width: 60px"
+                                                                      filterMaxLength="12"
+                                                                      style="text-align: center">              
+                                                                #{usuario.usuCedula}
+                                                            </p:column>
+
+                                                            <p:column headerText="&nbsp;#{bundle_usuario.label_resultados_tabla_login}" 
+                                                                      sortBy="#{usuario.usuLogin}"
+                                                                      filterBy="#{usuario.usuLogin}"
+                                                                      filterMatchMode="contains"
+                                                                      filterStyle="width: 100px"
+                                                                      filterMaxLength="20"
+                                                                      style="text-align: center">              
+                                                                #{usuario.usuLogin}
+                                                            </p:column>
+
+                                                            <p:column headerText="&nbsp;#{bundle_usuario.label_resultados_tabla_nombre}" 
+                                                                      sortBy="#{usuario.usuNombre}"
+                                                                      filterBy="#{usuario.usuNombre}"
+                                                                      filterMatchMode="contains"
+                                                                      filterStyle="width: 150px"
+                                                                      filterMaxLength="50"
+                                                                      style="text-align: left">              
+                                                                #{usuario.usuNombre}
+                                                            </p:column>
+
+                                                            <p:column headerText="&nbsp;#{bundle_usuario.label_resultados_tabla_tipo}" 
+                                                                      sortBy="#{usuario.tusuCodigo.tusuNombre}"
+                                                                      filterBy="#{usuario.tusuCodigo.tusuCodigo}"
+                                                                      filterOptions="#{usuarioBacking.tiposUsuariosOptions}"  
+                                                                      filterMatchMode="exact"
+                                                                      filterStyle="width: 250px"
+                                                                      style="text-align: left">              
+                                                                #{usuario.tusuCodigo.tusuNombre}
+                                                            </p:column>
+
+                                                        </p:dataTable>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </p:fieldset>
+                                        <p:messages id="msg" showSummary="false" showDetail="true" />
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/>
+                        </p:panel>
+                    </td>
+                </tr>
+            </table> 
+        </h:form>
+        <h:form id="formCrear">
+            <p:dialog modal="true" 
+                      header="#{bundle_usuario.label_nuevo_titulo}" 
+                      widgetVar="crearDlg">                
+                <p:ajax event="close" listener="#{usuarioBacking.listarTodos}" update="@form" oncomplete="widgetUsuarios.filter()" />
+                <p:panelGrid id="panelCrear" columns="2" style="width: 100%">  
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_codigo}" />
+                    <p:inputText size="50"
+                                 label="#{bundle_usuario.label_nuevo_modificar_codigo}"
+                                 required="true"
+                                 maxlength="12"
+                                 value="#{usuarioBacking.selectedUsuario.usuCedula}" />
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_tipo}" />
+                    <p:selectOneMenu label="#{bundle_usuario.label_nuevo_modificar_tipo}"
+                                     value="#{usuarioBacking.selectedUsuario.tusuCodigo}" 
+                                     converter="converterTipoUsuario"
+                                     style="width: 100%"> 
+                        <f:selectItem itemLabel="#{bundle_comun.label_seleccione_registro}" itemValue="#{null}" />
+                        <f:selectItems value="#{tipoUsuarioBacking.tiposUsuariosList}" 
+                                       var="tu"
+                                       itemLabel="#{tu.tusuCodigo} - #{tu.tusuNombre}" 
+                                       itemValue="#{tu}" /> 
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_nombre}" />
+                    <p:inputText size="50"
+                                 label="#{bundle_usuario.label_nuevo_modificar_nombre}"
+                                 required="true"
+                                 maxlength="50"
+                                 value="#{usuarioBacking.selectedUsuario.usuNombre}" />
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_login}" />
+                    <p:inputText size="50"
+                                 label="#{bundle_usuario.label_nuevo_modificar_login}"
+                                 required="true"
+                                 maxlength="50"
+                                 value="#{usuarioBacking.selectedUsuario.usuLogin}" />
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_clave}" />
+                    <p:password label="#{bundle_usuario.label_nuevo_modificar_clave}" 
+                                size="50" 
+                                required="true"
+                                match="confirmation"
+                                feedback="true"
+                                maxlength="20"
+                                value="#{usuarioBacking.selectedUsuario.usuClave}" />
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_confirme_clave}" />
+                    <p:password label="#{bundle_usuario.label_nuevo_modificar_confirme_clave}" 
+                                id="confirmation"
+                                size="50" 
+                                required="true"
+                                feedback="false"
+                                maxlength="20" />
+
+                </p:panelGrid>        
+                <f:facet name="footer">  
+                    <p:commandButton value="#{bundle_comun.button_aceptar}" 
+                                     title="#{bundle_usuario.button_nuevo_crear}" 
+                                     actionListener="#{usuarioBacking.crear}" 
+                                     id="crear"   
+                                     update=":formGestion:messages, panelCrear, msgCrear"
+                                     icon="ui-icon-check"
+                                     style="margin:0"/>
+                    &nbsp;
+                    <p:commandButton value="#{bundle_comun.button_cerrar}" 
+                                     title="#{bundle_comun.button_cerrar}" 
+                                     type="button" 
+                                     icon="ui-icon-close"
+                                     onclick="crearDlg.hide();"/>
+                    <p:messages id="msgCrear" showSummary="false" showDetail="true" />
+                </f:facet>
+            </p:dialog> 
+        </h:form>
+
+        <h:form id="formModificar">
+            <p:dialog modal="true" 
+                      header="#{bundle_usuario.label_modificar_titulo}" 
+                      widgetVar="modificarDlg"> 
+                <p:ajax event="close" listener="#{usuarioBacking.listarTodos}" update="@form" oncomplete="widgetUsuarios.filter()" />
+                <p:panelGrid id="panelModificar" columns="2" style="width: 100%">  
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_codigo}" />
+                    <p:inputText size="50"
+                                 label="#{bundle_usuario.label_nuevo_modificar_codigo}"
+                                 required="true"
+                                 maxlength="12"
+                                 value="#{usuarioBacking.selectedUsuario.usuCedula}" />
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_tipo}" />
+                    <p:selectOneMenu label="#{bundle_usuario.label_nuevo_modificar_tipo}"
+                                     value="#{usuarioBacking.selectedUsuario.tusuCodigo}" 
+                                     converter="converterTipoUsuario"
+                                     style="width: 100%"> 
+                        <f:selectItem itemLabel="#{bundle_comun.label_seleccione_registro}" itemValue="#{null}" />
+                        <f:selectItems value="#{tipoUsuarioBacking.tiposUsuariosList}" 
+                                       var="tu"
+                                       itemLabel="#{tu.tusuCodigo} - #{tu.tusuNombre}" 
+                                       itemValue="#{tu}" /> 
+                    </p:selectOneMenu>
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_nombre}" />
+                    <p:inputText size="50"
+                                 label="#{bundle_usuario.label_nuevo_modificar_nombre}"
+                                 required="true"
+                                 maxlength="50"
+                                 value="#{usuarioBacking.selectedUsuario.usuNombre}" />
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_login}" />
+                    <p:inputText size="50"
+                                 label="#{bundle_usuario.label_nuevo_modificar_login}"
+                                 required="true"
+                                 maxlength="50"
+                                 value="#{usuarioBacking.selectedUsuario.usuLogin}" />
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_cambiar_clave}" />
+                    <p:selectBooleanCheckbox value="#{usuarioBacking.cambiarClave}"> 
+                        <p:ajax update="claveModificar, confirmationModificar" />
+                    </p:selectBooleanCheckbox>
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_clave}" />
+                    <p:password label="#{bundle_usuario.label_nuevo_modificar_clave}" 
+                                readonly="#{!usuarioBacking.cambiarClave}"
+                                id="claveModificar"
+                                size="50" 
+                                required="true"
+                                match="confirmationModificar"
+                                feedback="true"
+                                maxlength="20"
+                                value="#{usuarioBacking.selectedUsuario.usuClave}" />
+
+                    <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_confirme_clave}" />
+                    <p:password label="#{bundle_usuario.label_nuevo_modificar_confirme_clave}" 
+                                readonly="#{!usuarioBacking.cambiarClave}"
+                                id="confirmationModificar"
+                                size="50" 
+                                required="true"
+                                feedback="false"
+                                maxlength="20"
+                                value="#{usuarioBacking.selectedUsuario.usuClave}" />
+
+                </p:panelGrid>  
+                <f:facet name="footer">  
+                    <p:commandButton value="#{bundle_comun.button_guardar}" 
+                                     title="#{bundle_usuario.button_modificar_guardar}" 
+                                     actionListener="#{usuarioBacking.modificar}" 
+                                     id="modificar"   
+                                     update=":formGestion:messages, panelModificar, msgModificar"
+                                     icon="ui-icon-check"
+                                     style="margin:0"/>
+                    &nbsp;
+                    <p:commandButton value="#{bundle_comun.button_cerrar}"
+                                     title="#{bundle_comun.button_cerrar}"
+                                     type="button"
+                                     icon="ui-icon-close"
+                                     onclick="modificarDlg.hide()"/>
+                    <p:messages id="msgModificar" showSummary="false" showDetail="true" />
+                </f:facet> 
+            </p:dialog>
+        </h:form>
+
+        <h:form id="formEliminar">
+            <p:confirmDialog id="confirmDialog" 
+                             message="#{bundle_usuario.label_eliminar_pregunta}"  
+                             header="#{bundle_usuario.label_eliminar_titulo}" 
+                             severity="alert" 
+                             widgetVar="eliminarDlg">
+                <p:commandButton id="confirm" 
+                                 value="#{bundle_comun.button_si_seguro}" 
+                                 title="#{bundle_comun.button_si_seguro}"
+                                 update=":formGestion:messages"
+                                 oncomplete="widgetUsuarios.filter(); eliminarDlg.hide()" 
+                                 actionListener="#{usuarioBacking.eliminar}" />  
+                <p:commandButton id="decline" 
+                                 value="#{bundle_comun.button_no}" 
+                                 title="#{bundle_comun.button_no} (#{bundle_comun.button_cerrar})" 
+                                 onclick="eliminarDlg.hide()" 
+                                 type="button" /> 
+            </p:confirmDialog> 
+        </h:form>
+    </ui:define>
+</ui:composition>

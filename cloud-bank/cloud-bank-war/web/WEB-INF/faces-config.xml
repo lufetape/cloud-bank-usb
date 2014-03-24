@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+              xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    <application>
+        <locale-config>            
+            <default-locale>es</default-locale>        
+        </locale-config>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.ComunBundle
+            </base-name>
+            <var>bundle_comun</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.MenuBundle
+            </base-name>
+            <var>bundle_menu</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.TipoDocumentoBundle
+            </base-name>
+            <var>bundle_tipo_documento</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.TipoUsuarioBundle
+            </base-name>
+            <var>bundle_tipo_usuario</var>
+        </resource-bundle>   
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.UsuarioBundle
+            </base-name>
+            <var>bundle_usuario</var>
+        </resource-bundle>       
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.ClienteBundle
+            </base-name>
+            <var>bundle_cliente</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.CuentaBundle
+            </base-name>
+            <var>bundle_cuenta</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.MovimientoBundle
+            </base-name>
+            <var>bundle_movimiento</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.ConsignacionBundle
+            </base-name>
+            <var>bundle_consignacion</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.RetiroBundle
+            </base-name>
+            <var>bundle_retiro</var>
+        </resource-bundle>
+    </application>
+    
+    <converter>
+        <converter-id>converterTipoUsuario</converter-id>
+        <converter-class>co.edu.usbcali.i_cloudbank.utils.ConverterTipoUsuario</converter-class>
+    </converter>
+    
+</faces-config>
