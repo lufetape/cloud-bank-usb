@@ -8,7 +8,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 
 /**
- * Convertidor de Usuarios para componentes gráficos, donde se necesita pintar y
+ * Convertidor de Tipos de Usuarios para componentes gráficos, donde se necesita pintar y
  * retornar el objeto completo
  *
  * @author Felipe

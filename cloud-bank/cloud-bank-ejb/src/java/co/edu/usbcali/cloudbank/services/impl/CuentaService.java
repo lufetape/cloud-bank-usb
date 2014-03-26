@@ -79,6 +79,51 @@ public class CuentaService implements ICuentaService {
     }
 
     @Override
+    public void retirar(Cuentas cuenta) throws CloudBankException, Exception {
+        
+        if (cuenta.getCueActiva().equals("R")) {
+            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "estadoCuentaRetirado"));
+        }
+        if (cuenta.getCueSaldo().doubleValue() > 0) {
+            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "saldoMayorCeroRetirar"));
+        }
+        cuenta.setCueActiva("R");
+
+        modificar(cuenta);
+    }
+    
+    @Override
+    public void desactivar(Cuentas cuenta) throws CloudBankException, Exception {
+        
+        if (cuenta.getCueActiva().equals("R")) {
+            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "estadoCuentaRetirado"));
+        }
+        if (cuenta.getCueActiva().equals("N")) {
+            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "estadoCuentaInactivo"));
+        }
+        cuenta.setCueActiva("N");
+
+        modificar(cuenta);
+    }
+    
+    @Override
+    public void activar(Cuentas cuenta) throws CloudBankException, Exception {
+        
+        if (cuenta.getCueActiva().equals("R")) {
+            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "estadoCuentaRetirado"));
+        }
+        if (cuenta.getCueActiva().equals("S")) {
+            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "estadoCuentaActivo"));
+        }
+        if (cuenta.getCueSaldo().doubleValue() <= 0) {
+            throw new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "saldoCeroActivar"));
+        }
+        cuenta.setCueActiva("S");
+
+        modificar(cuenta);
+    }
+
+    @Override
     public void modificar(Cuentas cuenta) throws CloudBankException, Exception {
 
         //Se validan los datos de entrada

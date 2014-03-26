@@ -17,6 +17,10 @@ public class IdiomaDTO implements Serializable {
 
     public IdiomaDTO() {
     }
+    
+    public IdiomaDTO(String id) {
+        this.id = id;
+    }
 
     public IdiomaDTO(String id, Locale locale, String nombre, String imagen) {
         this.id = id;

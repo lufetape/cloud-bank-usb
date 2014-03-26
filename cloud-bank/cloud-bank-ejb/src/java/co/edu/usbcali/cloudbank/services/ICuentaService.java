@@ -82,4 +82,31 @@ public interface ICuentaService {
      * @throws java.lang.Exception
      */
     public void eliminar(Cuentas cuenta) throws CloudBankException, Exception;
+    
+    /**
+     * Método que retira una cuenta
+     *
+     * @param cuenta
+     * @throws co.edu.usbcali.cloudbank.util.CloudBankException
+     * @throws java.lang.Exception
+     */
+    public void retirar(Cuentas cuenta) throws CloudBankException, Exception;
+    
+    /**
+     * Método que desactiva una cuenta
+     *
+     * @param cuenta
+     * @throws co.edu.usbcali.cloudbank.util.CloudBankException
+     * @throws java.lang.Exception
+     */
+    public void desactivar(Cuentas cuenta) throws CloudBankException, Exception;
+    
+    /**
+     * Método que activa una cuenta
+     *
+     * @param cuenta
+     * @throws co.edu.usbcali.cloudbank.util.CloudBankException
+     * @throws java.lang.Exception
+     */
+    public void activar(Cuentas cuenta) throws CloudBankException, Exception;
 }

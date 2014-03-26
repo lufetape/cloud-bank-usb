@@ -76,5 +76,9 @@
         <converter-id>converterTipoUsuario</converter-id>
         <converter-class>co.edu.usbcali.i_cloudbank.utils.ConverterTipoUsuario</converter-class>
     </converter>
+    <converter>
+        <converter-id>converterTipoDocumento</converter-id>
+        <converter-class>co.edu.usbcali.i_cloudbank.utils.ConverterTipoDocumento</converter-class>
+    </converter>
     
 </faces-config>

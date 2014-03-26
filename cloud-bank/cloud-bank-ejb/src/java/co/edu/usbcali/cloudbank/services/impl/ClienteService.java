@@ -201,7 +201,7 @@ public class ClienteService implements IClienteService {
         if (!UtilRegExp.isAlphanumeric(cliente.getCliTelefono())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "telefonoClienteInvalido")));
         }
-        if (cliente.getCliMail() != null) {
+        if (cliente.getCliMail() != null && !cliente.getCliMail().equals("")) {
             if (!UtilRegExp.isEmail(cliente.getCliMail())) {
                 throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "emailClienteInvalido")));
             }

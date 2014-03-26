@@ -76,7 +76,7 @@ public class UsuarioBacking extends BaseBacking implements Serializable {
         //Llenando opciones de tipos de usuarios para el filtro de la tabla
         tipoUsuarioBacking.listarTodos();
         tiposUsuariosOptions = new SelectItem[tipoUsuarioBacking.getTiposUsuariosList().size() + 1];
-        tiposUsuariosOptions[0] = new SelectItem("", "Todos");
+        tiposUsuariosOptions[0] = new SelectItem("", obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_seleccione_todos"));
         int i = 0;
         for (TiposUsuarios tUsu : tipoUsuarioBacking.getTiposUsuariosList()) {
             tiposUsuariosOptions[i + 1] = new SelectItem(tUsu.getTusuCodigo(), tUsu.getTusuNombre());

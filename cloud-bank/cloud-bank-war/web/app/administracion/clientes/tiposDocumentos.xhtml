@@ -22,9 +22,10 @@
                                                 <tr>
                                                     <td align="left">
                                                         <p:graphicImage id="help" url="/resources/images/24x24/Help-icon.png" style="vertical-align: middle" />
-                                                        &nbsp;
-                                                        <b>#{bundle_tipo_documento.label_resultados_ayuda_titulo}</b>
-                                                        #{bundle_tipo_documento.label_resultados_ayuda_descripcion}
+                                                        <p:tooltip for="help" showEffect="slide" hideEffect="slide" >
+                                                            <b>#{bundle_tipo_documento.label_resultados_ayuda_titulo}</b>
+                                                            #{bundle_tipo_documento.label_resultados_ayuda_descripcion}
+                                                        </p:tooltip>
                                                     </td>
                                                     <td align="right">
                                                         <p:commandButton value="#{bundle_comun.button_modificar}"
@@ -42,7 +43,7 @@
                                                                          update=":formEliminar, :formGestion:messages, :formGestion:msg"
                                                                          icon="eliminar"
                                                                          style="margin:0"/>
-                                                        <p:spacer width="20" />
+                                                        <p:spacer width="10" />
                                                         <p:commandButton id="crear" 
                                                                          value="#{bundle_comun.button_nuevo}" 
                                                                          title="#{bundle_tipo_documento.button_resultados_nuevo}" 
@@ -118,7 +119,7 @@
                                  required="true"
                                  maxlength="3"
                                  value="#{tipoDocumentoBacking.selectedTipoDocumento.tdocCodigo}" />
-                    
+
                     <h:outputLabel value="#{bundle_tipo_documento.label_nuevo_modificar_descripcion}" />
                     <p:inputText size="50"
                                  label="#{bundle_tipo_documento.label_nuevo_modificar_descripcion}"
@@ -144,7 +145,7 @@
                 </f:facet>
             </p:dialog> 
         </h:form>
-        
+
         <h:form id="formModificar">
             <p:dialog modal="true" 
                       header="#{bundle_tipo_documento.label_modificar_titulo}" 
@@ -154,14 +155,14 @@
 
                     <h:outputLabel value="#{bundle_tipo_documento.label_nuevo_modificar_codigo}" />
                     <h:outputLabel value="#{tipoDocumentoBacking.selectedTipoDocumento.tdocCodigo}" style="font-weight: bold" />
-                    
+
                     <h:outputLabel value="#{bundle_tipo_documento.label_nuevo_modificar_descripcion}" />
                     <p:inputText size="50"
                                  label="#{bundle_tipo_documento.label_nuevo_modificar_descripcion}"
                                  required="true"
                                  maxlength="50"
                                  value="#{tipoDocumentoBacking.selectedTipoDocumento.tdocNombre}" />
-                    
+
                 </p:panelGrid>  
                 <f:facet name="footer">  
                     <p:commandButton value="#{bundle_comun.button_guardar}" 
@@ -181,7 +182,7 @@
                 </f:facet> 
             </p:dialog>
         </h:form>
-        
+
         <h:form id="formEliminar">
             <p:confirmDialog id="confirmDialog" 
                              message="#{bundle_tipo_documento.label_eliminar_pregunta}"  

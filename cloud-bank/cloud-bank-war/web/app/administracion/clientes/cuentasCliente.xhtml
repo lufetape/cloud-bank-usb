@@ -1,0 +1,204 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">    
+    <p:fieldset id="cliente"
+                legend="#{bundle_cuenta.label_titulo_gestion_productos} #{clienteBacking.selectedCliente.cliNombre}" 
+                rendered="#{clienteBacking.renderedCliente}"> 
+        <table cellpadding="10" cellspacing="0" width="100%">
+            <tr>
+                <td width="40%" valign="top">
+                    #{bundle_cuenta.label_titulo_datos_personales}<br/><br/>
+                    <p:panelGrid style="width: 100%">  
+
+                        <p:row>
+                            <p:column style="width: 30px; text-align: center">
+                                <p:graphicImage value="/resources/images/24x24/Person-Male-Light-icon.png" style="vertical-align: middle" />
+                            </p:column>
+                            <p:column style="width: 115px">
+                                <h:outputLabel value="#{bundle_cliente.label_resultados_tabla_tipo}" style="font-weight: bold" />  
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{clienteBacking.selectedCliente.tdocCodigo.tdocNombre}" />  
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="text-align: center">
+                                <p:graphicImage value="/resources/images/24x24/Person-Male-Light-icon.png" style="vertical-align: middle" />
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{bundle_cliente.label_resultados_tabla_identificacion}" style="font-weight: bold" />  
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliId}" />  
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="text-align: center">
+                                <p:graphicImage value="/resources/images/24x24/Comment-icon.png" style="vertical-align: middle" />
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{bundle_cliente.label_resultados_tabla_nombre}" style="font-weight: bold" />  
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliNombre}" /> 
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="text-align: center">
+                                <p:graphicImage value="/resources/images/24x24/Groups-Rescuers-Light-icon.png" style="vertical-align: middle" />
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{bundle_cliente.label_resultados_tabla_direccion}" style="font-weight: bold" />  
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliDireccion}" />
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="text-align: center">
+                                <p:graphicImage value="/resources/images/24x24/role-icon.png" style="vertical-align: middle" />
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{bundle_cliente.label_resultados_tabla_telefono}" style="font-weight: bold" />  
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliTelefono}" /> 
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="text-align: center">
+                                <p:graphicImage value="/resources/images/24x24/application-icon.png" style="vertical-align: middle" />
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{bundle_cliente.label_resultados_tabla_email}" style="font-weight: bold" />  
+                            </p:column>
+                            <p:column>
+                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliMail}" />  
+                            </p:column>
+                        </p:row>
+
+                        <p:row>
+                            <p:column style="text-align: right" colspan="3">                                
+                                <p:commandButton value="#{bundle_cliente.button_regresar_clientes}" 
+                                                 rendered="#{!clienteBacking.renderedListaClientes}"
+                                                 title="#{bundle_cliente.button_regresar_clientes}" 
+                                                 update=":formGestion:panel"
+                                                 actionListener="#{clienteBacking.renderizarListaClientes}"
+                                                 icon="ui-icon-arrowthickstop-1-w"/>
+                                <p:commandButton value="#{bundle_comun.button_modificar}" 
+                                                 title="#{bundle_cliente.label_modificar_titulo}"
+                                                 actionListener="#{clienteBacking.lanzarModificar}" 
+                                                 update=":formModificar, :formGestion:messages, :formGestion:msg"
+                                                 icon="modificar"/>
+                            </p:column>
+                        </p:row>
+
+                    </p:panelGrid>
+                </td>
+                <td valign="top">
+                    #{bundle_cuenta.label_titulo_productos}<br/><br/>
+                    <p:tabView id="tabProductos">  
+                        <p:tab id="ca" title="#{bundle_cuenta.label_resultados_titulo}"> 
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tr>
+                                    <td height="35">
+                                        <table cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                                <td align="left">
+                                                    <p:graphicImage id="help" url="/resources/images/24x24/Help-icon.png" style="vertical-align: middle" />
+                                                    <p:tooltip for="help" showEffect="slide" hideEffect="slide" >
+                                                        <b>#{bundle_cuenta.label_resultados_ayuda_titulo}</b>
+                                                        #{bundle_cuenta.label_resultados_ayuda_descripcion}
+                                                    </p:tooltip>
+                                                </td>
+                                                <td align="right">
+                                                    <p:menuButton value="#{bundle_comun.button_nuevo}">
+                                                        <p:menuitem value="#{bundle_cuenta.label_resultados_tabla_nueva_cuenta}" 
+                                                                    title="#{bundle_cuenta.label_nuevo_titulo}" 
+                                                                    oncomplete="agregarCuentaDlg.show()"
+                                                                    update=":formAgregar, :formGestion:messages, :formGestion:msg"
+                                                                    icon="agregar"/>
+                                                    </p:menuButton>
+                                                    &nbsp;
+                                                    <p:splitButton value="#{bundle_comun.button_retirar}" 
+                                                                   title="#{bundle_cuenta.label_eliminar_titulo}" 
+                                                                   actionListener="#{clienteBacking.lanzarRetirarCuenta}"
+                                                                   update=":formRetirar, :formGestion:messages, :formGestion:msg"
+                                                                   icon="retirar">  
+
+                                                        <p:menuitem value="#{bundle_comun.button_desactivar}" 
+                                                                    title="#{bundle_cuenta.label_desactivar_titulo}"
+                                                                    actionListener="#{clienteBacking.lanzarDesactivarCuenta}" 
+                                                                    update=":formDesactivar, :formGestion:messages, :formGestion:msg"
+                                                                    icon="desactivar"/> 
+
+                                                        <p:menuitem value="#{bundle_comun.button_activar}" 
+                                                                    title="#{bundle_cuenta.label_activar_titulo}"
+                                                                    actionListener="#{clienteBacking.lanzarActivarCuenta}" 
+                                                                    update=":formActivar, :formGestion:messages, :formGestion:msg"
+                                                                    icon="activar"/>
+                                                    </p:splitButton>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr> 
+                                <tr>
+                                    <td>
+                                        <p:dataTable id="cuentas"  
+                                                     widgetVar="widgetCuentas"
+                                                     var="cuenta" 
+                                                     value="#{clienteBacking.selectedCliente.cuentasCollection}"    
+                                                     rowKey ="#{cuenta.cueNumero}" 
+                                                     paginator="true"
+                                                     paginatorPosition="bottom"
+                                                     filteredValue="#{clienteBacking.filteredCuentasList}"
+                                                     rows="10" 
+                                                     selectionMode="single"
+                                                     selection="#{clienteBacking.selectedCuenta}"
+                                                     emptyMessage="#{bundle_comun.label_paginador_empty}"
+                                                     paginatorTemplate="#{bundle_comun.label_paginador_template}"  
+                                                     currentPageReportTemplate="#{bundle_comun.label_paginador_currentTemplate}"
+                                                     rowsPerPageTemplate="#{bundle_comun.label_paginador_rowsTemplate}">
+
+                                            <p:column headerText="&nbsp;#{bundle_cuenta.label_resultados_tabla_numero}" 
+                                                      sortBy="#{cuenta.cueNumero}"
+                                                      filterBy="#{cliente.cliId}"
+                                                      filterMatchMode="contains"
+                                                      filterStyle="width: 100px"
+                                                      filterMaxLength="50"
+                                                      style="text-align: left">              
+                                                #{cuenta.cueNumero}
+                                            </p:column>
+
+                                            <p:column headerText="&nbsp;#{bundle_cuenta.label_resultados_tabla_saldo}" 
+                                                      sortBy="#{cuenta.cueSaldo}"
+                                                      style="text-align: right">              
+                                                #{cuenta.cueSaldo}
+                                            </p:column>
+
+                                            <p:column headerText="&nbsp;#{bundle_cuenta.label_resultados_tabla_estado}" 
+                                                      sortBy="#{cuenta.cueActiva}"
+                                                      style="text-align: center">              
+                                                #{cuenta.cueActiva}
+                                            </p:column>
+                                        </p:dataTable>
+                                    </td>
+                                </tr>
+                            </table>
+                        </p:tab>
+                    </p:tabView>
+                </td>
+            </tr>
+        </table>
+    </p:fieldset>
+</ui:composition>

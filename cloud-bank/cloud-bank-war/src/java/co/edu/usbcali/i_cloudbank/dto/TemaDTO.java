@@ -15,6 +15,10 @@ public class TemaDTO implements Serializable {
 
     public TemaDTO() {
     }
+    
+    public TemaDTO(String id) {
+        this.id = id;
+    }
 
     public TemaDTO(String id, String nombre, String imagen) {
         this.id = id;

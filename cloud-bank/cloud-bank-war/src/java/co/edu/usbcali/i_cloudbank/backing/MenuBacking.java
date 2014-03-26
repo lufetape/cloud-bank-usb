@@ -29,13 +29,15 @@ public class MenuBacking extends BaseBacking implements Serializable {
     private List<IdiomaDTO> idiomas;
     private TemaDTO selectedTema;
     private IdiomaDTO selectedIdioma;
+    private static final String BASE_PREFIX = "/app";
+    private static final String BASE_SUFFIX = ".xhtml";
 
     @PostConstruct
     public void initialize(){        
         cargarTemas();
-        setSelectedTema(new TemaDTO("redmond", "redmond", "redmond.png")); //Se trae de sesion de usuario
+        setSelectedTema(temas.get(temas.indexOf(new TemaDTO("flick")))); //OJO: De sesion
         cargarIdiomas();
-        setSelectedIdioma(new IdiomaDTO("es", new Locale("es"), "label_idioma_spanish", "spanish")); //Se trae de sesion de usuario
+        setSelectedIdioma(idiomas.get(idiomas.indexOf(new IdiomaDTO("es")))); //OJO: De sesion
         construirMenu();
     }
     
@@ -46,38 +48,76 @@ public class MenuBacking extends BaseBacking implements Serializable {
         setMenuModel(new DefaultMenuModel());
         
         //Menú de administración:
-        DefaultSubMenu submenuAdmnistracion = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_submenu_administrar"), "administrar");
-        submenuAdmnistracion.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_administrar_clientes"), "clientes", "/app/administracion/clientes.xhtml"));
-        DefaultSubMenu submenuProductos = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_submenu_administrar_productos"), "productos");
-        submenuProductos.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_administrar_productos_cuentas"), "cuentas", "/app/administracion/cuentas.xhtml"));
-        submenuAdmnistracion.addElement(submenuProductos);
-        submenuAdmnistracion.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_administrar_usuarios"), "usuarios", "/app/administracion/usuarios.xhtml"));
-        getMenuModel().addElement(submenuAdmnistracion);
+        DefaultSubMenu admnistracion = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_administrar"), "administrar");                
+        
+            //Clientes:
+            DefaultMenuItem clientes = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_clientes"), "clientes");
+            clientes.setUrl(BASE_PREFIX+"/administracion/clientes/clientes"+BASE_SUFFIX);
+            admnistracion.addElement(clientes);
+            //Usuarios:
+            DefaultMenuItem usuarios = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_usuarios"), "usuarios");
+            usuarios.setUrl(BASE_PREFIX+"/administracion/usuarios/usuarios"+BASE_SUFFIX);
+            admnistracion.addElement(usuarios);
+            
+            //Submenu de Maestros:
+            DefaultSubMenu maestros = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_maestros"), "maestros");
+            
+                //Tipos de documentos:
+                DefaultMenuItem tiposDocumentos = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_tiposDocumentos"), "tiposDocumentos");
+                tiposDocumentos.setUrl(BASE_PREFIX+"/administracion/clientes/tiposDocumentos"+BASE_SUFFIX);
+                maestros.addElement(tiposDocumentos);
+                //Tipos de Usuarios
+                DefaultMenuItem tiposUsuarios = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_tiposUsuarios"), "tiposUsuarios");
+                tiposUsuarios.setUrl(BASE_PREFIX+"/administracion/usuarios/tiposUsuarios"+BASE_SUFFIX);
+                maestros.addElement(tiposUsuarios);
+                
+            admnistracion.addElement(maestros);
+        
+        getMenuModel().addElement(admnistracion);
         
         //Menú de registro de movimientos:
-        DefaultSubMenu submenuMovimientos = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_submenu_registrar"), "movimientos");
-        submenuMovimientos.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_registrar_consignacion"), "consignaciones", "/app/transacciones/consignaciones.xhtml"));
-        submenuMovimientos.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_registrar_retiro"), "retiros", "/app/transacciones/retiros.xhtml"));
-        submenuMovimientos.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_registrar_transferencia"), "transferencias", "/app/transacciones/transferencias.xhtml"));
-        getMenuModel().addElement(submenuMovimientos);
+        DefaultSubMenu movimientos = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_registrar"), "registrar");
+        
+            //Consignaciones
+            DefaultMenuItem consignaciones = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_consignaciones"), "consignaciones");
+            consignaciones.setUrl(BASE_PREFIX+"/transacciones/consignaciones/consignaciones"+BASE_SUFFIX);
+            movimientos.addElement(consignaciones);
+            //Retiros
+            DefaultMenuItem retiros = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_retiros"), "retiros");
+            retiros.setUrl(BASE_PREFIX+"/transacciones/retiros/tiposUsuarios.setUrl(BASE_PREFIX+\"/transacciones/consignaciones/consignaciones\"+BASE_SUFFIX);"+BASE_SUFFIX);
+            movimientos.addElement(retiros);
+            //Transferencias
+            DefaultMenuItem transferencias = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_transferencias"), "transferencias");
+            transferencias.setUrl(BASE_PREFIX+"/transacciones/transferencias/transferencias"+BASE_SUFFIX);
+            movimientos.addElement(transferencias);
+            
+        getMenuModel().addElement(movimientos);
         
         //Menú de consultas:
-        DefaultSubMenu submenuConsultas = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_submenu_consultar"), "consultar");
-        submenuConsultas.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_consultar_clientes"), "clientes", "/app/consultas/clientes.xhtml"));
-        DefaultSubMenu submenuConsultaMovimientos = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_submenu_consultar_movimientos"), "movimimientos");
-        submenuConsultaMovimientos.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_consultar_movimientos_consignaciones"), "consignaciones", "/app/consultas/consignaciones.xhtml"));
-        submenuConsultaMovimientos.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_consultar_movimientos_retiros"), "retiros", "/app/consultas/retiros.xhtml"));
-        submenuConsultas.addElement(submenuConsultaMovimientos);
-        getMenuModel().addElement(submenuConsultas);
+        DefaultSubMenu consultas = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_consultar"), "consultar");        
+            
+            //Consulta de movimientos
+            DefaultMenuItem consultaMovimientos = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_movimientos"), "movimimientos");
+            consultaMovimientos.setUrl(BASE_PREFIX+"/consultas/movimientos/movimientos"+BASE_SUFFIX);
+            consultas.addElement(consultaMovimientos);
+            
+        getMenuModel().addElement(consultas);
 
         //Menú de ayuda:
-        DefaultSubMenu submenuAyuda = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_submenu_ayuda"), "ayuda");
-        submenuAyuda.addElement(new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_ayuda_support"), "support", "/app/movimientos/support.xhtml"));
-        submenuAyuda.addElement(new DefaultSeparator());
-        DefaultMenuItem menuItemAbout = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_menuitem_ayuda_about"), "about");
-        menuItemAbout.setOnclick("aboutDialog.show()");
-        submenuAyuda.addElement(menuItemAbout);
-        getMenuModel().addElement(submenuAyuda);
+        DefaultSubMenu ayuda = new DefaultSubMenu(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_ayuda"), "ayuda");
+        
+            //Soporte
+            DefaultMenuItem support = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_support"), "support");
+            support.setOnclick("alert('SUPPORT')");
+            ayuda.addElement(support);
+            //Separador
+            ayuda.addElement(new DefaultSeparator());
+            //About
+            DefaultMenuItem about = new DefaultMenuItem(obtenerMensaje(ResourceBundles.RB_MENSAJES.MENU, "label_about"), "about");
+            about.setOnclick("alert('ABOUT CLOUS BANK')");
+            ayuda.addElement(about);
+            
+        getMenuModel().addElement(ayuda);
     } 
     
     public void cargarTemas(){
