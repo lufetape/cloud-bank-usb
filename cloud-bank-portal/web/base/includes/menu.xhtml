@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"> 
+    <h:form>  
+
+        <p:menubar id="menu">                    
+            <p:menuitem title="#{bundle_menu.label_home}" icon="home" url="/" />
+            <p:menuitem value="#{bundle_menu.label_cuentas}" icon="productos" url="/app/cuentas/cuentas.xhtml" />
+            <p:menuitem value="#{bundle_menu.label_transferir}" icon="transferencias" url="/app/transacciones/transferencias.xhtml" />
+            <p:menuitem value="#{bundle_menu.label_about}" icon="about" onclick="aboutDialog.show()" /> 
+        </p:menubar>
+        <p:sticky target="menu" />
+
+    </h:form> 
+</ui:composition>

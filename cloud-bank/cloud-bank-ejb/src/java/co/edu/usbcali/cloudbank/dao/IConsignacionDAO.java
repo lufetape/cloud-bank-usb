@@ -24,5 +24,13 @@ public interface IConsignacionDAO extends IBaseDAO<Consignaciones> {
      * @throws java.lang.Exception
      */
     public List<Consignaciones> consultarPorFiltros(String numero, Date fechaInicial, Date fechaFinal) throws Exception;
+    
+    /**
+     * Método que consulta la ultima consignacion realizada para ua cuenta
+     *
+     * @return Ultima cosignacion
+     * @throws java.lang.Exception
+     */
+    public Consignaciones consultarUltimaConsignacion() throws Exception;
 
 }

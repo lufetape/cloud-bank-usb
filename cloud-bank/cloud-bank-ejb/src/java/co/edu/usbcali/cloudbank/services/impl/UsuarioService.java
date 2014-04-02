@@ -54,11 +54,17 @@ public class UsuarioService implements IUsuarioService {
     public List<Usuarios> consultarPorFiltros(Long codigo, Long idTipoUsuario, String login, String nombre) throws CloudBankException, Exception {
 
         logger.entry();
-        logger.info("Validando si la consulta equivale a consultar todos");
+        logger.info("Validando entradas");
+        if (login != null && login.trim().equals("")) {
+            login = null;
+        }
+        if (nombre != null && nombre.trim().equals("")) {
+            nombre = null;
+        }
         if (codigo == null && idTipoUsuario == null && login == null && nombre == null) {
             return logger.exit(consultarTodos());
         }
-
+        logger.info("Consultando usuarios");
         return logger.exit(usuarioDAO.consultarPorFiltros(codigo, idTipoUsuario, login, nombre));
     }
 
@@ -67,11 +73,10 @@ public class UsuarioService implements IUsuarioService {
 
         logger.entry();
 
-        logger.info("Validando codigo");
+        logger.info("Validando usuario");
         if (usuario.getUsuCedula() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "idUsuarioNulo")));
         }
-
         usuarioDAO.remove(new Usuarios(), usuario.getUsuCedula());
         logger.exit();
     }
@@ -83,17 +88,19 @@ public class UsuarioService implements IUsuarioService {
         //Se validan los datos de entrada
         validarUsuario(usuario);
 
-        logger.info("Modificando usuario");
         //Se consulta el usuario
+        logger.info("Consultando usuario");
         Usuarios usuarioModificar = consultarPorId(usuario.getUsuCedula());
 
         //Se hidrata el objeto con los nuevos valores
+        logger.info("Hidratando usuario");
         usuarioModificar.setUsuLogin(usuario.getUsuLogin());
         usuarioModificar.setTusuCodigo(usuario.getTusuCodigo());
         usuarioModificar.setUsuNombre(usuario.getUsuNombre().trim().toUpperCase());
         usuarioModificar.setUsuClave(usuario.getUsuClave());
 
-        //Se realiza la actualizacion            
+        //Se realiza la actualizacion 
+        logger.info("Modificando usuario");
         usuarioDAO.modify(usuarioModificar);
         logger.exit();
     }
@@ -106,18 +113,20 @@ public class UsuarioService implements IUsuarioService {
         validarUsuario(usuario);
 
         //Se verifica si el usuario ya existe
-        logger.info("Verificando si el usuario existe");
+        logger.info("Verificando si usuario existe");
         if (consultarPorId(usuario.getUsuCedula()) != null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "yaExiste")));
         }
 
-        logger.info("Creando usuario");
         //Se hidrata el objeto con los valores
+        logger.info("Hidratando usuario");
         Usuarios usuarioCrear = new Usuarios(usuario.getUsuCedula());
         usuarioCrear.setUsuLogin(usuario.getUsuLogin());
         usuarioCrear.setTusuCodigo(usuario.getTusuCodigo());
         usuarioCrear.setUsuNombre(usuario.getUsuNombre().trim().toUpperCase());
         usuarioCrear.setUsuClave(usuario.getUsuClave());
+        
+        logger.info("Creando usuario");
         return logger.exit(usuarioDAO.create(usuarioCrear));
     }
 
@@ -129,6 +138,9 @@ public class UsuarioService implements IUsuarioService {
     private void validarUsuario(Usuarios usuario) throws CloudBankException, Exception {
 
         logger.entry();
+        
+        logger.info("Validando usuario");
+                
         if (usuario.getUsuCedula() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "idUsuarioNulo")));
         }
@@ -142,33 +154,55 @@ public class UsuarioService implements IUsuarioService {
         if (usuario.getTusuCodigo() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "tipoUsuarioNoExiste")));
         }
-        if (usuario.getUsuNombre() == null) {
+        if (usuario.getUsuNombre() == null || usuario.getUsuNombre().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "nombreUsuarioNulo")));
-        }
-        if (usuario.getUsuNombre().trim().equals("")) {
-            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "nombreUsuarioVacio")));
         }
         if (!UtilRegExp.isAlphanumeric(usuario.getUsuNombre())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "nombreUsuarioInvalido")));
         }
-        if (usuario.getUsuLogin() == null) {
+        if (usuario.getUsuLogin() == null || usuario.getUsuLogin().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "loginUsuarioNulo")));
-        }
-        if (usuario.getUsuLogin().trim().equals("")) {
-            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "loginUsuarioVacio")));
         }
         if (!UtilRegExp.isAlphanumeric(usuario.getUsuLogin())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "loginUsuarioInvalido")));
         }
-        if (usuario.getUsuClave() == null) {
+        if (usuario.getUsuClave() == null || usuario.getUsuClave().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "claveUsuarioNula")));
-        }
-        if (usuario.getUsuClave().trim().equals("")) {
-            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "claveUsuarioVacia")));
         }
         if (!UtilRegExp.isAlphanumeric(usuario.getUsuClave())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "claveUsuarioInvalida")));
         }
         logger.exit();
+    }
+
+    @Override
+    public Usuarios autenticarUsuario(String login, String clave) throws CloudBankException, Exception {
+        
+        logger.entry();
+        logger.info("Validando entradas");
+        if (login != null && login.trim().equals("")) {
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "loginUsuarioNulo")));
+        }
+        if (!UtilRegExp.isAlphanumeric(login)) {
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "loginUsuarioInvalido")));
+        }
+        if (clave == null || clave.trim().equals("")) {
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "claveUsuarioNula")));
+        }
+        if (!UtilRegExp.isAlphanumeric(clave)) {
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "claveUsuarioInvalida")));
+        }
+        logger.info("Consultando usuario");
+        Usuarios usuario = usuarioDAO.consultarPorLogin(login);        
+        if(usuario == null){
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "noExiste")));
+        }
+        logger.info("Verificando clave");
+        if(!usuario.getUsuClave().equals(clave)){
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "claveNoExiste")));
+        }
+        logger.info("Usuario valido");        
+        return logger.exit(usuario);
+        
     }
 }

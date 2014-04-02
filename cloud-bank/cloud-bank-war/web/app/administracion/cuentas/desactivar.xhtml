@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">    
+    <h:form id="formDesactivar">
+        <p:confirmDialog message="#{bundle_cuenta.label_desactivar_pregunta}"  
+                         header="#{bundle_cuenta.label_desactivar_titulo}" 
+                         severity="alert" 
+                         widgetVar="desactivarCuentaDlg">
+            <p:commandButton value="#{bundle_comun.button_si_seguro}" 
+                             title="#{bundle_comun.button_si_seguro}"
+                             update=":formGestion:tabProductos, :formGestion:messages, :formGestion:msg"
+                             oncomplete="desactivarCuentaDlg.hide()" 
+                             action="#{clienteBacking.desactivarCuenta}" />  
+            <p:commandButton value="#{bundle_comun.button_no}" 
+                             title="#{bundle_comun.button_no} (#{bundle_comun.button_cerrar})" 
+                             onclick="desactivarCuentaDlg.hide()" 
+                             type="button" /> 
+        </p:confirmDialog> 
+    </h:form>
+</ui:composition>

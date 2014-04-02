@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">  
+    <p:panel header="#{bundle_tipo_usuario.label_panel_titulo}" 
+             style="border: none;padding: 0px">
+        <br/>
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top">
+                    <p:fieldset legend="#{bundle_tipo_usuario.label_resultados_titulo}">
+                        <table cellpadding="0" cellspacing="0" width="100%" border="0">
+                            <tr>
+                                <td height="40">
+                                    <table cellpadding="0" cellspacing="0" width="100%">
+                                        <tr>
+                                            <td align="left">
+                                                <p:graphicImage id="help" url="/resources/images/24x24/help-icon.png" style="vertical-align: middle" />
+                                                <p:tooltip for="help" showEffect="slide" hideEffect="slide" >
+                                                    <b>#{bundle_usuario.label_resultados_ayuda_titulo}</b>
+                                                    #{bundle_usuario.label_resultados_ayuda_descripcion}
+                                                </p:tooltip>
+                                            </td>
+                                            <td align="right">
+                                                <p:commandButton value="#{bundle_comun.button_modificar}"
+                                                                 title="#{bundle_tipo_usuario.label_modificar_titulo}"
+                                                                 action="#{tipoUsuarioBacking.lanzarModificar}" 
+                                                                 id="lanzarModificar"   
+                                                                 update=":formModificar, :formGestion:messages, :formGestion:msg"
+                                                                 icon="modificar"
+                                                                 style="margin:0"/>
+                                                &nbsp;
+                                                <p:commandButton value="#{bundle_comun.button_eliminar}"
+                                                                 title="#{bundle_tipo_usuario.label_eliminar_titulo}"
+                                                                 action="#{tipoUsuarioBacking.lanzarEliminar}" 
+                                                                 id="lanzarEliminar"   
+                                                                 update=":formEliminar, :formGestion:messages, :formGestion:msg"
+                                                                 icon="eliminar"
+                                                                 style="margin:0"/>
+                                                <p:spacer width="10" />
+                                                <p:commandButton id="crear" 
+                                                                 value="#{bundle_comun.button_nuevo}" 
+                                                                 title="#{bundle_tipo_usuario.button_resultados_nuevo}" 
+                                                                 action="#{tipoUsuarioBacking.lanzarCrear}" 
+                                                                 oncomplete="crearDlg.show();" 
+                                                                 update=":formCrear"
+                                                                 icon="nuevo"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td>
+                                    <p:dataTable id="tiposUsuarios"  
+                                                 widgetVar="widgetTiposUsuarios"
+                                                 var="tipoUsuario" 
+                                                 value="#{tipoUsuarioBacking.tiposUsuariosList}"    
+                                                 rowKey ="#{tipoUsuario.tusuCodigo}" 
+                                                 paginator="true"
+                                                 paginatorPosition="bottom"
+                                                 rows="10" 
+                                                 selectionMode="single"
+                                                 selection="#{tipoUsuarioBacking.selectedTipoUsuario}"
+                                                 emptyMessage="#{bundle_comun.label_paginador_empty}"
+                                                 paginatorTemplate="#{bundle_comun.label_paginador_template}"  
+                                                 currentPageReportTemplate="#{bundle_comun.label_paginador_currentTemplate}"
+                                                 rowsPerPageTemplate="#{bundle_comun.label_paginador_rowsTemplate}"
+                                                 filteredValue="#{tipoUsuarioBacking.filteredtiposUsuariosList}">
+
+                                        <p:column headerText="&nbsp;#{bundle_tipo_usuario.label_resultados_tabla_codigo}" 
+                                                  sortBy="#{tipoUsuario.tusuCodigo}"
+                                                  filterBy="#{tipoUsuario.tusuCodigo}"
+                                                  filterMatchMode="contains"
+                                                  filterStyle="width: 50px"
+                                                  filterMaxLength="3"
+                                                  style="text-align: center">              
+                                            #{tipoUsuario.tusuCodigo}
+                                        </p:column>
+
+                                        <p:column headerText="&nbsp;#{bundle_tipo_usuario.label_resultados_tabla_descripcion}" 
+                                                  sortBy="#{tipoUsuario.tusuNombre}"
+                                                  filterBy="#{tipoUsuario.tusuNombre}"
+                                                  filterMatchMode="contains"
+                                                  filterStyle="width: 150px"
+                                                  filterMaxLength="50"
+                                                  style="text-align: left">              
+                                            #{tipoUsuario.tusuNombre}
+                                        </p:column>
+
+                                    </p:dataTable>
+                                </td>
+                            </tr>
+                        </table>
+                    </p:fieldset>
+                </td>
+            </tr>
+        </table>
+    </p:panel>
+</ui:composition>

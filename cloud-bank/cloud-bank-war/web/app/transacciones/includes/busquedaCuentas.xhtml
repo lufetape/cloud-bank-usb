@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <p:panelGrid style="width: 100%; padding: 0px"> 
+
+        <p:row>
+            <p:column>
+                <br/>
+                <h:outputLabel value="#{bundle_cuenta.label_titulo_cliente}:" />
+                <br/>
+                <p:autoComplete size="25"
+                                label="#{bundle_cuenta.label_titulo_cliente}"
+                                value="#{buscarCuentaBacking.selectedCliente}"
+                                completeMethod="#{buscarCuentaBacking.completarClientes}"
+                                forceSelection="true"
+                                converter="converterCliente"
+                                var="c"
+                                itemLabel="#{c.cliId == null ? '' : ''.concat(c.cliId).concat('&nbsp;-&nbsp;').concat(c.cliNombre)}" 
+                                itemValue="#{c}" >
+                    <p:ajax event="itemSelect" 
+                            listener="#{buscarCuentaBacking.listarCuentas}" 
+                            update=":formCuentas:cuentas, :formGestion:messages" />
+                </p:autoComplete>&nbsp;
+                <p:commandButton title="#{bundle_comun.button_limpiar}" 
+                                 action="#{buscarCuentaBacking.resetCliente}"
+                                 update=":formCuentas:cuentas, :formGestion:messages"
+                                 icon="delete"
+                                 style="margin:0"/>
+            </p:column>
+        </p:row>
+
+    </p:panelGrid>
+
+    <br />
+
+    <p:panelGrid style="width: 100%" binding="#{buscarCuentaBacking.panelCuentas}"> 
+        <p:row>
+            <p:column>
+                <h:outputLabel value="#{bundle_cuenta.label_buscador_seleccione}:" />
+                <br/>
+                <p:dataTable id="cuentasTable"  
+                             widgetVar="widgetCuentas"
+                             var="cuenta" 
+                             value="#{buscarCuentaBacking.selectedCliente.cuentasCollection}"    
+                             rowKey ="#{cuenta.cueNumero}" 
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             rows="5" 
+                             selectionMode="single"
+                             selection="#{buscarCuentaBacking.selectedCuenta}"
+                             emptyMessage="#{bundle_comun.label_paginador_empty}"
+                             paginatorTemplate="#{bundle_comun.label_paginador_template}"  
+                             currentPageReportTemplate="">
+
+                    <p:column sortBy="#{cuenta.cueActiva}"
+                              style="text-align: center; width: 10%"> 
+                        <p:graphicImage url="/resources/images/16x16/#{cuenta.cueActiva eq 'S' ? 'status-active-icon.png' : cuenta.cueActiva eq 'N' ? 'status-red-icon.png' : cuenta.cueActiva eq 'R' ? 'status-disabled-icon.png' : 'question-icon.png'}" 
+                                        title="#{cuenta.cueActiva}"
+                                        style="vertical-align: middle" />
+                    </p:column>
+
+                    <p:column headerText="&nbsp;#{bundle_cuenta.label_resultados_tabla_numero}" 
+                              sortBy="#{cuenta.cueNumero}"                              
+                              style="text-align: left">              
+                        <span title="#{bundle_cuenta.label_resultados_tabla_saldo}: $#{cuenta.cueSaldo}">
+                            #{cuenta.cueNumero}
+                        </span>
+                    </p:column>
+
+                </p:dataTable>
+            </p:column>
+        </p:row>
+
+    </p:panelGrid>
+</ui:composition>

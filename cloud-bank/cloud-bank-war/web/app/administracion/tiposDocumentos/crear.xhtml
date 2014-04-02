@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">    
+    <h:form id="formCrear">
+        <p:dialog modal="true" 
+                  header="#{bundle_tipo_documento.label_nuevo_titulo}" 
+                  widgetVar="crearDlg">                
+            <p:ajax event="close" listener="#{tipoDocumentoBacking.listarTodos}" update="@form" oncomplete="widgetTiposDocumentos.filter()" />
+            <p:panelGrid id="panelCrear" columns="2" style="width: 100%">  
+
+                <h:outputLabel value="#{bundle_tipo_documento.label_nuevo_modificar_codigo}" />
+                <p:inputText size="50"
+                             label="#{bundle_tipo_documento.label_nuevo_modificar_codigo}"
+                             required="true"
+                             maxlength="3"
+                             value="#{tipoDocumentoBacking.selectedTipoDocumento.tdocCodigo}" />
+
+                <h:outputLabel value="#{bundle_tipo_documento.label_nuevo_modificar_descripcion}" />
+                <p:inputText size="50"
+                             label="#{bundle_tipo_documento.label_nuevo_modificar_descripcion}"
+                             required="true"
+                             maxlength="50"
+                             value="#{tipoDocumentoBacking.selectedTipoDocumento.tdocNombre}" />
+            </p:panelGrid>        
+            <f:facet name="footer">  
+                <p:commandButton value="#{bundle_comun.button_aceptar}" 
+                                 title="#{bundle_tipo_documento.button_nuevo_crear}" 
+                                 action="#{tipoDocumentoBacking.crear}" 
+                                 id="crear"   
+                                 update=":formGestion:messages, panelCrear, msgCrear"
+                                 icon="ui-icon-check"
+                                 style="margin:0"/>
+                &nbsp;
+                <p:commandButton value="#{bundle_comun.button_cerrar}" 
+                                 title="#{bundle_comun.button_cerrar}" 
+                                 type="button" 
+                                 icon="ui-icon-close"
+                                 onclick="crearDlg.hide();"/>
+                <p:messages id="msgCrear" showSummary="false" showDetail="true" />
+            </f:facet>
+        </p:dialog> 
+    </h:form>
+</ui:composition>

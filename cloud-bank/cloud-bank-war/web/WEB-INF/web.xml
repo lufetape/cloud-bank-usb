@@ -11,9 +11,31 @@
         <param-value>false</param-value>
     </context-param>
     <context-param>
-        <param-name>primefaces.THEME</param-name>
-        <param-value>#{menuBacking.selectedTema}</param-value>
+        <param-name>javax.faces.STATE_SAVING_METHOD</param-name>
+        <param-value>client</param-value>
     </context-param>
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>flick</param-value>
+    </context-param>
+    <filter>
+        <description>Filtro para verificacion de sesion y permisos</description>
+        <filter-name>FilterSessionCloudBank</filter-name>
+        <filter-class>co.edu.usbcali.i_cloudbank.filters.FilterSessionCloudBank</filter-class>
+        <init-param>
+            <description>Pagina de Login</description>
+            <param-name>loginURL</param-name>
+            <param-value>/cloud-bank-war/login/login.xhtml</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>FilterSessionCloudBank</filter-name>
+        <url-pattern>/app/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -26,6 +48,6 @@
         <session-timeout>-1</session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>welcome.xhtml</welcome-file>
+        <welcome-file>app/inicio.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

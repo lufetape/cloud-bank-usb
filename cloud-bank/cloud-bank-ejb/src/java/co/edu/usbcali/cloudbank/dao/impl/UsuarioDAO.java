@@ -27,6 +27,8 @@ public class UsuarioDAO extends BaseJpaDAO<Usuarios> implements IUsuarioDAO {
     @Override
     public List<Usuarios> consultarPorFiltros(Long codigo, Long idTipoUsuario, String login, String nombre) throws Exception {
 
+        logger.entry();
+        
         //Se construye el query por palabra clave
         StringBuilder consultaQuery = new StringBuilder();
         consultaQuery.append("SELECT u ");
@@ -62,6 +64,25 @@ public class UsuarioDAO extends BaseJpaDAO<Usuarios> implements IUsuarioDAO {
         }
 
         //Se retorna la consulta
-        return find();
+        return logger.exit(find());
+    }
+
+    @Override
+    public Usuarios consultarPorLogin(String login) throws Exception {
+        
+        logger.entry();
+
+        //Se parametriza el named query
+        query = "Usuarios.findByUsuLogin";
+        parametros.put("usuLogin", login);
+        
+        Usuarios usuario = null;
+        List<Usuarios> usuarios = findNamedQuery();
+        if(!usuarios.isEmpty()){
+            usuario = usuarios.get(0);
+        }
+
+        //Se retorna la consulta
+        return logger.exit(usuario);        
     }
 }

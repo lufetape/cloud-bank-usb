@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://soap.i_cloudbank.usbcali.edu.co/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://soap.i_cloudbank.usbcali.edu.co/">
+
+<xs:element name="consultarMovimientos" type="tns:consultarMovimientos"/>
+
+<xs:element name="consultarMovimientosResponse" type="tns:consultarMovimientosResponse"/>
+
+<xs:element name="consultarPorCliente" type="tns:consultarPorCliente"/>
+
+<xs:element name="consultarPorClienteResponse" type="tns:consultarPorClienteResponse"/>
+
+<xs:element name="realizarTransferencia" type="tns:realizarTransferencia"/>
+
+<xs:element name="realizarTransferenciaResponse" type="tns:realizarTransferenciaResponse"/>
+
+<xs:complexType name="consultarPorCliente">
+<xs:sequence>
+<xs:element name="idCliente" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consultarPorClienteResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuestaConsultaCuentasDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaConsultaCuentasDTO">
+<xs:sequence>
+<xs:element name="cuentas" type="tns:cuentaDTO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="estado" type="tns:estadoDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="cuentaDTO">
+<xs:sequence>
+<xs:element name="estado" type="xs:string" minOccurs="0"/>
+<xs:element name="numero" type="xs:string" minOccurs="0"/>
+<xs:element name="saldo" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="estadoDTO">
+<xs:sequence>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="exitoso" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="realizarTransferencia">
+<xs:sequence>
+<xs:element name="idCliente" type="xs:long"/>
+<xs:element name="numeroOrigen" type="xs:string" minOccurs="0"/>
+<xs:element name="claveOrigen" type="xs:string" minOccurs="0"/>
+<xs:element name="numeroDestino" type="xs:string" minOccurs="0"/>
+<xs:element name="valor" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="realizarTransferenciaResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:estadoDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consultarMovimientos">
+<xs:sequence>
+<xs:element name="idCliente" type="xs:long"/>
+<xs:element name="numero" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaInicial" type="xs:string" minOccurs="0"/>
+<xs:element name="fechaFinal" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consultarMovimientosResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuestaConsultaMovimientosDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaConsultaMovimientosDTO">
+<xs:sequence>
+<xs:element name="consignaciones" type="tns:movimientoDTO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="estado" type="tns:estadoDTO" minOccurs="0"/>
+<xs:element name="retiros" type="tns:movimientoDTO" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="movimientoDTO">
+<xs:sequence>
+<xs:element name="codigo" type="xs:long"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+<xs:element name="fecha" type="xs:string" minOccurs="0"/>
+<xs:element name="valor" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>

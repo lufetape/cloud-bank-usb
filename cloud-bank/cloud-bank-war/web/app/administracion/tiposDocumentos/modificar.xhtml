@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">    
+    <h:form id="formModificar">
+        <p:dialog modal="true" 
+                  header="#{bundle_tipo_documento.label_modificar_titulo}" 
+                  widgetVar="modificarDlg"> 
+            <p:ajax event="close" listener="#{tipoDocumentoBacking.listarTodos}" update="@form" oncomplete="widgetTiposDocumentos.filter()" />
+            <p:panelGrid id="panelModificar" columns="2" style="width: 100%">  
+
+                <h:outputLabel value="#{bundle_tipo_documento.label_nuevo_modificar_codigo}" />
+                <h:outputLabel value="#{tipoDocumentoBacking.selectedTipoDocumento.tdocCodigo}" style="font-weight: bold" />
+
+                <h:outputLabel value="#{bundle_tipo_documento.label_nuevo_modificar_descripcion}" />
+                <p:inputText size="50"
+                             label="#{bundle_tipo_documento.label_nuevo_modificar_descripcion}"
+                             required="true"
+                             maxlength="50"
+                             value="#{tipoDocumentoBacking.selectedTipoDocumento.tdocNombre}" />
+
+            </p:panelGrid>  
+            <f:facet name="footer">  
+                <p:commandButton value="#{bundle_comun.button_guardar}" 
+                                 title="#{bundle_tipo_documento.button_modificar_guardar}" 
+                                 action="#{tipoDocumentoBacking.modificar}" 
+                                 id="modificar"   
+                                 update=":formGestion:messages, panelModificar, msgModificar"
+                                 icon="ui-icon-check"
+                                 style="margin:0"/>
+                &nbsp;
+                <p:commandButton value="#{bundle_comun.button_cerrar}"
+                                 title="#{bundle_comun.button_cerrar}"
+                                 type="button"
+                                 icon="ui-icon-close"
+                                 onclick="modificarDlg.hide()"/>
+                <p:messages id="msgModificar" showSummary="false" showDetail="true" />
+            </f:facet> 
+        </p:dialog>
+    </h:form>
+</ui:composition>

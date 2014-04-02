@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">    
+    <h:form id="formMovimientos">
+        <p:dialog modal="true" 
+                  header="#{bundle_cuenta.label_movimientos_titulo}: #{clienteBacking.selectedCuenta.cueNumero}" 
+                  widgetVar="movimientosDlg"
+                  width="800"
+                  height="420"> 
+            <br/>
+            <p:graphicImage url="/resources/images/16x16/star-full-icon.png" style="vertical-align: middle" />
+            &nbsp;
+            #{bundle_cuenta.label_movimientos_mostrando}
+            <br/><br/>
+            <table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td valign="top" width="220">
+                        <p:panel id="filtros" header="#{bundle_cuenta.label_movimientos_filtrar}">
+                            <table cellpadding="0" cellspacing="0" width="100%">
+                                <tr>
+                                    <td align="center">
+                                        <p:panelGrid style="width: 90%; border: none; padding: 5px"> 
+
+                                            <p:row>
+                                                <p:column>
+                                                    <br/>
+                                                    <h:outputLabel value="#{bundle_cuenta.label_movimientos_fecha_desde}:" />
+                                                    <br/>
+                                                    <p:calendar size="16"
+                                                                label="#{bundle_cuenta.label_movimientos_fecha_desde}"
+                                                                required="false"
+                                                                maxlength="50"
+                                                                value="#{clienteBacking.dateInicial}"
+                                                                showOn="button"/>
+                                                </p:column>
+                                            </p:row>
+
+                                            <p:row>
+                                                <p:column>
+                                                    <h:outputLabel value="#{bundle_cuenta.label_movimientos_fecha_hasta}:" />
+                                                    <br/>
+                                                    <p:calendar size="16"
+                                                                label="#{bundle_cuenta.label_movimientos_fecha_hasta}"
+                                                                required="false"
+                                                                maxlength="50"
+                                                                value="#{clienteBacking.dateFinal}"
+                                                                showOn="button"/> 
+                                                    <br/><br/>
+                                                </p:column>
+                                            </p:row>
+
+                                        </p:panelGrid>
+                                    </td>
+                                </tr>
+                            </table>
+                            <f:facet name="footer">
+                                <p:commandButton value="#{bundle_comun.button_consultar}" 
+                                                 title="#{bundle_comun.button_consultar}" 
+                                                 action="#{clienteBacking.filtrarMovimientosCuenta}" 
+                                                 update=":formMovimientos:tabMovimientos,:formMovimientos:filtros, :formGestion:messages "
+                                                 icon="consultar"
+                                                 style="margin:0"/>
+                                <p:commandButton value="#{bundle_comun.button_limpiar}" 
+                                                 title="#{bundle_comun.button_limpiar}" 
+                                                 action="#{clienteBacking.resetFiltros}"
+                                                 update=":formMovimientos:tabMovimientos,:formMovimientos:filtros, :formGestion:messages"
+                                                 icon="limpiar" />
+                            </f:facet>
+                        </p:panel>  
+                    </td>
+                    <td>&nbsp;</td>
+                    <td valign="top">
+                        <p:tabView id="tabMovimientos">  
+                            <p:tab id="consignaciones" title="#{bundle_cuenta.label_movimientos_consignaciones}"> 
+                                <p:dataTable id="consignacionesTable"  
+                                             widgetVar="widgetConsignaciones"
+                                             var="consignacion" 
+                                             value="#{clienteBacking.selectedCuenta.consignacionesCollection}"    
+                                             rowKey ="#{consignacion.consignacionesPK}" 
+                                             paginator="true"
+                                             paginatorPosition="bottom"
+                                             rows="10" 
+                                             selectionMode="single"
+                                             emptyMessage="#{bundle_comun.label_paginador_empty}"
+                                             paginatorTemplate="#{bundle_comun.label_paginador_template}"  
+                                             currentPageReportTemplate="#{bundle_comun.label_paginador_currentTemplate}"
+                                             rowsPerPageTemplate="#{bundle_comun.label_paginador_rowsTemplate}">
+
+                                    <p:column headerText="&nbsp;#{bundle_cuenta.label_movimientos_fecha}" 
+                                              sortBy="#{consignacion.conFecha}"
+                                              style="text-align: center"> 
+                                        <h:outputText value="#{consignacion.conFecha}" >
+                                            <f:convertDateTime pattern="yyyy-MM-dd hh:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="&nbsp;#{bundle_cuenta.label_movimientos_descripcion}" 
+                                              sortBy="#{consignacion.conDescripcion}"
+                                              style="text-align: left">              
+                                        #{consignacion.conDescripcion}
+                                    </p:column>
+
+                                    <p:column headerText="&nbsp;#{bundle_cuenta.label_movimientos_valor}" 
+                                              sortBy="#{consignacion.conValor}"
+                                              style="text-align: right">              
+                                        <h:outputText value="#{consignacion.conValor}" >
+                                            <f:convertNumber pattern="$###,###.##" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:tab>
+
+                            <p:tab id="retiros" title="#{bundle_cuenta.label_movimientos_retiros}"> 
+                                <p:dataTable id="retirosTable"  
+                                             widgetVar="widgetRetiros"
+                                             var="retiro" 
+                                             value="#{clienteBacking.selectedCuenta.retirosCollection}"    
+                                             rowKey ="#{retiro.retirosPK}" 
+                                             paginator="true"
+                                             paginatorPosition="bottom"
+                                             rows="10" 
+                                             selectionMode="single"
+                                             emptyMessage="#{bundle_comun.label_paginador_empty}"
+                                             paginatorTemplate="#{bundle_comun.label_paginador_template}"  
+                                             currentPageReportTemplate="#{bundle_comun.label_paginador_currentTemplate}"
+                                             rowsPerPageTemplate="#{bundle_comun.label_paginador_rowsTemplate}">
+
+                                    <p:column headerText="&nbsp;#{bundle_cuenta.label_movimientos_fecha}" 
+                                              sortBy="#{retiro.retFecha}"
+                                              style="text-align: center"> 
+                                        <h:outputText value="#{retiro.retFecha}" >
+                                            <f:convertDateTime pattern="yyyy-MM-dd hh:mm:ss" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="&nbsp;#{bundle_cuenta.label_movimientos_descripcion}" 
+                                              sortBy="#{retiro.retDescripcion}"
+                                              style="text-align: left">              
+                                        #{retiro.retDescripcion}
+                                    </p:column>
+
+                                    <p:column headerText="&nbsp;#{bundle_cuenta.label_movimientos_valor}" 
+                                              sortBy="#{retiro.retValor}"
+                                              style="text-align: right">              
+                                        <h:outputText value="#{retiro.retValor}" >
+                                            <f:convertNumber pattern="$###,###.##" />
+                                        </h:outputText>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:tab>
+                        </p:tabView>                   
+                    </td>
+                </tr>
+            </table>
+            <br/>
+            <f:facet name="footer">  
+                <p:commandButton value="#{bundle_comun.button_cerrar}" 
+                                 title="#{bundle_comun.button_cerrar}" 
+                                 type="button" 
+                                 icon="ui-icon-close"
+                                 onclick="movimientosDlg.hide();"/>
+            </f:facet>
+        </p:dialog>
+    </h:form>
+</ui:composition>

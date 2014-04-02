@@ -6,15 +6,24 @@
                 xmlns:p="http://primefaces.org/ui"> 
     <table cellpadding="0" cellspacing="0" width="100%">
         <tr>
-            <td align="center" valign="middle" width="190">
-                <p:graphicImage url="/resources/images/corporate/cloudbank-logo.png" width="180" />
+            <td align="center" valign="bottom" width="250">
+                <p:graphicImage id="logo" url="/resources/images/corporate/cloudbank-logo-medium.png" width="250"/>
             </td>
             <td>
-                <ui:include src="/base/includes/menu.xhtml"/>
+                <table cellpadding="5" cellspacing="0" width="100%">
+                    <tr>
+                        <td align="right" valign="bottom" height="30" style="color: white">
+                            #{bundle_comun.label_conectado_como}
+                            <b>#{sesionUsuarioBacking.usuario.usuNombre}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="bottom">
+                            <ui:include src="menu.xhtml"/>
+                        </td>
+                    </tr>
+                </table>                
             </td>
-        </tr>
-        <tr>
-            <td height="5"></td>
         </tr>
     </table>
 </ui:composition>

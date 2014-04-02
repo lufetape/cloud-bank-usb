@@ -18,6 +18,18 @@
         </resource-bundle>
         <resource-bundle>
             <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.LoginBundle
+            </base-name>
+            <var>bundle_login</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.InicioBundle
+            </base-name>
+            <var>bundle_inicio</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
                 co.edu.usbcali.i_cloudbank.bundles.MenuBundle
             </base-name>
             <var>bundle_menu</var>
@@ -70,6 +82,12 @@
             </base-name>
             <var>bundle_retiro</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.i_cloudbank.bundles.TransferenciaBundle
+            </base-name>
+            <var>bundle_transferencia</var>
+        </resource-bundle>
     </application>
     
     <converter>
@@ -79,6 +97,10 @@
     <converter>
         <converter-id>converterTipoDocumento</converter-id>
         <converter-class>co.edu.usbcali.i_cloudbank.utils.ConverterTipoDocumento</converter-class>
+    </converter>
+    <converter>
+        <converter-id>converterCliente</converter-id>
+        <converter-class>co.edu.usbcali.i_cloudbank.utils.ConverterCliente</converter-class>
     </converter>
     
 </faces-config>

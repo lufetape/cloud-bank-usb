@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"> 
+    <h:form id="formMenu">
+        <p:panel header="#{bundle_comun.label_acceso_directo_titulo}">
+            <br />        
+            <p:menu style="width: 100%;border: none">   
+
+                <p:menuitem value="#{bundle_menu.label_consignaciones}" 
+                            icon="consignaciones" 
+                            url="/app/transacciones/consignar.xhtml" />  
+
+                <p:menuitem value="#{bundle_menu.label_retiros}" 
+                            icon="retiros" 
+                            url="/app/transacciones/retirar.xhtml" />  
+
+                <p:menuitem value="#{bundle_menu.label_transferencias}" 
+                            icon="transferencias" 
+                            url="/app/transacciones/transferir.xhtml" />  
+
+            </p:menu>        
+            <br/>
+        </p:panel>
+    </h:form>
+</ui:composition>

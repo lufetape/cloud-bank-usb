@@ -13,8 +13,10 @@ public class ResourceBundles {
         CLIENTE("co.edu.usbcali.cloudbank.bundles.ClienteBundle"),
         USUARIO("co.edu.usbcali.cloudbank.bundles.UsuarioBundle"),
         CUENTA("co.edu.usbcali.cloudbank.bundles.CuentaBundle"),
+        TRANSACCION("co.edu.usbcali.cloudbank.bundles.TransaccionBundle"),
         TIPO_DOCUMENTO("co.edu.usbcali.cloudbank.bundles.TipoDocumentoBundle"),
-        TIPO_USUARIO("co.edu.usbcali.cloudbank.bundles.TipoUsuarioBundle");
+        TIPO_USUARIO("co.edu.usbcali.cloudbank.bundles.TipoUsuarioBundle"),
+        INTEGRADOR_CUENTA("co.edu.usbcali.cloudbank.bundles.IntegradorCuentaBundle");
         private final String bundleName;
 
         RB_MENSAJES(String bundleName) {

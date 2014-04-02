@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/base/templates/main-gui.xhtml">
+    <ui:define name="content">
+        <h:form id="form">
+            <p:panel id="panel" header="#{bundle_inicio.label_bienvenida_titulo_panel}">
+                <p:panelGrid style="width: 100%">
+                    <p:row>  
+                        <p:column style="vertical-align: middle"> 
+                            <h:outputText value="#{bundle_inicio.label_bienvenida_titulo_aplicacion}" style="font-size: 20px; font-weight: bold" />
+                            <p align="justify">
+                                <h:outputText value="#{bundle_inicio.label_bienvenida_descripcion}" />
+                            </p>  
+                            <br />
+                            <p:panel header="#{bundle_inicio.label_bienvenida_indicaciones_titulo}">
+                                <p align="justify">                                    
+                                    <h:outputText value="#{bundle_inicio.label_bienvenida_indicaciones_descripcion}" />
+                                </p>
+                            </p:panel>
+                            <p align="justify">
+                                <br />
+                                <h:outputText value="#{bundle_inicio.label_bienvenida_producto_de}" />
+                            </p>
+                            <p align="justify" class="ui-state-default">
+                                <br />
+                                <p:spacer width="15" />
+                                <p:graphicImage url="/resources/images/corporate/cloudservices-logo-medium.png" 
+                                                style="vertical-align: middle"/>
+                                <br /><br />
+                            </p>                           
+                        </p:column>   
+                        <p:column>&nbsp;</p:column>
+                        <p:column style="vertical-align: top">                            
+                            <p align="justify" class="ui-state-default">
+                                <br />
+                                <p:spacer width="15" />
+                                <p:graphicImage url="/resources/images/corporate/cloudbank-logo-medium.png" 
+                                                style="vertical-align: middle" />
+                                <br /><br />
+                                <p:graphicImage url="/resources/images/corporate/cloud-bank-background.jpg" 
+                                                style="vertical-align: middle" />
+                            </p>                            
+                        </p:column>                      
+                    </p:row>
+                </p:panelGrid>
+            </p:panel>
+        </h:form>
+    </ui:define>
+</ui:composition>

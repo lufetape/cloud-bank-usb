@@ -8,53 +8,36 @@
         <h:head>
             <f:facet name="first">
                 <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
-                <title>Titulo principal</title>
+                <title>#{bundle_comun.label_titulo_principal}</title>
             </f:facet>
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/global/global.css" />
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/global/default.css" />
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/custom/header-footer.css" />
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/custom/menu.css" />
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/resources/css/custom/icons.css" />
             <script type="text/javascript" language="Javascript" src="#{request.contextPath}/resources/js/primeLocales.js" />
         </h:head>
         <h:body> 
-            <div id="page" class="ui-widget" style="padding: 5px">
-                <table cellpadding="0" cellspacing="0" width="100%">
-                    <tr>
-                        <td>
-                           <ui:include src="/base/includes/header.xhtml"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td valign="top"> 
-                            <table cellpadding="0" cellspacing="0" width="100%">
-                                <tr> 
-                                    <td>
-                                        <ui:insert name="content">...</ui:insert>
-                                    </td>
-                                    <td width="10">
-                                        &nbsp;
-                                    </td>
-                                    <td width="20%" valign="top">
-                                        <p:panel header="Sesión" toggleable="true">
-                                            <br />
-                                        </p:panel>
-                                        <br />
-                                        <p:panel header="Otra cosa" toggleable="true">
-                                            <br />
-                                        </p:panel>
-                                    </td>
-                                </tr>
-                           </table>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                           <ui:include src="/base/includes/footer.xhtml"/>
-                        </td>
-                    </tr>
-                </table>          
-            </div>                
-            <ui:include src="/base/includes/loader.xhtml"/>             
+            <table cellpadding="5" cellspacing="0" width="100%">                
+                <tr>
+                    <td style="background-color: #000000">
+                        <ui:include src="../includes/header.xhtml"/> 
+                    </td>  
+                </tr>
+                <tr>
+                    <td>
+                        <ui:insert name="content">...</ui:insert>
+                    </td>  
+                </tr>
+                <tr>
+                    <td align="center" class="ui-state-default" height="30">
+                        <ui:include src="../includes/footer.xhtml"/> 
+                    </td>
+                </tr>
+            </table>
+            <ui:include src="../includes/loader.xhtml"/>  
+            <ui:include src="../includes/about.xhtml"/>   
+            <ui:include src="../includes/logout.xhtml"/>
         </h:body>
     </f:view>
 </html>

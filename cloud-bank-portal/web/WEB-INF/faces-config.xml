@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+              xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+    <application>
+        <locale-config>            
+            <default-locale>es</default-locale>        
+        </locale-config>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.e_cloudbank.bundles.ComunBundle
+            </base-name>
+            <var>bundle_comun</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.e_cloudbank.bundles.InicioBundle
+            </base-name>
+            <var>bundle_inicio</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.e_cloudbank.bundles.MenuBundle
+            </base-name>
+            <var>bundle_menu</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.e_cloudbank.bundles.CuentaBundle
+            </base-name>
+            <var>bundle_cuenta</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.e_cloudbank.bundles.TransferenciaBundle
+            </base-name>
+            <var>bundle_transferencia</var>
+        </resource-bundle>
+    </application>
+    
+    <converter>
+        <converter-id>converterCuenta</converter-id>
+        <converter-class>co.edu.usbcali.e_cloudbank.utils.ConverterCuenta</converter-class>
+    </converter>
+    
+</faces-config>

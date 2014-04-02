@@ -1,0 +1,111 @@
+/* 
+    Document   : icons
+    Author     : lufetape
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.consultar {
+    background: url("../../images/16x16/search-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.limpiar {
+    background: url("../../images/16x16/reload-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.delete {
+    background: url("../../images/16x16/arrow-back-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ver {
+    background: url("../../images/16x16/eye-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.nuevo {
+    background: url("../../images/16x16/filenew.gif") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.modificar {
+    background: url("../../images/16x16/edit.gif") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.eliminar {
+    background: url("../../images/16x16/editdelete.gif") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.agregar {
+    background: url("../../images/16x16/add-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.productos {
+    background: url("../../images/16x16/add-item-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.cuentas {
+    background: url("../../images/16x16/piggy-bank-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.retirar {
+    background: url("../../images/16x16/status-disabled-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.desactivar {
+    background: url("../../images/16x16/status-red-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.activar {
+    background: url("../../images/16x16/status-active-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.movimientos {
+    background: url("../../images/16x16/move-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.logout {
+    background: url("../../images/16x16/session-logout-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}

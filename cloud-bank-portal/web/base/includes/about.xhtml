@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"> 
+    <h:form>
+        <p:dialog modal="true" 
+                  widgetVar="aboutDialog" 
+                  header="#{bundle_comun.label_about_titulo}"   
+                  draggable="true" closable="true" showEffect="fade" resizable="true" 
+                  style="vertical-align: top"
+                  width="450"> 
+            <table cellpadding="0" cellspacing="5" width="100%">
+                <tr>
+                    <td>
+                        <p align="left" style="font-size: 20px; font-weight: bold">
+                            <b>#{bundle_inicio.label_bienvenida_titulo_aplicacion}</b>
+                        </p>
+                        <p align="justify">
+                            #{bundle_inicio.label_bienvenida_descripcion}
+                        </p>
+                        <p align="justify">
+                            <b>#{bundle_comun.label_about_version_des}</b>
+                            #{bundle_comun.label_about_version_val}
+                            <br/>
+                            <b>#{bundle_comun.label_about_vendor_des}</b>
+                            #{bundle_comun.label_about_vendor_val}
+                            <br/>
+                            <b>#{bundle_comun.label_about_homepage_des}</b>
+                            #{bundle_comun.label_about_homepage_val}
+                        </p>
+                        <p align="justify">
+                            <h:outputText value="#{bundle_inicio.label_bienvenida_producto_de}" />
+                        </p>
+                        <p align="justify" class="ui-state-default">
+                            <br />
+                            <p:spacer width="15" />
+                            <p:graphicImage url="/resources/images/corporate/cloudservices-logo-medium.png" 
+                                            style="vertical-align: middle"/>
+                            <br /><br />
+                        </p>
+                        <p align="center">
+                            <b><h:outputText value="#{bundle_inicio.label_bienvenida_derechos}" /></b>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            <f:facet name="footer">
+                <p:commandButton value="#{bundle_comun.button_cerrar}"
+                                 title="#{bundle_comun.button_cerrar}"
+                                 oncomplete="aboutDialog.hide()"
+                                 icon="ui-icon-close"
+                                 style="margin:0"/>
+            </f:facet>
+        </p:dialog>
+    </h:form>
+</ui:composition>

@@ -31,6 +31,17 @@ public interface IUsuarioService {
      * @throws java.lang.Exception
      */
     public Usuarios consultarPorId(Long codigo) throws CloudBankException, Exception;
+    
+    /**
+     * Método que autentica un usuario
+     *
+     * @param login
+     * @param clave
+     * @return Usuario autenticado
+     * @throws co.edu.usbcali.cloudbank.util.CloudBankException
+     * @throws java.lang.Exception
+     */
+    public Usuarios autenticarUsuario(String login, String clave) throws CloudBankException, Exception;
 
     /**
      * Método que consulta usuarios por diferentes filtros

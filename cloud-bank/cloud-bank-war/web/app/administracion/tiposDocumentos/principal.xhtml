@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/base/templates/main-gui.xhtml">
+    <ui:define name="content">
+        
+        <h:form id="formGestion">
+            <p:growl id="messages" showSummary="false" showDetail="true" life="3000" />
+            <ui:include src="gestion.xhtml" />
+            <p:messages id="msg" showSummary="false" showDetail="true" />
+        </h:form>
+        
+        <ui:include src="crear.xhtml" />
+        <ui:include src="modificar.xhtml" />
+        <ui:include src="eliminar.xhtml" />
+        
+    </ui:define>
+</ui:composition>

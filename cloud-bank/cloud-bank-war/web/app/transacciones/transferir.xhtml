@@ -1,0 +1,231 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/base/templates/main-gui.xhtml">  
+    <ui:define name="content"> 
+        <p:panel id="panel"
+                 header="#{bundle_transferencia.label_panel_titulo}" 
+                 style="border: none;padding: 0px">
+            <br/>
+            <table cellpadding="0" cellspacing="0" width="100%">
+                <tr>
+                    <td valign="top" width="250">   
+                        <h:form id="formCuentas">
+                            <p:panel id="cuentas"
+                                     header="#{bundle_cuenta.label_titulo_buscador}" >
+                                <ui:include src="includes/busquedaCuentas.xhtml" />
+                                <f:facet name="footer">
+                                    <div align="right">
+                                        <p:menuButton value="#{bundle_cuenta.label_buscador_usar_numero}">  
+                                            <p:menuitem value="#{bundle_cuenta.label_buscador_usar_numero_origen}"
+                                                        title="#{bundle_comun.button_limpiar}" 
+                                                        action="#{transferenciaBacking.asignarOrigen}"
+                                                        update=":formGestion:origen, :formGestion:messages" />
+
+                                            <p:menuitem value="#{bundle_cuenta.label_buscador_usar_numero_destino}"
+                                                        title="#{bundle_comun.button_limpiar}" 
+                                                        action="#{transferenciaBacking.asignarDestino}"
+                                                        update=":formGestion:destino, :formGestion:messages" />
+
+                                        </p:menuButton>
+                                    </div>
+                                </f:facet>
+                            </p:panel>
+                        </h:form>
+                    </td> 
+                    <td>&nbsp;</td>
+                    <td valign="top">
+                        <h:form id="formGestion">
+                            <p:growl id="messages" showSummary="false" showDetail="true" life="3000" />
+                            <p:wizard flowListener="#{transferenciaBacking.onFlowProcess}"
+                                      widgetVar="wiz"
+                                      backLabel="#{bundle_comun.label_wizard_anterior}"
+                                      nextLabel="#{bundle_comun.label_wizard_siguiente}">  
+                                <p:tab id="paso1" 
+                                       title="#{bundle_transferencia.label_wizard_paso1}" 
+                                       titletip="#{bundle_transferencia.label_wizard_paso1_descripcion}">  
+                                    <p:panel>
+                                        <p:messages showSummary="false" showDetail="true" />                                
+                                        <table cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                                <td colspan="3">
+                                                    <p:graphicImage url="/resources/images/16x16/star-full-icon.png" style="vertical-align: middle" />
+                                                    &nbsp;
+                                                    #{bundle_transferencia.label_wizard_paso1_descripcion}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" valign="middle" width="140">
+                                                    <p:graphicImage url="/resources/images/128x128/sync-icon.png" />
+                                                </td>
+                                                <td>
+                                                    <h:panelGrid style="width: 50%;padding: 15px"> 
+
+                                                        <p:row>
+                                                            <p:column>
+                                                                <h:outputText value="#{bundle_transferencia.label_transferir_origen}:" />
+                                                                <br />
+                                                                <p:inputMask id="origen"
+                                                                             required="true" 
+                                                                             size="30"
+                                                                             maxlength="30"
+                                                                             mask="9999-9999-9999"
+                                                                             label="#{bundle_transferencia.label_transferir_origen}"  
+                                                                             value="#{transferenciaBacking.retiros.retirosPK.cueNumero}" />  
+                                                                <p:focus for="origen" />
+                                                            </p:column>
+                                                        </p:row>
+
+                                                        <p:row><p:column>&nbsp;</p:column></p:row>
+
+                                                        <p:row>
+                                                            <p:column>
+                                                                <h:outputText value="#{bundle_transferencia.label_transferir_clave}:" />
+                                                                <br />
+                                                                <p:password required="true" 
+                                                                            size="30"
+                                                                            maxlength="30"
+                                                                            label="#{bundle_transferencia.label_transferir_clave}"  
+                                                                            value="#{transferenciaBacking.retiros.cuentas.cueClave}" />  
+                                                            </p:column>
+                                                        </p:row>
+
+                                                    </h:panelGrid>
+                                                </td>
+                                                <td>
+                                                    <h:panelGrid style="width: 50%;padding: 15px"> 
+
+                                                        <p:row>
+                                                            <p:column>
+                                                                <h:outputText value="#{bundle_transferencia.label_transferir_destino}:" />
+                                                                <br />
+                                                                <p:inputMask id="destino"
+                                                                             required="true" 
+                                                                             size="30"
+                                                                             maxlength="30"
+                                                                             mask="9999-9999-9999"
+                                                                             label="#{bundle_transferencia.label_transferir_destino}"  
+                                                                             value="#{transferenciaBacking.consignacion.consignacionesPK.cueNumero}" />  
+                                                            </p:column>
+                                                        </p:row>
+
+                                                        <p:row><p:column>&nbsp;</p:column></p:row>
+
+                                                        <p:row>
+                                                            <p:column>
+                                                                <h:outputText value="#{bundle_transferencia.label_transferir_valor}:" /> 
+                                                                <br/>
+                                                                <p:inputText required="true" 
+                                                                             size="30"
+                                                                             maxlength="30"
+                                                                             label="#{bundle_transferencia.label_transferir_valor}"  
+                                                                             value="#{transferenciaBacking.consignacion.conValor}" /> 
+                                                            </p:column>
+                                                        </p:row>
+
+                                                        <p:row><p:column>&nbsp;</p:column></p:row>
+
+                                                        <p:row>
+                                                            <p:column>
+                                                                <h:outputText value="#{bundle_transferencia.label_transferir_confirme_valor}:" /> 
+                                                                <br/>
+                                                                <p:inputText required="true" 
+                                                                             size="30"
+                                                                             maxlength="30"
+                                                                             label="#{bundle_transferencia.label_transferir_confirme_valor}"  
+                                                                             value="#{transferenciaBacking.retiros.retValor}" />  
+                                                            </p:column>
+                                                        </p:row>
+
+                                                    </h:panelGrid>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </p:panel>  
+                                </p:tab>  
+
+                                <p:tab id="paso2" 
+                                       title="#{bundle_transferencia.label_wizard_paso2}" 
+                                       titletip="#{bundle_transferencia.label_wizard_paso2_descripcion}"> 
+                                    <p:panel>
+                                        <p:messages showSummary="false" showDetail="true" />                                
+                                        <table cellpadding="0" cellspacing="0" width="100%">
+                                            <tr>
+                                                <td colspan="2">
+                                                    <p:graphicImage url="/resources/images/16x16/star-full-icon.png" style="vertical-align: middle" />
+                                                    &nbsp;
+                                                    #{bundle_transferencia.label_wizard_paso2_descripcion}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td align="center" valign="middle" width="140">
+                                                    <p:graphicImage url="/resources/images/128x128/sync-icon.png" />
+                                                </td>
+                                                <td>
+                                                    <h:panelGrid columns="2" style="padding: 20px"> 
+
+                                                        <h:outputText value="#{bundle_transferencia.label_confirmar_origen}:" styleClass="ui-wizard-step-title" />
+                                                        <h:outputText value="#{transferenciaBacking.retiros.retirosPK.cueNumero}" />
+
+                                                        <h:outputText value="#{bundle_transferencia.label_confirmar_titular}:" styleClass="ui-wizard-step-title" />
+                                                        <h:outputText value="#{transferenciaBacking.retiros.cuentas.cliId.cliNombre}" />
+
+                                                        <h:outputText value="#{bundle_transferencia.label_confirmar_destino}:" styleClass="ui-wizard-step-title" />
+                                                        <h:outputText value="#{transferenciaBacking.consignacion.consignacionesPK.cueNumero}" />
+
+                                                        <h:outputText value="#{bundle_transferencia.label_confirmar_titular}:" styleClass="ui-wizard-step-title" />
+                                                        <h:outputText value="#{transferenciaBacking.consignacion.cuentas.cliId.cliNombre}" />
+
+                                                        <h:outputText value="#{bundle_transferencia.label_confirmar_valor}:" styleClass="ui-wizard-step-title" /> 
+                                                        <h:outputText value="#{transferenciaBacking.consignacion.conValor}" />
+                                                    </h:panelGrid>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    &nbsp;
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <f:facet name="footer">
+                                            <div align="right">
+                                                <p:commandButton value="#{bundle_comun.button_aceptar}" 
+                                                                 title="#{bundle_transferencia.label_confirmar_crear}" 
+                                                                 action="#{transferenciaBacking.transferir}" 
+                                                                 update="@form, :formCuentas:cuentas"
+                                                                 oncomplete="wiz.loadStep(wiz.cfg.steps[0], true)"
+                                                                 icon="ui-icon-check"
+                                                                 style="margin:0"/>
+                                                &nbsp;
+                                                <p:commandButton value="#{bundle_comun.button_cancelar}" 
+                                                                 title="#{bundle_comun.button_cancelar}" 
+                                                                 action="#{transferenciaBacking.reset}" 
+                                                                 update="@form, :formCuentas:cuentas"
+                                                                 oncomplete="wiz.loadStep(wiz.cfg.steps[0], true)"
+                                                                 icon="ui-icon-close"
+                                                                 style="margin:0"/>
+                                            </div>
+                                        </f:facet>
+                                    </p:panel> 
+                                </p:tab> 
+                            </p:wizard>
+                        </h:form>
+                    </td>
+                    <td>&nbsp;</td>
+                    <td valign="top" width="300">                        
+                        <ui:include src="includes/menuLateral.xhtml" />
+                    </td>
+                </tr>
+            </table>
+        </p:panel>
+    </ui:define>
+</ui:composition>

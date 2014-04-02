@@ -14,6 +14,15 @@ import javax.ejb.Local;
 public interface IUsuarioDAO extends IBaseDAO<Usuarios> {
 
     /**
+     * Método que consulta un usuario por login
+     *
+     * @param login
+     * @return Usuario encontrado
+     * @throws java.lang.Exception
+     */
+    public Usuarios consultarPorLogin(String login) throws Exception;
+    
+    /**
      * Método que consulta usuarios por diferentes filtros de busqueda mezclados
      *
      * @param codigo

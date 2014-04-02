@@ -9,10 +9,14 @@ import co.edu.usbcali.cloudbank.model.Clientes;
 import co.edu.usbcali.cloudbank.model.Cuentas;
 import co.edu.usbcali.cloudbank.model.TiposDocumentos;
 import co.edu.usbcali.cloudbank.services.IClienteService;
+import co.edu.usbcali.cloudbank.services.IConsignacionService;
 import co.edu.usbcali.cloudbank.services.ICuentaService;
+import co.edu.usbcali.cloudbank.services.IRetiroService;
 import co.edu.usbcali.cloudbank.util.CloudBankException;
 import co.edu.usbcali.i_cloudbank.utils.ResourceBundles;
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -31,11 +35,15 @@ import org.primefaces.context.RequestContext;
 @ManagedBean
 @ViewScoped
 public class ClienteBacking extends BaseBacking implements Serializable {
-    
+
     @EJB
     private ICuentaService cuentaService;
     @EJB
-    private IClienteService clienteService;    
+    private IClienteService clienteService;
+    @EJB
+    private IConsignacionService consignacionService;
+    @EJB
+    private IRetiroService retiroService;
     private List<Clientes> clientesList;
     private List<Clientes> filteredClientesList;
     private List<Cuentas> filteredCuentasList;
@@ -53,6 +61,8 @@ public class ClienteBacking extends BaseBacking implements Serializable {
     private Long identificacion;
     private TiposDocumentos tipoDocumento;
     private String nombre;
+    private Date dateInicial;
+    private Date dateFinal;
 
     /**
      * Método que ejecuta operaciones iniciales para el ManagedBean
@@ -119,6 +129,8 @@ public class ClienteBacking extends BaseBacking implements Serializable {
         setIdentificacion(null);
         setTipoDocumento(new TiposDocumentos());
         setNombre(null);
+        setDateInicial(null);
+        setDateFinal(null);
     }
 
     public void lanzarVer() {
@@ -150,6 +162,7 @@ public class ClienteBacking extends BaseBacking implements Serializable {
         if (validarSeleccion()) {
             try {
                 selectedCliente = clienteService.consultarPorId(selectedCliente.getCliId());
+                selectedCliente.setCuentasCollection(cuentaService.consultarPorCliente(selectedCliente.getCliId()));
                 if (selectedCliente != null) {
                     renderizarCliente();
                 } else {
@@ -251,25 +264,62 @@ public class ClienteBacking extends BaseBacking implements Serializable {
                     FacesMessage.SEVERITY_ERROR);
         }
     }
-    
+
     public void lanzarRetirarCuenta() {
         if (validarSeleccionCuenta()) {
             RequestContext.getCurrentInstance().execute("retirarCuentaDlg.show()");
         }
     }
-    
+
     public void lanzarDesactivarCuenta() {
         if (validarSeleccionCuenta()) {
             RequestContext.getCurrentInstance().execute("desactivarCuentaDlg.show()");
         }
     }
-    
+
     public void lanzarActivarCuenta() {
         if (validarSeleccionCuenta()) {
             RequestContext.getCurrentInstance().execute("activarCuentaDlg.show()");
         }
     }
-    
+
+    public void lanzarVerMovimientosCuenta() {
+        if (validarSeleccionCuenta()) {
+
+            RequestContext.getCurrentInstance().execute("movimientosDlg.show()");
+            
+            //Ultimos 30 dias
+            Calendar fechaIncial = Calendar.getInstance();
+            fechaIncial.set(Calendar.DATE, fechaIncial.get(Calendar.DATE) - 30);
+
+            Calendar fechaFinal = Calendar.getInstance();
+
+            dateInicial = fechaIncial.getTime();
+            dateFinal = fechaFinal.getTime();
+            filtrarMovimientosCuenta();
+        }
+    }
+
+    public void filtrarMovimientosCuenta() {
+        try {            
+            //Consignaciones
+            selectedCuenta.setConsignacionesCollection(consignacionService.consultarPorFiltros(selectedCuenta.getCueNumero(), dateInicial, dateFinal));
+            //Retiros            
+            selectedCuenta.setRetirosCollection(retiroService.consultarPorFiltros(selectedCuenta.getCueNumero(), dateInicial, dateFinal));
+
+        } catch (CloudBankException cbe) {
+            this.mostrarMensaje(null,
+                    obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_warning_titulo"),
+                    cbe.getMessage(),
+                    FacesMessage.SEVERITY_WARN);
+        } catch (Exception e) {
+            this.mostrarMensaje(null,
+                    obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_error_titulo"),
+                    obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "label_error_listarMovimientos"),
+                    FacesMessage.SEVERITY_ERROR);
+        }
+    }
+
     public void agregarCuenta() {
 
         try {
@@ -277,7 +327,8 @@ public class ClienteBacking extends BaseBacking implements Serializable {
             Cuentas cuenta = new Cuentas();
             cuenta.setCliId(selectedCliente);
             cuentaService.crear(cuenta);
-            
+            selectedCliente.setCuentasCollection(cuentaService.consultarPorCliente(selectedCliente.getCliId()));
+
             this.mostrarMensaje(null,
                     obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_info_titulo"),
                     obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "label_info_registro_creado"),
@@ -295,13 +346,13 @@ public class ClienteBacking extends BaseBacking implements Serializable {
                     FacesMessage.SEVERITY_ERROR);
         }
     }
-    
+
     public void retirarCuenta() {
-        if(validarSeleccionCuenta()){
+        if (validarSeleccionCuenta()) {
             try {
                 //Se retira la cuenta del cliente:
                 cuentaService.retirar(selectedCuenta);
-                
+
                 this.mostrarMensaje(null,
                         obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_info_titulo"),
                         obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "label_info_registro_eliminado"),
@@ -320,13 +371,13 @@ public class ClienteBacking extends BaseBacking implements Serializable {
             }
         }
     }
-    
+
     public void desactivarCuenta() {
-        if(validarSeleccionCuenta()){
+        if (validarSeleccionCuenta()) {
             try {
                 //Se desactiva la cuenta del cliente:
                 cuentaService.desactivar(selectedCuenta);
-                
+
                 this.mostrarMensaje(null,
                         obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_info_titulo"),
                         obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "label_info_registro_desactivado"),
@@ -345,13 +396,13 @@ public class ClienteBacking extends BaseBacking implements Serializable {
             }
         }
     }
-    
+
     public void activarCuenta() {
-        if(validarSeleccionCuenta()){
+        if (validarSeleccionCuenta()) {
             try {
                 //Se activa la cuenta del cliente:
                 cuentaService.activar(selectedCuenta);
-                
+
                 this.mostrarMensaje(null,
                         obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_info_titulo"),
                         obtenerMensaje(ResourceBundles.RB_MENSAJES.CUENTA, "label_info_registro_activado"),
@@ -370,7 +421,7 @@ public class ClienteBacking extends BaseBacking implements Serializable {
             }
         }
     }
-    
+
     public boolean validarSeleccionCuenta() {
         if (selectedCuenta == null) {
             this.mostrarMensaje(null,
@@ -589,5 +640,61 @@ public class ClienteBacking extends BaseBacking implements Serializable {
      */
     public void setCuentaService(ICuentaService cuentaService) {
         this.cuentaService = cuentaService;
+    }
+
+    /**
+     * @return the consignacionService
+     */
+    public IConsignacionService getConsignacionService() {
+        return consignacionService;
+    }
+
+    /**
+     * @param consignacionService the consignacionService to set
+     */
+    public void setConsignacionService(IConsignacionService consignacionService) {
+        this.consignacionService = consignacionService;
+    }
+
+    /**
+     * @return the retiroService
+     */
+    public IRetiroService getRetiroService() {
+        return retiroService;
+    }
+
+    /**
+     * @param retiroService the retiroService to set
+     */
+    public void setRetiroService(IRetiroService retiroService) {
+        this.retiroService = retiroService;
+    }
+
+    /**
+     * @return the dateInicial
+     */
+    public Date getDateInicial() {
+        return dateInicial;
+    }
+
+    /**
+     * @param dateInicial the dateInicial to set
+     */
+    public void setDateInicial(Date dateInicial) {
+        this.dateInicial = dateInicial;
+    }
+
+    /**
+     * @return the dateFinal
+     */
+    public Date getDateFinal() {
+        return dateFinal;
+    }
+
+    /**
+     * @param dateFinal the dateFinal to set
+     */
+    public void setDateFinal(Date dateFinal) {
+        this.dateFinal = dateFinal;
     }
 }

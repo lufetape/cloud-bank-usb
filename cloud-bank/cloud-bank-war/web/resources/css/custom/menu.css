@@ -1,0 +1,104 @@
+/* 
+    Document   : menu
+    Created on : 20/10/2012, 09:21:02 PM
+    Author     : lufetape
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.ui-menuitem-icon.home, .home {
+    background: url("../../images/16x16/blue-home-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.administrar, .administrar {
+    background: url("../../images/16x16/administrator-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.clientes, .clientes {
+    background: url("../../images/16x16/user-clients-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.usuarios, .usuarios {
+    background: url("../../images/16x16/user-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.maestros, .maestros {
+    background: url("../../images/16x16/shapes-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.tiposDocumentos, .tiposDocumentos {
+    background: url("../../images/16x16/student-id-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.tiposUsuarios, .tiposUsuarios {
+    background: url("../../images/16x16/profile-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.registrar, .registrar {
+    background: url("../../images/16x16/move-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.consignaciones, .consignaciones {
+    background: url("../../images/16x16/stats-up-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.retiros, .retiros {
+    background: url("../../images/16x16/stats-down-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.transferencias, .transferencias {
+    background: url("../../images/16x16/sync-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.ayuda, .ayuda {
+    background: url("../../images/16x16/question-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.support, .support {
+    background: url("../../images/16x16/help-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.about, .about {
+    background: url("../../images/16x16/about-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}

@@ -1,0 +1,34 @@
+/* 
+    Document   : icons
+    Author     : lufetape
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.consultar {
+    background: url("../../images/16x16/search-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.limpiar {
+    background: url("../../images/16x16/reload-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.productos {
+    background: url("../../images/16x16/add-item-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.movimientos {
+    background: url("../../images/16x16/move-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}

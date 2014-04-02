@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">    
+    <p:panel header="#{bundle_cliente.label_panel_titulo}" 
+             style="border: none;padding: 0px" 
+             rendered="#{clienteBacking.renderedCliente}">
+        <br/>
+        <table cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+                <td valign="top" width="250">
+                    <p:panel header="#{bundle_cuenta.label_titulo_datos_personales}">
+                        <table cellpadding="0" cellspacing="0" width="100%">
+                            <tr>
+                                <td align="center">
+                                    <p:panelGrid style="width: 100%; border: none; padding: 5px"> 
+
+                                        <p:row><p:column>&nbsp;</p:column></p:row>
+
+                                        <p:row>
+                                            <p:column style="width: 30px; text-align: center" rowspan="4">
+                                                <p:graphicImage value="/resources/images/32x32/student-id-icon.png" 
+                                                                style="vertical-align: middle"
+                                                                title="#{bundle_cliente.label_resultados_tabla_identificacion}"/>
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column>
+                                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliNombre}" /> 
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column>
+                                                <h:outputLabel value="#{clienteBacking.selectedCliente.tdocCodigo.tdocNombre}" />  
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column>
+                                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliId}" style="font-weight: bold" />  
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row><p:column>&nbsp;</p:column></p:row>
+
+                                        <p:row>                                           
+                                            <p:column style="text-align: center">
+                                                <p:graphicImage value="/resources/images/16x16/green-home-icon.png" 
+                                                                style="vertical-align: middle"
+                                                                title="#{bundle_cliente.label_resultados_tabla_direccion}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliDireccion}" />
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column style="text-align: center">
+                                                <p:graphicImage value="/resources/images/16x16/phone-icon.png" 
+                                                                style="vertical-align: middle"
+                                                                title="#{bundle_cliente.label_resultados_tabla_telefono}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliTelefono}" /> 
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row>
+                                            <p:column style="text-align: center">
+                                                <p:graphicImage value="/resources/images/16x16/mail-icon.png" 
+                                                                style="vertical-align: middle"
+                                                                title="#{bundle_cliente.label_resultados_tabla_email}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputLabel value="#{clienteBacking.selectedCliente.cliMail}" />  
+                                            </p:column>
+                                        </p:row>
+
+                                        <p:row><p:column>&nbsp;</p:column></p:row>
+
+                                    </p:panelGrid>
+
+                                </td>
+                            </tr>
+                        </table>
+                        <f:facet name="footer">
+                            <p:commandButton value="#{bundle_cliente.button_regresar_clientes}" 
+                                             rendered="#{!clienteBacking.renderedListaClientes}"
+                                             title="#{bundle_cliente.button_regresar_clientes}" 
+                                             update="@form"
+                                             action="#{clienteBacking.renderizarListaClientes}"
+                                             icon="ui-icon-arrowthickstop-1-w"/>
+                            <p:commandButton value="#{bundle_comun.button_modificar}" 
+                                             title="#{bundle_cliente.label_modificar_titulo}"
+                                             action="#{clienteBacking.lanzarModificar}" 
+                                             update=":formModificar, :formGestion:messages, :formGestion:msg"
+                                             icon="modificar"/>
+                        </f:facet>
+                    </p:panel>  
+                </td>
+                <td>&nbsp;</td>
+                <td valign="top">
+                    <p:fieldset id="cuentas"
+                                legend="#{bundle_cuenta.label_titulo_gestion_productos} #{clienteBacking.selectedCliente.cliNombre}" 
+                                rendered="#{clienteBacking.renderedCliente}"> 
+                        <br/>
+                        <p:tabView id="tabProductos">  
+                            <p:tab id="ca" title="#{bundle_cuenta.label_resultados_titulo} (#{clienteBacking.selectedCliente.cuentasCollection.size()})"> 
+                                <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                    <tr>
+                                        <td height="35">
+                                            <table cellpadding="0" cellspacing="0" width="100%">
+                                                <tr>
+                                                    <td align="left">
+                                                        <p:graphicImage id="help" url="/resources/images/24x24/help-icon.png" style="vertical-align: middle" />
+                                                        <p:tooltip for="help" showEffect="slide" hideEffect="slide" >
+                                                            <b>#{bundle_cuenta.label_resultados_ayuda_titulo}</b>
+                                                            #{bundle_cuenta.label_resultados_ayuda_descripcion}
+                                                        </p:tooltip>
+                                                    </td>
+                                                    <td align="right">
+                                                        <p:menuButton value="#{bundle_comun.button_nuevo}">
+                                                            <p:menuitem value="#{bundle_cuenta.label_resultados_tabla_nueva_cuenta}" 
+                                                                        title="#{bundle_cuenta.label_nuevo_titulo}" 
+                                                                        oncomplete="agregarCuentaDlg.show()"
+                                                                        update=":formAgregar, :formGestion:messages, :formGestion:msg"
+                                                                        icon="cuentas"/>
+                                                        </p:menuButton>
+                                                        &nbsp;
+                                                        <p:splitButton value="#{bundle_comun.button_retirar}" 
+                                                                       title="#{bundle_cuenta.label_eliminar_titulo}" 
+                                                                       action="#{clienteBacking.lanzarRetirarCuenta}"
+                                                                       update=":formRetirar, :formGestion:messages, :formGestion:msg"
+                                                                       icon="retirar">  
+
+                                                            <p:menuitem value="#{bundle_comun.button_desactivar}" 
+                                                                        title="#{bundle_cuenta.label_desactivar_titulo}"
+                                                                        action="#{clienteBacking.lanzarDesactivarCuenta}" 
+                                                                        update=":formDesactivar, :formGestion:messages, :formGestion:msg"
+                                                                        icon="desactivar"/> 
+
+                                                            <p:menuitem value="#{bundle_comun.button_activar}" 
+                                                                        title="#{bundle_cuenta.label_activar_titulo}"
+                                                                        action="#{clienteBacking.lanzarActivarCuenta}" 
+                                                                        update=":formActivar, :formGestion:messages, :formGestion:msg"
+                                                                        icon="activar"/>
+                                                        </p:splitButton>
+                                                        &nbsp;
+                                                        <p:commandButton value="#{bundle_comun.button_movimientos}" 
+                                                                         title="#{bundle_comun.button_movimientos}" 
+                                                                         action="#{clienteBacking.lanzarVerMovimientosCuenta}"
+                                                                         update=":formMovimientos, :formGestion:messages, :formGestion:msg"
+                                                                         icon="movimientos"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr> 
+                                    <tr>
+                                        <td>
+                                            <p:dataTable id="cuentasTable"  
+                                                         widgetVar="widgetCuentas"
+                                                         var="cuenta" 
+                                                         value="#{clienteBacking.selectedCliente.cuentasCollection}"    
+                                                         rowKey ="#{cuenta.cueNumero}" 
+                                                         paginator="true"
+                                                         paginatorPosition="bottom"
+                                                         rows="10" 
+                                                         selectionMode="single"
+                                                         selection="#{clienteBacking.selectedCuenta}"
+                                                         emptyMessage="#{bundle_comun.label_paginador_empty}"
+                                                         paginatorTemplate="#{bundle_comun.label_paginador_template}"  
+                                                         currentPageReportTemplate="#{bundle_comun.label_paginador_currentTemplate}"
+                                                         rowsPerPageTemplate="#{bundle_comun.label_paginador_rowsTemplate}">
+
+                                                <p:column headerText="&nbsp;#{bundle_cuenta.label_resultados_tabla_estado}" 
+                                                          sortBy="#{cuenta.cueActiva}"
+                                                          style="text-align: center; width: 10%"> 
+                                                    <p:graphicImage url="/resources/images/16x16/#{cuenta.cueActiva eq 'S' ? 'status-active-icon.png' : cuenta.cueActiva eq 'N' ? 'status-red-icon.png' : cuenta.cueActiva eq 'R' ? 'status-disabled-icon.png' : 'question-icon.png'}" 
+                                                                    title="#{cuenta.cueActiva}"
+                                                                    style="vertical-align: middle" />
+                                                </p:column>
+
+                                                <p:column headerText="&nbsp;#{bundle_cuenta.label_resultados_tabla_numero}" 
+                                                          sortBy="#{cuenta.cueNumero}"
+                                                          style="text-align: left">              
+                                                    #{cuenta.cueNumero}
+                                                </p:column>
+
+                                                <p:column headerText="&nbsp;#{bundle_cuenta.label_resultados_tabla_saldo}" 
+                                                          sortBy="#{cuenta.cueSaldo}"
+                                                          style="text-align: right">              
+                                                    <h:outputText value="#{cuenta.cueSaldo}" >
+                                                        <f:convertNumber pattern="$###,###.##" />
+                                                    </h:outputText>
+                                                </p:column>
+
+                                            </p:dataTable>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </p:tab>
+                        </p:tabView>
+                        <br/>
+                    </p:fieldset>
+                </td>
+            </tr>
+        </table>
+    </p:panel>
+</ui:composition>

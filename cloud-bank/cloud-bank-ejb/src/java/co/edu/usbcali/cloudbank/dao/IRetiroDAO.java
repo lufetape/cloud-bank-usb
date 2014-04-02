@@ -24,5 +24,13 @@ public interface IRetiroDAO extends IBaseDAO<Retiros> {
      * @throws java.lang.Exception
      */
     public List<Retiros> consultarPorFiltros(String numero, Date fechaInicial, Date fechaFinal) throws Exception;
+    
+    /**
+     * Método que consulta el ultimo retiro realizado para ua cuenta
+     *
+     * @return Ultimo retiro
+     * @throws java.lang.Exception
+     */
+    public Retiros consultarUltimoRetiro() throws Exception;
 
 }

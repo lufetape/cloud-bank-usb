@@ -20,7 +20,7 @@ import org.apache.logging.log4j.Logger;
  * @param <T> Entidad de la base de datos
  */
 public class BaseJpaDAO<T> implements IBaseDAO<T> {
-    
+
     private static final Logger logger = LogManager.getLogger(BaseJpaDAO.class);
 
     /**
@@ -76,69 +76,83 @@ public class BaseJpaDAO<T> implements IBaseDAO<T> {
 
     @Override
     public T create(T entity) {
+        logger.entry();
         getEntityManager().persist(entity);
-        return entity;
+        return logger.exit(entity);
     }
 
     @Override
     public void modify(T entity) {
+        logger.entry();
         getEntityManager().merge(entity);
+        logger.exit();
     }
 
     @Override
     public void remove(T entity, Object primaryKey) throws IllegalArgumentException {
+        logger.entry();
         Object entityRemove = getEntityManager().find(entity.getClass(), primaryKey);
         if (entityRemove != null) {
             getEntityManager().remove(entityRemove);
         } else {
-            throw new IllegalArgumentException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "entidadNoEncontrada"));
+            throw logger.throwing(new IllegalArgumentException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "entidadNoEncontrada")));
         }
+        logger.exit();
     }
 
     @Override
     public void refresh(T entity) {
+        logger.entry();
         getEntityManager().refresh(entity);
+        logger.exit();
     }
 
     @Override
     public void flush() {
+        logger.entry();
         getEntityManager().flush();
+        logger.exit();
     }
 
     @Override
     public int count() {
+        logger.entry();
         CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         Root<T> rt = cq.from(entityClass);
         cq.select(getEntityManager().getCriteriaBuilder().count(rt));
         Query countQuery = getEntityManager().createQuery(cq);
-        return ((Long) countQuery.getSingleResult()).intValue();
+        return logger.exit(((Long) countQuery.getSingleResult()).intValue());
     }
 
     @Override
     public T findById(Object id) {
-        return getEntityManager().find(entityClass, id);
+        logger.entry();
+        return logger.exit(getEntityManager().find(entityClass, id));
     }
 
     @Override
     public List<T> findAll() {
+        logger.entry();
         CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query findAllQuery = getEntityManager().createQuery(cq);
-        return findAllQuery.getResultList();
+        return logger.exit(findAllQuery.getResultList());
     }
 
     @Override
     public List<T> findRange(int[] range) {
+        logger.entry();
         CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
         cq.select(cq.from(entityClass));
         Query findRangeQuery = getEntityManager().createQuery(cq);
         findRangeQuery.setMaxResults(range[1] - range[0] + 1);
         findRangeQuery.setFirstResult(range[0]);
-        return findRangeQuery.getResultList();
+        return logger.exit(findRangeQuery.getResultList());
     }
 
     @Override
     public List<T> find() {
+        logger.entry();
         Query findQuery = getEntityManager().createQuery(query);
 
         for (String parameterName : parametros.keySet()) {
@@ -146,11 +160,12 @@ public class BaseJpaDAO<T> implements IBaseDAO<T> {
         }
 
         parametros = new HashMap<>();
-        return findQuery.getResultList();
+        return logger.exit(findQuery.getResultList());
     }
 
     @Override
     public List<T> findNamedQuery() {
+        logger.entry();
         Query namedQueryFind = getEntityManager().createNamedQuery(query);
 
         for (String parameterName : parametros.keySet()) {
@@ -158,6 +173,6 @@ public class BaseJpaDAO<T> implements IBaseDAO<T> {
         }
 
         parametros = new HashMap<>();
-        return namedQueryFind.getResultList();
+        return logger.exit(namedQueryFind.getResultList());
     }
 }

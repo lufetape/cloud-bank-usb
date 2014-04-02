@@ -60,10 +60,8 @@ public class ClienteService implements IClienteService {
 
         logger.entry();
         logger.info("Validando palabra clave");
-        if (palabraClave == null) {
-            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "palabraClaveNula")));
-        }
-        if (!UtilRegExp.isAlphanumeric(palabraClave)) {
+
+        if (palabraClave != null && !UtilRegExp.isAlphanumeric(palabraClave)) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "palabraClaveInvalida")));
         }
 
@@ -75,10 +73,12 @@ public class ClienteService implements IClienteService {
 
         logger.entry();
         logger.info("Validando si la consulta equivale a consultar todos");
+        if (nombre != null && nombre.trim().equals("")) {
+            nombre = null;
+        }
         if (id == null && idTipoDocumento == null && nombre == null) {
             return logger.exit(consultarTodos());
         }
-
         return logger.exit(clienteDAO.consultarPorFiltros(id, idTipoDocumento, nombre));
     }
 
@@ -90,6 +90,15 @@ public class ClienteService implements IClienteService {
         logger.info("Validando id");
         if (cliente.getCliId() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "idClienteNulo")));
+        }
+
+        cliente.setCuentasCollection(cuentaService.consultarPorCliente(cliente.getCliId()));
+
+        logger.info("Validando cuentas del cliente");
+        for (Cuentas cuenta : cliente.getCuentasCollection()) {
+            if (!cuenta.getCueActiva().equals("R")) {
+                throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "noPuedeSerEliminado")));
+            }
         }
 
         clienteDAO.remove(new Clientes(), cliente.getCliId());
@@ -174,29 +183,20 @@ public class ClienteService implements IClienteService {
         if (cliente.getTdocCodigo() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "tipoDocumentoNoExiste")));
         }
-        if (cliente.getCliNombre() == null) {
+        if (cliente.getCliNombre() == null || cliente.getCliNombre().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "nombreClienteNulo")));
-        }
-        if (cliente.getCliNombre().trim().equals("")) {
-            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "nombreClienteVacio")));
         }
         if (!UtilRegExp.isAlphanumeric(cliente.getCliNombre())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "nombreClienteInvalido")));
         }
-        if (cliente.getCliDireccion() == null) {
+        if (cliente.getCliDireccion() == null || cliente.getCliDireccion().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "direccionClienteNula")));
-        }
-        if (cliente.getCliDireccion().trim().equals("")) {
-            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "direccionClienteVacia")));
         }
         if (!UtilRegExp.isAlphanumeric(cliente.getCliDireccion())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "direccionClienteInvalida")));
         }
-        if (cliente.getCliTelefono() == null) {
+        if (cliente.getCliTelefono() == null || cliente.getCliTelefono().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "telefonoClienteNulo")));
-        }
-        if (cliente.getCliTelefono().trim().equals("")) {
-            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "telefonoClienteVacio")));
         }
         if (!UtilRegExp.isAlphanumeric(cliente.getCliTelefono())) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.CLIENTE, "telefonoClienteInvalido")));

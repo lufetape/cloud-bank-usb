@@ -16,7 +16,10 @@ public class ResourceBundles {
         USUARIO("co.edu.usbcali.i_cloudbank.bundles.UsuarioBundle"),
         CLIENTE("co.edu.usbcali.i_cloudbank.bundles.ClienteBundle"),
         CUENTA("co.edu.usbcali.i_cloudbank.bundles.CuentaBundle"),
-        MOVIMIENTO("co.edu.usbcali.i_cloudbank.bundles.MovimientoBundle");
+        CONSGNACION("co.edu.usbcali.i_cloudbank.bundles.ConsignacionBundle"),
+        RETIRO("co.edu.usbcali.i_cloudbank.bundles.RetiroBundle"),
+        TRANSFERENCIA("co.edu.usbcali.i_cloudbank.bundles.TransferenciaBundle");
+        
         private final String bundleName;
 
         RB_MENSAJES(String bundleName) {

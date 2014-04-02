@@ -14,4 +14,6 @@ package co.edu.usbcali.i_cloudbank.utils;
 public class ObjectKeys {
     public static final String KEY_TIPOS_DOCUMENTOS = "tiposDocumentosKey";
     public static final String KEY_TIPOS_USUARIOS = "tiposUsuariosKey";
+    public static final String KEY_CLIENTES = "clientesKey";
+    public static final String KEY_USUARIO_SESSION = "usuarioSessionKey";
 }

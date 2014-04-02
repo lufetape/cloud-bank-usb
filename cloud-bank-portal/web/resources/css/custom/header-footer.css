@@ -1,0 +1,62 @@
+/* 
+    Document   : header-footer
+    Created on : 23/03/2014
+    Author     : Luis Felipe Tabares Perez
+    Description:
+        Hoja de estilos para el header y el footer
+*/
+
+root { 
+    display: block;
+    padding: 0px;
+}
+
+/*
+    HEADER
+*/
+
+.logoColumn {
+    border-top: 1px #e0e0e0 solid;
+}
+
+.sessionColumn {
+    border-top: 1px #c0c0c0 solid;
+    border-right: 1px #c0c0c0 solid;
+    padding: 5px;
+}
+
+.panelInfo {
+    font-size:12px;
+    background-color: #f0f0f0;
+    filter: alpha(opacity=90); /* internet explorer */
+    -khtml-opacity: 90;      /* khtml, version anterior de safari */
+    -moz-opacity: 90;       /* firefox, mozilla, netscape */
+    opacity: 0.90;           /* safari, chrome, opera */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    box-shadow: 0px 2px 2px #c0c0c0;
+    -webkit-box-shadow: 0px 2px 2px #c0c0c0;
+    -moz-box-shadow: 0px 2px 2px #c0c0c0;
+}
+
+.panelInfoWhite {
+    font-size:12px;
+    background-color: #fcfcfc;
+    filter: alpha(opacity=90); /* internet explorer */
+    -khtml-opacity: 90;      /* khtml, version anterior de safari */
+    -moz-opacity: 90;       /* firefox, mozilla, netscape */
+    opacity: 0.90;           /* safari, chrome, opera */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    box-shadow: 0px 2px 2px #c0c0c0;
+    -webkit-box-shadow: 0px 2px 2px #c0c0c0;
+    -moz-box-shadow: 0px 2px 2px #c0c0c0;
+}
+
+.panelBanner {
+    font-size:12px;
+    background-color: #f5f5f5;
+    border: 1px #c5c5c5 solid;
+}
+
+.footer{
+    font-size: 12px;
+}

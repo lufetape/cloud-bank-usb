@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">    
+    <h:form id="formCrear">
+        <p:dialog modal="true" 
+                  header="#{bundle_usuario.label_nuevo_titulo}" 
+                  widgetVar="crearDlg">                
+            <p:ajax event="close" listener="#{usuarioBacking.listarTodos}" update="@form" oncomplete="widgetUsuarios.filter()" />
+            <p:panelGrid id="panelCrear" columns="2" style="width: 100%">  
+
+                <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_codigo}" />
+                <p:inputText size="50"
+                             label="#{bundle_usuario.label_nuevo_modificar_codigo}"
+                             required="true"
+                             maxlength="12"
+                             value="#{usuarioBacking.selectedUsuario.usuCedula}" />
+
+                <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_tipo}" />
+                <p:selectOneMenu label="#{bundle_usuario.label_nuevo_modificar_tipo}"
+                                 value="#{usuarioBacking.selectedUsuario.tusuCodigo}" 
+                                 converter="converterTipoUsuario"
+                                 style="width: 100%"> 
+                    <f:selectItem itemLabel="#{bundle_comun.label_seleccione_registro}" itemValue="#{null}" />
+                    <f:selectItems value="#{tipoUsuarioBacking.tiposUsuariosList}" 
+                                   var="tu"
+                                   itemLabel="#{tu.tusuCodigo} - #{tu.tusuNombre}" 
+                                   itemValue="#{tu}" /> 
+                </p:selectOneMenu>
+
+                <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_nombre}" />
+                <p:inputText size="50"
+                             label="#{bundle_usuario.label_nuevo_modificar_nombre}"
+                             required="true"
+                             maxlength="50"
+                             value="#{usuarioBacking.selectedUsuario.usuNombre}" />
+
+                <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_login}" />
+                <p:inputText size="50"
+                             label="#{bundle_usuario.label_nuevo_modificar_login}"
+                             required="true"
+                             maxlength="50"
+                             value="#{usuarioBacking.selectedUsuario.usuLogin}" />
+
+                <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_clave}" />
+                <p:password label="#{bundle_usuario.label_nuevo_modificar_clave}" 
+                            size="50" 
+                            required="true"
+                            match="confirmation"
+                            feedback="true"
+                            maxlength="20"
+                            value="#{usuarioBacking.selectedUsuario.usuClave}" />
+
+                <h:outputLabel value="#{bundle_usuario.label_nuevo_modificar_confirme_clave}" />
+                <p:password label="#{bundle_usuario.label_nuevo_modificar_confirme_clave}" 
+                            id="confirmation"
+                            size="50" 
+                            required="true"
+                            feedback="false"
+                            maxlength="20" />
+
+            </p:panelGrid>        
+            <f:facet name="footer">  
+                <p:commandButton value="#{bundle_comun.button_aceptar}" 
+                                 title="#{bundle_usuario.button_nuevo_crear}" 
+                                 action="#{usuarioBacking.crear}" 
+                                 id="crear"   
+                                 update=":formGestion:messages, panelCrear, msgCrear"
+                                 icon="ui-icon-check"
+                                 style="margin:0"/>
+                &nbsp;
+                <p:commandButton value="#{bundle_comun.button_cerrar}" 
+                                 title="#{bundle_comun.button_cerrar}" 
+                                 type="button" 
+                                 icon="ui-icon-close"
+                                 onclick="crearDlg.hide();"/>
+                <p:messages id="msgCrear" showSummary="false" showDetail="true" />
+            </f:facet>
+        </p:dialog> 
+    </h:form>
+</ui:composition>

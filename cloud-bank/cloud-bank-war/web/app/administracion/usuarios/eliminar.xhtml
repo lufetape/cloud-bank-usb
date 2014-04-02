@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">    
+    <h:form id="formEliminar">
+        <p:confirmDialog id="confirmDialog" 
+                         message="#{bundle_usuario.label_eliminar_pregunta}"  
+                         header="#{bundle_usuario.label_eliminar_titulo}" 
+                         severity="alert" 
+                         widgetVar="eliminarDlg">
+            <p:commandButton id="confirm" 
+                             value="#{bundle_comun.button_si_seguro}" 
+                             title="#{bundle_comun.button_si_seguro}"
+                             update=":formGestion:messages"
+                             oncomplete="widgetUsuarios.filter(); eliminarDlg.hide()" 
+                             action="#{usuarioBacking.eliminar}" />  
+            <p:commandButton id="decline" 
+                             value="#{bundle_comun.button_no}" 
+                             title="#{bundle_comun.button_no} (#{bundle_comun.button_cerrar})" 
+                             onclick="eliminarDlg.hide()" 
+                             type="button" /> 
+        </p:confirmDialog> 
+    </h:form>
+</ui:composition>

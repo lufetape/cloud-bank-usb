@@ -14,7 +14,7 @@ import org.apache.logging.log4j.Logger;
  */
 @Stateless
 public class CuentaDAO extends BaseJpaDAO<Cuentas> implements ICuentaDAO {
-    
+
     private static final Logger logger = LogManager.getLogger(CuentaDAO.class);
 
     /**
@@ -26,6 +26,8 @@ public class CuentaDAO extends BaseJpaDAO<Cuentas> implements ICuentaDAO {
 
     @Override
     public List<Cuentas> consultarPorCliente(Long idCliente) throws Exception {
+
+        logger.entry();
 
         //Se construye el query por palabra clave
         StringBuilder consultaQuery = new StringBuilder();
@@ -39,11 +41,13 @@ public class CuentaDAO extends BaseJpaDAO<Cuentas> implements ICuentaDAO {
         parametros.put("prmIdCliente", idCliente);
 
         //Se retorna la consulta
-        return find();
+        return logger.exit(find());
     }
 
     @Override
     public List<Cuentas> consultarPorFiltros(String numero, Long idCliente, String cuentaActiva) throws Exception {
+
+        logger.entry();
 
         //Se construye el query por palabra clave
         StringBuilder consultaQuery = new StringBuilder();
@@ -74,12 +78,14 @@ public class CuentaDAO extends BaseJpaDAO<Cuentas> implements ICuentaDAO {
         }
 
         //Se retorna la consulta
-        return find();
-    }  
+        return logger.exit(find());
+    }
 
     @Override
     public Cuentas consultarUltimaCuenta() throws Exception {
-        
+
+        logger.entry();
+
         //Se construye el query de ultima cuenta
         StringBuilder consultaQuery = new StringBuilder();
         consultaQuery.append("SELECT c ");
@@ -89,9 +95,9 @@ public class CuentaDAO extends BaseJpaDAO<Cuentas> implements ICuentaDAO {
 
         //Se retorna la consulta
         List<Cuentas> cuentas = find();
-        if(cuentas.isEmpty()){
-            return new Cuentas("0000-0000-0000");
+        if (cuentas.isEmpty()) {
+            return logger.exit(new Cuentas("0000-0000-0000"));
         }
-        return cuentas.get(0);
+        return logger.exit(cuentas.get(0));
     }
 }

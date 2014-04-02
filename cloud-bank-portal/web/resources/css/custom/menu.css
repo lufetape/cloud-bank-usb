@@ -1,0 +1,34 @@
+/* 
+    Document   : menu
+    Created on : 20/10/2012, 09:21:02 PM
+    Author     : lufetape
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.ui-menuitem-icon.home, .home {
+    background: url("../../images/16x16/blue-home-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.productos, .productos {
+    background: url("../../images/16x16/add-item-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.transferencias, .transferencias {
+    background: url("../../images/16x16/sync-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.ui-menuitem-icon.about, .about {
+    background: url("../../images/16x16/about-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
