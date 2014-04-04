@@ -10,6 +10,7 @@ public class ResourceBundles {
     public static enum RB_MENSAJES {
 
         COMUN("co.edu.usbcali.i_cloudbank.bundles.ComunBundle"),
+        LOGIN("co.edu.usbcali.i_cloudbank.bundles.LoginBundle"),
         MENU("co.edu.usbcali.i_cloudbank.bundles.MenuBundle"),
         TIPO_DOCUMENTO("co.edu.usbcali.i_cloudbank.bundles.TipoDocumentoBundle"),
         TIPO_USUARIO("co.edu.usbcali.i_cloudbank.bundles.TipoUsuarioBundle"),

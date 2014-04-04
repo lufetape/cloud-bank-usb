@@ -3,31 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/base/includes/menu.xhtml</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/app/inicio.xhtml</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/base/includes/about.xhtml</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/filters/FilterSessionCloudBank.java</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/backing/MenuBacking.java</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/backing/ClienteBacking.java</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/backing/SesionUsuarioBacking.java</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/resources/css/custom/icons.css</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/login/login.xhtml</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/bundles/MenuBundle.properties</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/base/templates/login-gui.xhtml</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/backing/BuscarCuentaBacking.java</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/base/includes/logout.xhtml</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/base/templates/main-gui.xhtml</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/WEB-INF/faces-config.xml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/app/administracion/clientes/principal.xhtml</file>
             <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/backing/TransferenciaBacking.java</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/backing/LoginBacking.java</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/bundles/LoginBundle.properties</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/bundles/ComunBundle.properties</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/app/transacciones/includes/busquedaCuentas.xhtml</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/base/includes/header.xhtml</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/backing/ConsignacionBacking.java</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/app/transacciones/transferir.xhtml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/app/administracion/cuentas/movimientos.xhtml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/base/templates/login-gui.xhtml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/app/transacciones/consignar.xhtml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/app/administracion/clientes/gestion.xhtml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/app/administracion/clientes/consultar.xhtml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/bundles/RetiroBundle.properties</file>
             <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/co/edu/usbcali/i_cloudbank/backing/RetiroBacking.java</file>
-            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/WEB-INF/web.xml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/app/transacciones/retirar.xhtml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/base/includes/logout.xhtml</file>
             <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/src/java/log4j2.xml</file>
+            <file>file:/C:/Users/Felipe/Desktop/cloud-bank-usb/cloud-bank/cloud-bank-war/web/base/templates/main-gui.xhtml</file>
         </group>
     </open-files>
 </project-private>

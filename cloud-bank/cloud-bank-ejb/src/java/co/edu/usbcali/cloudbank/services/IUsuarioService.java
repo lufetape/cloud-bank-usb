@@ -55,6 +55,16 @@ public interface IUsuarioService {
      * @throws java.lang.Exception
      */
     public List<Usuarios> consultarPorFiltros(Long codigo, Long idTipoUsuario, String login, String nombre) throws CloudBankException, Exception;
+    
+    /**
+     * Método que consulta usuarios por login
+     *
+     * @param login
+     * @return Usuario encontrado
+     * @throws co.edu.usbcali.cloudbank.util.CloudBankException
+     * @throws java.lang.Exception
+     */
+    public Usuarios consultarPorLogin(String login) throws CloudBankException, Exception;
 
     /**
      * Método que crea un usuario

@@ -13,4 +13,5 @@ package co.edu.usbcali.e_cloudbank.utils;
  */
 public class ObjectKeys {
     public static final String KEY_CUENTAS = "cuentasKey";
+    public static final String KEY_USUARIO_SESSION = "sessionUsuarioKey";
 }

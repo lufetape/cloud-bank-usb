@@ -10,7 +10,7 @@
             <p:row><p:column>&nbsp;</p:column></p:row>
 
             <p:row>
-                <p:column style="width: 30px; text-align: center" rowspan="4">
+                <p:column style="width: 30px; text-align: center" rowspan="3">
                     <p:graphicImage value="/resources/images/32x32/student-id-icon.png" 
                                     style="vertical-align: middle"
                                     title="#{bundle_inicio.label_cliente_tabla_identificacion}"/>
@@ -19,19 +19,13 @@
 
             <p:row>
                 <p:column>
-                    <h:outputLabel value="Pendiente" /> 
+                    <h:outputLabel value="#{sesionUsuarioBacking.usuario.identificacion}" />  
                 </p:column>
             </p:row>
 
             <p:row>
                 <p:column>
-                    <h:outputLabel value="Pendiente" />  
-                </p:column>
-            </p:row>
-
-            <p:row>
-                <p:column>
-                    <h:outputLabel value="Pendiente" style="font-weight: bold" />  
+                    <h:outputLabel value="#{sesionUsuarioBacking.usuario.nombre}" style="font-weight: bold" />  
                 </p:column>
             </p:row>
 
@@ -39,34 +33,23 @@
 
             <p:row>                                           
                 <p:column style="text-align: center">
-                    <p:graphicImage value="/resources/images/16x16/green-home-icon.png" 
+                    <p:graphicImage value="/resources/images/16x16/user-icon.png" 
                                     style="vertical-align: middle"
-                                    title="#{bundle_inicio.label_cliente_tabla_direccion}"/>
+                                    title="#{bundle_inicio.label_cliente_tabla_login}"/>
                 </p:column>
                 <p:column>
-                    <h:outputLabel value="Pendiente" />
+                    <h:outputLabel value="#{sesionUsuarioBacking.usuario.login}" />
                 </p:column>
             </p:row>
 
-            <p:row>
+            <p:row>                                           
                 <p:column style="text-align: center">
-                    <p:graphicImage value="/resources/images/16x16/phone-icon.png" 
+                    <p:graphicImage value="/resources/images/16x16/profile-icon.png" 
                                     style="vertical-align: middle"
-                                    title="#{bundle_inicio.label_cliente_tabla_telefono}"/>
+                                    title="#{bundle_inicio.label_cliente_tabla_tipo}"/>
                 </p:column>
                 <p:column>
-                    <h:outputLabel value="Pendiente" /> 
-                </p:column>
-            </p:row>
-
-            <p:row>
-                <p:column style="text-align: center">
-                    <p:graphicImage value="/resources/images/16x16/mail-icon.png" 
-                                    style="vertical-align: middle"
-                                    title="#{bundle_inicio.label_cliente_tabla_email}"/>
-                </p:column>
-                <p:column>
-                    <h:outputLabel value="Pendiente" />  
+                    <h:outputLabel value="#{sesionUsuarioBacking.usuario.tipoUsuario.descripcion}" />
                 </p:column>
             </p:row>
 

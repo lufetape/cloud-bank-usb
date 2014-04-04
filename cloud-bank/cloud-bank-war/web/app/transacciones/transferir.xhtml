@@ -186,7 +186,9 @@
                                                         <h:outputText value="#{transferenciaBacking.consignacion.cuentas.cliId.cliNombre}" />
 
                                                         <h:outputText value="#{bundle_transferencia.label_confirmar_valor}:" styleClass="ui-wizard-step-title" /> 
-                                                        <h:outputText value="#{transferenciaBacking.consignacion.conValor}" />
+                                                        <h:outputText value="#{transferenciaBacking.consignacion.conValor}" >
+                                                            <f:convertNumber pattern="$###,###.##" />
+                                                        </h:outputText>
                                                     </h:panelGrid>
                                                 </td>
                                             </tr>

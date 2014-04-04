@@ -157,7 +157,9 @@
                                                         <h:outputText value="#{retiroBacking.retiros.cuentas.cliId.cliNombre}" />
 
                                                         <h:outputText value="#{bundle_retiro.label_confirmar_valor}:" styleClass="ui-wizard-step-title" /> 
-                                                        <h:outputText value="#{retiroBacking.retiros.retValor}" />
+                                                        <h:outputText value="#{retiroBacking.retiros.retValor}" >
+                                                            <f:convertNumber pattern="$###,###.##" />
+                                                        </h:outputText>
                                                     </h:panelGrid>
                                                 </td>
                                             </tr>

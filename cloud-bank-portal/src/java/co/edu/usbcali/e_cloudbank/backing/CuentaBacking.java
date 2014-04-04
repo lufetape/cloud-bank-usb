@@ -21,6 +21,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import org.primefaces.component.row.Row;
 
@@ -46,6 +47,9 @@ public class CuentaBacking extends BaseBacking implements Serializable {
     private Date dateFinal;
 
     private Row rowMovimientos;
+    
+    @ManagedProperty(value = "#{sesionUsuarioBacking}")
+    private SesionUsuarioBacking sesionUsuarioBacking;
 
     @PostConstruct
     public void init() {
@@ -57,7 +61,7 @@ public class CuentaBacking extends BaseBacking implements Serializable {
     public void listarCuentas() {
         try {
             //ID cliente (de sesion)
-            long idCliente = 251234L;
+            long idCliente = sesionUsuarioBacking.getUsuario().getIdentificacion();
             cuentasList = cuentaService.listarCuentas(idCliente).getCuentas();
         } catch (CloudBankException cbe) {
             this.mostrarMensaje(null,
@@ -87,7 +91,7 @@ public class CuentaBacking extends BaseBacking implements Serializable {
     public void filtrarMovimientos() {
         try {
             //ID cliente (de sesion)
-            long idCliente = 251234L;
+            long idCliente = sesionUsuarioBacking.getUsuario().getIdentificacion();
             RespuestaConsultaMovimientosDTO respuestaConsultaMovimientosDTO = cuentaService.listarMovimientos(idCliente, selectedCuenta.getNumero(), dateInicial, dateFinal);
             consignacionesList = respuestaConsultaMovimientosDTO.getConsignaciones();
             retirosList = respuestaConsultaMovimientosDTO.getRetiros();
@@ -217,5 +221,19 @@ public class CuentaBacking extends BaseBacking implements Serializable {
      */
     public void setRowMovimientos(Row rowMovimientos) {
         this.rowMovimientos = rowMovimientos;
+    }
+
+    /**
+     * @return the sesionUsuarioBacking
+     */
+    public SesionUsuarioBacking getSesionUsuarioBacking() {
+        return sesionUsuarioBacking;
+    }
+
+    /**
+     * @param sesionUsuarioBacking the sesionUsuarioBacking to set
+     */
+    public void setSesionUsuarioBacking(SesionUsuarioBacking sesionUsuarioBacking) {
+        this.sesionUsuarioBacking = sesionUsuarioBacking;
     }
 }

@@ -18,6 +18,24 @@
         </resource-bundle>
         <resource-bundle>
             <base-name>
+                co.edu.usbcali.e_cloudbank.bundles.LoginBundle
+            </base-name>
+            <var>bundle_login</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.e_cloudbank.bundles.AccountBundle
+            </base-name>
+            <var>bundle_account</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
+                co.edu.usbcali.e_cloudbank.bundles.OpenIDBundle
+            </base-name>
+            <var>bundle_openid</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>
                 co.edu.usbcali.e_cloudbank.bundles.InicioBundle
             </base-name>
             <var>bundle_inicio</var>

@@ -1,7 +1,9 @@
 package co.edu.usbcali.cloudbank.services.impl;
 
 import co.edu.usbcali.cloudbank.dao.IUsuarioDAO;
+import co.edu.usbcali.cloudbank.model.Clientes;
 import co.edu.usbcali.cloudbank.model.Usuarios;
+import co.edu.usbcali.cloudbank.services.IClienteService;
 import co.edu.usbcali.cloudbank.services.ITipoUsuarioService;
 import co.edu.usbcali.cloudbank.services.IUsuarioService;
 import co.edu.usbcali.cloudbank.util.CloudBankException;
@@ -9,6 +11,7 @@ import co.edu.usbcali.cloudbank.util.ResourceBundles;
 import co.edu.usbcali.cloudbank.util.UtilBundle;
 import co.edu.usbcali.cloudbank.util.UtilRegExp;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.apache.logging.log4j.LogManager;
@@ -21,14 +24,19 @@ import org.apache.logging.log4j.Logger;
  */
 @Stateless
 public class UsuarioService implements IUsuarioService {
-
+    
     private static final Logger logger = LogManager.getLogger(UsuarioService.class);
 
+    @EJB
+    private IClienteService clienteService;
+    
     @EJB
     private ITipoUsuarioService tipoUsuarioService;
 
     @EJB
     private IUsuarioDAO usuarioDAO;
+    
+    private static final Long TIPO_USUARIO_CLIENTE = 30L;
 
     @Override
     public List<Usuarios> consultarTodos() throws Exception {
@@ -66,6 +74,20 @@ public class UsuarioService implements IUsuarioService {
         }
         logger.info("Consultando usuarios");
         return logger.exit(usuarioDAO.consultarPorFiltros(codigo, idTipoUsuario, login, nombre));
+    }
+    
+    @Override
+    public Usuarios consultarPorLogin(String login) throws CloudBankException, Exception {
+        logger.entry();
+        logger.info("Validando login");
+        if (login == null || login.trim().equals("")) {
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "loginUsuarioNulo")));
+        }
+        if (!UtilRegExp.isAlphanumeric(login)) {
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "loginUsuarioInvalido")));
+        }
+        logger.info("Consultando usuario");
+        return logger.exit(usuarioDAO.consultarPorLogin(login));
     }
 
     @Override
@@ -153,6 +175,12 @@ public class UsuarioService implements IUsuarioService {
         usuario.setTusuCodigo(tipoUsuarioService.consultarPorId(usuario.getTusuCodigo().getTusuCodigo()));
         if (usuario.getTusuCodigo() == null) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TIPO_DOCUMENTO, "tipoUsuarioNoExiste")));
+        }
+        if(Objects.equals(usuario.getTusuCodigo().getTusuCodigo(), TIPO_USUARIO_CLIENTE)){
+            Clientes cliente = clienteService.consultarPorId(usuario.getUsuCedula());
+            if(cliente == null || cliente.getCliId() == null){
+                throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "clienteNoExiste")));
+            }
         }
         if (usuario.getUsuNombre() == null || usuario.getUsuNombre().trim().equals("")) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "nombreUsuarioNulo")));

@@ -32,3 +32,17 @@
     width:16px;
     padding-right: 5px;
 }
+
+.google {
+    background: url("../../images/16x16/social-google-box-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}
+
+.logout {
+    background: url("../../images/16x16/session-logout-icon.png") no-repeat !important;
+    height:16px;
+    width:16px;
+    padding-right: 5px;
+}

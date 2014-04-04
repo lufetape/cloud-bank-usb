@@ -35,6 +35,9 @@ public class TransferenciaBacking extends BaseBacking implements Serializable {
 
     @ManagedProperty(value = "#{cuentaBacking}")
     private CuentaBacking cuentaBacking;
+    
+    @ManagedProperty(value = "#{sesionUsuarioBacking}")
+    private SesionUsuarioBacking sesionUsuarioBacking;
 
     private String clave;
     private Double valor;
@@ -59,7 +62,7 @@ public class TransferenciaBacking extends BaseBacking implements Serializable {
 
         try {
             //ID cliente (de sesion)
-            long idCliente = 251234L;
+            long idCliente = sesionUsuarioBacking.getUsuario().getIdentificacion();
             if(selectedCuentaOrigen == null){
                 selectedCuentaOrigen = new CuentaDTO();
             }
@@ -176,5 +179,19 @@ public class TransferenciaBacking extends BaseBacking implements Serializable {
      */
     public void setConfirmeValor(Double confirmeValor) {
         this.confirmeValor = confirmeValor;
+    }
+
+    /**
+     * @return the sesionUsuarioBacking
+     */
+    public SesionUsuarioBacking getSesionUsuarioBacking() {
+        return sesionUsuarioBacking;
+    }
+
+    /**
+     * @param sesionUsuarioBacking the sesionUsuarioBacking to set
+     */
+    public void setSesionUsuarioBacking(SesionUsuarioBacking sesionUsuarioBacking) {
+        this.sesionUsuarioBacking = sesionUsuarioBacking;
     }
 }

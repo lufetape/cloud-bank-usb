@@ -1,5 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI at http://jax-ws.dev.java.net. RI's version is Metro/2.3 (tags/2.3-7528; 2013-04-29T19:34:10+0000) JAXWS-RI/2.2.8 JAXWS/2.2 svn-revision#unknown. --><xs:schema xmlns:tns="http://soap.i_cloudbank.usbcali.edu.co/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://soap.i_cloudbank.usbcali.edu.co/">
 
+<xs:element name="agregarUsuario" type="tns:agregarUsuario"/>
+
+<xs:element name="agregarUsuarioResponse" type="tns:agregarUsuarioResponse"/>
+
 <xs:element name="consultarMovimientos" type="tns:consultarMovimientos"/>
 
 <xs:element name="consultarMovimientosResponse" type="tns:consultarMovimientosResponse"/>
@@ -7,6 +11,10 @@
 <xs:element name="consultarPorCliente" type="tns:consultarPorCliente"/>
 
 <xs:element name="consultarPorClienteResponse" type="tns:consultarPorClienteResponse"/>
+
+<xs:element name="consultarUsuarioPorLogin" type="tns:consultarUsuarioPorLogin"/>
+
+<xs:element name="consultarUsuarioPorLoginResponse" type="tns:consultarUsuarioPorLoginResponse"/>
 
 <xs:element name="realizarTransferencia" type="tns:realizarTransferencia"/>
 
@@ -91,6 +99,57 @@
 <xs:element name="descripcion" type="xs:string" minOccurs="0"/>
 <xs:element name="fecha" type="xs:string" minOccurs="0"/>
 <xs:element name="valor" type="xs:double"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consultarUsuarioPorLogin">
+<xs:sequence>
+<xs:element name="login" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="consultarUsuarioPorLoginResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:respuestaConsultaUsuarioDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="respuestaConsultaUsuarioDTO">
+<xs:sequence>
+<xs:element name="estado" type="tns:estadoDTO" minOccurs="0"/>
+<xs:element name="usuario" type="tns:usuarioDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="usuarioDTO">
+<xs:sequence>
+<xs:element name="identificacion" type="xs:long"/>
+<xs:element name="login" type="xs:string" minOccurs="0"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="tipoUsuario" type="tns:tipoUsuarioDTO" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="tipoUsuarioDTO">
+<xs:sequence>
+<xs:element name="codigo" type="xs:long"/>
+<xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="agregarUsuario">
+<xs:sequence>
+<xs:element name="identificacion" type="xs:long"/>
+<xs:element name="tipoUsuario" type="xs:long"/>
+<xs:element name="nombre" type="xs:string" minOccurs="0"/>
+<xs:element name="login" type="xs:string" minOccurs="0"/>
+<xs:element name="clave" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="agregarUsuarioResponse">
+<xs:sequence>
+<xs:element name="return" type="tns:estadoDTO" minOccurs="0"/>
 </xs:sequence>
 </xs:complexType>
 </xs:schema>

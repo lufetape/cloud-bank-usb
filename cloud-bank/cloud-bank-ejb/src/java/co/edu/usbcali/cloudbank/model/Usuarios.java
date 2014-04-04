@@ -50,7 +50,7 @@ public class Usuarios implements Serializable {
     private String usuNombre;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 30)
+    @Size(min = 1, max = 100)
     @Column(name = "USU_LOGIN")
     private String usuLogin;
     @Basic(optional = false)

@@ -4,6 +4,12 @@
 <xsd:import namespace="http://soap.i_cloudbank.usbcali.edu.co/" schemaLocation="http://localhost:8080/cloud-bank-war/CloudBankService?xsd=1"/>
 </xsd:schema>
 </types>
+<message name="realizarTransferencia">
+<part name="parameters" element="tns:realizarTransferencia"/>
+</message>
+<message name="realizarTransferenciaResponse">
+<part name="parameters" element="tns:realizarTransferenciaResponse"/>
+</message>
 <message name="consultarPorCliente">
 <part name="parameters" element="tns:consultarPorCliente"/>
 </message>
@@ -16,13 +22,23 @@
 <message name="consultarMovimientosResponse">
 <part name="parameters" element="tns:consultarMovimientosResponse"/>
 </message>
-<message name="realizarTransferencia">
-<part name="parameters" element="tns:realizarTransferencia"/>
+<message name="consultarUsuarioPorLogin">
+<part name="parameters" element="tns:consultarUsuarioPorLogin"/>
 </message>
-<message name="realizarTransferenciaResponse">
-<part name="parameters" element="tns:realizarTransferenciaResponse"/>
+<message name="consultarUsuarioPorLoginResponse">
+<part name="parameters" element="tns:consultarUsuarioPorLoginResponse"/>
+</message>
+<message name="agregarUsuario">
+<part name="parameters" element="tns:agregarUsuario"/>
+</message>
+<message name="agregarUsuarioResponse">
+<part name="parameters" element="tns:agregarUsuarioResponse"/>
 </message>
 <portType name="CloudBankService">
+<operation name="realizarTransferencia">
+<input wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/realizarTransferenciaRequest" message="tns:realizarTransferencia"/>
+<output wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/realizarTransferenciaResponse" message="tns:realizarTransferenciaResponse"/>
+</operation>
 <operation name="consultarPorCliente">
 <input wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/consultarPorClienteRequest" message="tns:consultarPorCliente"/>
 <output wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/consultarPorClienteResponse" message="tns:consultarPorClienteResponse"/>
@@ -31,13 +47,26 @@
 <input wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/consultarMovimientosRequest" message="tns:consultarMovimientos"/>
 <output wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/consultarMovimientosResponse" message="tns:consultarMovimientosResponse"/>
 </operation>
-<operation name="realizarTransferencia">
-<input wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/realizarTransferenciaRequest" message="tns:realizarTransferencia"/>
-<output wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/realizarTransferenciaResponse" message="tns:realizarTransferenciaResponse"/>
+<operation name="consultarUsuarioPorLogin">
+<input wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/consultarUsuarioPorLoginRequest" message="tns:consultarUsuarioPorLogin"/>
+<output wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/consultarUsuarioPorLoginResponse" message="tns:consultarUsuarioPorLoginResponse"/>
+</operation>
+<operation name="agregarUsuario">
+<input wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/agregarUsuarioRequest" message="tns:agregarUsuario"/>
+<output wsam:Action="http://soap.i_cloudbank.usbcali.edu.co/CloudBankService/agregarUsuarioResponse" message="tns:agregarUsuarioResponse"/>
 </operation>
 </portType>
 <binding name="CloudBankServicePortBinding" type="tns:CloudBankService">
 <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+<operation name="realizarTransferencia">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
 <operation name="consultarPorCliente">
 <soap:operation soapAction=""/>
 <input>
@@ -56,7 +85,16 @@
 <soap:body use="literal"/>
 </output>
 </operation>
-<operation name="realizarTransferencia">
+<operation name="consultarUsuarioPorLogin">
+<soap:operation soapAction=""/>
+<input>
+<soap:body use="literal"/>
+</input>
+<output>
+<soap:body use="literal"/>
+</output>
+</operation>
+<operation name="agregarUsuario">
 <soap:operation soapAction=""/>
 <input>
 <soap:body use="literal"/>

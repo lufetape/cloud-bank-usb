@@ -2,7 +2,8 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"> 
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"> 
     <h:form>  
 
         <p:menubar id="menu">                    
@@ -10,6 +11,12 @@
             <p:menuitem value="#{bundle_menu.label_cuentas}" icon="productos" url="/app/cuentas/cuentas.xhtml" />
             <p:menuitem value="#{bundle_menu.label_transferir}" icon="transferencias" url="/app/transacciones/transferencias.xhtml" />
             <p:menuitem value="#{bundle_menu.label_about}" icon="about" onclick="aboutDialog.show()" /> 
+            <f:facet name="options">
+                <p:commandButton value="#{bundle_comun.label_main_dialogo_cerrarSesion_titulo}" 
+                                 icon="logout" 
+                                 type="button"
+                                 onclick="cerrarSesionDialog.show()" />
+            </f:facet>
         </p:menubar>
         <p:sticky target="menu" />
 

@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/base/templates/login-gui.xhtml">
+    <ui:define name="content">        
+        <p:growl id="messages" showDetail="true" life="5000" />
+        <br />
+        <table width="70%" cellpadding="5" class="ui-state-default" align="center">
+            <tr>
+                <td width="5"></td>
+                <td valign="top" width="200">
+                    <p align="justify" style="background-color: black">
+                        <br />
+                        <p:spacer width="15" />
+                        <p:graphicImage url="/resources/images/corporate/cloudbank-logo-medium.png" 
+                                        style="vertical-align: middle" />
+                        <br /><br />
+                        <p:graphicImage url="/resources/images/corporate/cloud-bank-background.jpg" 
+                                        style="vertical-align: middle" />
+                    </p>
+                </td>
+                <td id="login" valign="middle">
+                    <h:form>
+                        <table cellpadding="0" cellspacing="0" width="100%" class="ui-widget-content">
+                            <tr>
+                                <td>
+                                    <table cellpadding="10" cellspacing="0" width="80%" align="center">
+                                        <tr>
+                                            <td>
+                                                <table cellpadding="0" cellspacing="0" width="100%">
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <br />
+                                                            <h:outputLabel value="#{bundle_account.label_confirme_cuenta}" 
+                                                                           style="font-size: 24px; background: none; border: 0px"  
+                                                                           class="ui-state-default" />
+                                                            <p align="justify">
+                                                                <h:outputLabel value="#{accountBacking.loginBacking.fullName} (#{accountBacking.loginBacking.openIdEmail}). " 
+                                                                               style="font-weight: bold" />
+                                                                <h:outputLabel value="#{bundle_account.label_confirme_cuenta_descripcion}:" 
+                                                                               style="font-size: 14px; font-weight: normal" />
+                                                            </p>
+                                                        </td>
+                                                    </tr>
+                                                </table>                                                
+                                            </td>
+                                        </tr>                            
+                                        <tr>
+                                            <td align="center">
+                                                <p:graphicImage url="/resources/images/corporate/cloudservices-logo-medium.png" 
+                                                                style="vertical-align: middle" width="200" />  
+                                                <br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 14px; font-weight: normal">
+                                                #{bundle_account.label_identificacion}
+                                                <b style="color: red">*</b>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center">
+                                                <p:focus for="identificacion" />
+                                                <p:inputText id="identificacion"
+                                                             maxlength="35"
+                                                             style="height: 35px; width: 80%"
+                                                             required="true"
+                                                             value="#{accountBacking.identificacion}"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                <p:commandButton value="#{bundle_account.label_acceder}"
+                                                                 title="#{bundle_account.label_acceder}"
+                                                                 action="#{accountBacking.agregarCuenta}"
+                                                                 update="@form"
+                                                                 style="height: 40px;" /> 
+                                                &nbsp;
+                                                <p:commandButton value="#{bundle_comun.button_cancelar}" 
+                                                                 title="#{bundle_comun.button_cancelar}" 
+                                                                 onclick="location.href = '#{request.contextPath}'" 
+                                                                 type="button" 
+                                                                 style="height: 40px;" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p:messages showSummary="false" showDetail="true" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </h:form>
+                </td>
+                <td width="5"></td>
+            </tr>
+        </table>
+        <br />
+    </ui:define>
+</ui:composition>

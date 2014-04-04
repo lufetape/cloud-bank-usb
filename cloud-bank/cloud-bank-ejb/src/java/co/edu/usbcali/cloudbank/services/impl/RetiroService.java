@@ -144,7 +144,7 @@ public class RetiroService implements IRetiroService {
                 throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TRANSACCION, "cuentaOrigenRetirada")));
         }
         if (retiro.getRetValor() == null || retiro.getRetValor().doubleValue() <= 0) {
-            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TRANSACCION, "valorNoPermitido")));
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TRANSACCION, "valorNoPermitidoRetirar")));
         }
         if (retiro.getRetValor().doubleValue() > retiro.getCuentas().getCueSaldo().doubleValue()) {
             throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TRANSACCION, "fondosInsuficientes")));

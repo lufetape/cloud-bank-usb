@@ -8,14 +8,13 @@
 
         <p:menubar id="menu" model="#{menuBacking.menuModel}" autoDisplay="false"> 
             <f:facet name="options">
-                <p:menuButton value="#{sesionUsuarioBacking.usuario.usuLogin}">  
-                    <p:menuitem value="#{bundle_menu.label_home}" icon="home" url="/" />  
-                    <p:separator />  
-                    <p:menuitem value="#{bundle_comun.label_main_dialogo_cerrarSesion_titulo}" icon="logout" onclick="cerrarSesionDialog.show()" />  
-                </p:menuButton>
+                <p:commandButton value="#{bundle_comun.label_main_dialogo_cerrarSesion_titulo}" 
+                                 icon="logout" 
+                                 type="button"
+                                 onclick="cerrarSesionDialog.show()" />
             </f:facet> 
         </p:menubar>
-        
+
         <p:sticky target="menu" />
 
     </h:form> 

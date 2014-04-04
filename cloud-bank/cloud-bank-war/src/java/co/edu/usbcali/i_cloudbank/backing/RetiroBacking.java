@@ -79,7 +79,7 @@ public class RetiroBacking extends BaseBacking implements Serializable {
         } catch (Exception e) {
             this.mostrarMensaje(null,
                     obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_error_titulo"),
-                    obtenerMensaje(ResourceBundles.RB_MENSAJES.RETIRO, "label_error_verificando_consignacion"),
+                    obtenerMensaje(ResourceBundles.RB_MENSAJES.RETIRO, "label_error_verificando_retiro"),
                     FacesMessage.SEVERITY_ERROR);
         }
         return false;

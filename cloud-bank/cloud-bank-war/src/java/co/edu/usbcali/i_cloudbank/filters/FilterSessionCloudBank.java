@@ -70,12 +70,7 @@ public final class FilterSessionCloudBank implements Filter {
     
     private boolean isAuthorized(String path, Usuarios usuario){
         
-        if(path.equals(BASE_PREFIX+"/inicio"+BASE_SUFFIX)){
-            return true;
-        }
-        
-        String[] verificationPaths;
-        
+        String[] verificationPaths;        
         //Se configuran los paths de donde se verificara
         switch(usuario.getTusuCodigo().getTusuCodigo().intValue()){
             case 10:
@@ -101,6 +96,11 @@ public final class FilterSessionCloudBank implements Filter {
         
         //Si los paths no son nulos pero no tienen elementos, el tipo de usuario tiene todos los permisos
         if(verificationPaths.length == 0){
+            return true;
+        }
+        
+        //Si la página es la de inicio, entra directo
+        if(path.equals(BASE_PREFIX+"/inicio"+BASE_SUFFIX)){
             return true;
         }
         

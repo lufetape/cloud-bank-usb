@@ -43,7 +43,7 @@ public class LoginBacking extends BaseBacking implements Serializable {
             } catch (IOException ioe) {
                 this.mostrarMensaje(null,
                         obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_error_titulo"),
-                        obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "label_error_direccionar"),
+                        obtenerMensaje(ResourceBundles.RB_MENSAJES.LOGIN, "label_error_direccionar"),
                         FacesMessage.SEVERITY_ERROR);
             }
 
@@ -55,7 +55,7 @@ public class LoginBacking extends BaseBacking implements Serializable {
         } catch (Exception e) {
             this.mostrarMensaje(null,
                     obtenerMensaje(ResourceBundles.RB_MENSAJES.COMUN, "label_error_titulo"),
-                    obtenerMensaje(ResourceBundles.RB_MENSAJES.USUARIO, "label_error_autenticar"),
+                    obtenerMensaje(ResourceBundles.RB_MENSAJES.LOGIN, "label_error_autenticar"),
                     FacesMessage.SEVERITY_ERROR);
         }
     }

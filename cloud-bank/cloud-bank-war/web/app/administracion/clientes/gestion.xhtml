@@ -69,6 +69,7 @@
                                              title="#{bundle_comun.button_consultar}" 
                                              action="#{clienteBacking.listarPorFiltros}" 
                                              update="@form"
+                                             oncomplete="widgetClientes.filter()"
                                              icon="consultar"
                                              style="margin:0"/>
                             <p:commandButton value="#{bundle_comun.button_limpiar}" 

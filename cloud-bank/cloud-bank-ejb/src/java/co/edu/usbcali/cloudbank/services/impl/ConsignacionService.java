@@ -154,7 +154,7 @@ public class ConsignacionService implements IConsignacionService {
                 throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TRANSACCION, "cuentaDestinoRetirada")));
         }
         if (consignacion.getConValor() == null || consignacion.getConValor().doubleValue() <= 0) {
-            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TRANSACCION, "valorNoPermitido")));
+            throw logger.throwing(new CloudBankException(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.TRANSACCION, "valorNoPermitidoConsignar")));
         }
         logger.exit();
     }

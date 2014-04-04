@@ -143,7 +143,9 @@
                                                         <h:outputText value="#{consignacionBacking.consignacion.cuentas.cliId.cliNombre}" />
 
                                                         <h:outputText value="#{bundle_consignacion.label_confirmar_valor}:" styleClass="ui-wizard-step-title" /> 
-                                                        <h:outputText value="#{consignacionBacking.consignacion.conValor}" />
+                                                        <h:outputText value="#{consignacionBacking.consignacion.conValor}" >
+                                                            <f:convertNumber pattern="$###,###.##" />
+                                                        </h:outputText>
                                                     </h:panelGrid>
                                                 </td>
                                             </tr>

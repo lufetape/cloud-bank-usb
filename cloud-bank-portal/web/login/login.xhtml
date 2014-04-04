@@ -1,0 +1,101 @@
+<!DOCTYPE html PUBLIC 
+    "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/base/templates/login-gui.xhtml">
+    <ui:define name="content">
+        <h:form>
+            <p:growl id="messages" showDetail="true" life="5000" />
+            <br />
+            <table width="65%" cellpadding="5" class="ui-state-default" align="center">
+                <tr>
+                    <td width="5"></td>
+                    <td valign="top" width="200">
+                        <p align="justify" style="background-color: black">
+                            <br />
+                            <p:spacer width="15" />
+                            <p:graphicImage url="/resources/images/corporate/cloudbank-logo-medium.png" 
+                                            style="vertical-align: middle" />
+                            <br /><br />
+                            <p:graphicImage url="/resources/images/corporate/cloud-bank-background.jpg" 
+                                            style="vertical-align: middle" />
+                        </p>
+                    </td>
+                    <td id="login" valign="middle">
+                        <table cellpadding="0" cellspacing="0" width="100%" class="ui-widget-content">
+                            <tr>
+                                <td>
+                                    <table cellpadding="10" cellspacing="0" width="80%" align="center">
+                                        <tr>
+                                            <td>
+                                                <table cellpadding="0" cellspacing="0" width="100%">
+                                                    <tr>
+                                                        <td valign="top">
+                                                            <br />
+                                                            <h:outputLabel value="#{bundle_login.label_inicie_sesion}" 
+                                                                           style="font-size: 24px; background: none; border: 0px"  
+                                                                           class="ui-state-default" />
+                                                            <br /><br />
+                                                            <h:outputLabel value="#{bundle_login.label_inicie_sesion_descripcion}" style="font-size: 14px; font-weight: normal" />
+                                                        </td>
+                                                    </tr>
+                                                </table>                                                
+                                            </td>
+                                        </tr>                            
+                                        <tr>
+                                            <td align="center">
+                                                <p:commandButton value="&nbsp;#{bundle_login.label_acceder_google}"
+                                                                 title="#{bundle_login.label_acceder_google}"
+                                                                 action="#{loginBacking.loginCustom(bundle_openid.googleOPENID)}"
+                                                                 ajax="false"
+                                                                 icon="google"
+                                                                 style="height: 40px; width: 95%" />    
+                                                <br/><br/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p:separator />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 14px; font-weight: normal">
+                                                #{bundle_login.label_ingresar_openid}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="center">
+                                                <p:inputText id="openid_identifier" 
+                                                             value="#{loginBacking.userSuppliedId}"
+                                                             style="background: url(../resources/images/24x24/openid-icon.png) no-repeat; padding-left: 30px; background-position: 0 50%;height: 35px; width: 80%" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td align="right">
+                                                <p:commandButton value="#{bundle_login.label_acceder_openid}"
+                                                                 title="#{bundle_login.label_acceder_openid}"
+                                                                 action="#{loginBacking.loginOpenId}"
+                                                                 ajax="false"
+                                                                 style="height: 40px;" />                                               
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p:messages showSummary="false" showDetail="true" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="5"></td>
+                </tr>
+            </table>
+            <br />
+        </h:form>
+    </ui:define>
+</ui:composition>

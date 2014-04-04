@@ -3,6 +3,7 @@ package co.edu.usbcali.cloudbank.integrator;
 import co.edu.usbcali.cloudbank.dto.EstadoDTO;
 import co.edu.usbcali.cloudbank.dto.RespuestaConsultaCuentasDTO;
 import co.edu.usbcali.cloudbank.dto.RespuestaConsultaMovimientosDTO;
+import co.edu.usbcali.cloudbank.dto.RespuestaConsultaUsuarioDTO;
 import java.util.Date;
 import javax.ejb.Local;
 
@@ -45,4 +46,24 @@ public interface ICuentaClienteIntegrator {
      * @return Respuesta de la operación (Estado)
      */
     public EstadoDTO realizarTransferencia(long idCliente, String numeroOrigen, String claveOrigen, String numeroDestino, double valor);
+    
+    /**
+     * Método que consulta un usuario por login
+     * 
+     * @param login
+     * @return Respuesta de la operación (Estado)
+     */
+    public RespuestaConsultaUsuarioDTO consultarUsuarioPorLogin(String login);
+    
+    /**
+     * Método que agrega un usuario al sistema
+     *
+     * @param identificacion
+     * @param tipoUsuario
+     * @param nombre
+     * @param login
+     * @param clave
+     * @return Respuesta de la operación (Estado)
+     */
+    public EstadoDTO agregarUsuario(long identificacion, long tipoUsuario, String nombre, String login, String clave);
 }

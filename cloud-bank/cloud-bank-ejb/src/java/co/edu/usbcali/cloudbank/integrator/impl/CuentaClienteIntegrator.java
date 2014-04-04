@@ -10,6 +10,9 @@ import co.edu.usbcali.cloudbank.dto.EstadoDTO;
 import co.edu.usbcali.cloudbank.dto.MovimientoDTO;
 import co.edu.usbcali.cloudbank.dto.RespuestaConsultaCuentasDTO;
 import co.edu.usbcali.cloudbank.dto.RespuestaConsultaMovimientosDTO;
+import co.edu.usbcali.cloudbank.dto.RespuestaConsultaUsuarioDTO;
+import co.edu.usbcali.cloudbank.dto.TipoUsuarioDTO;
+import co.edu.usbcali.cloudbank.dto.UsuarioDTO;
 import co.edu.usbcali.cloudbank.integrator.ICuentaClienteIntegrator;
 import co.edu.usbcali.cloudbank.model.Clientes;
 import co.edu.usbcali.cloudbank.model.Consignaciones;
@@ -17,12 +20,14 @@ import co.edu.usbcali.cloudbank.model.ConsignacionesPK;
 import co.edu.usbcali.cloudbank.model.Cuentas;
 import co.edu.usbcali.cloudbank.model.Retiros;
 import co.edu.usbcali.cloudbank.model.RetirosPK;
+import co.edu.usbcali.cloudbank.model.TiposUsuarios;
 import co.edu.usbcali.cloudbank.model.Usuarios;
 import co.edu.usbcali.cloudbank.services.IClienteService;
 import co.edu.usbcali.cloudbank.services.IConsignacionService;
 import co.edu.usbcali.cloudbank.services.ICuentaService;
 import co.edu.usbcali.cloudbank.services.IRetiroService;
 import co.edu.usbcali.cloudbank.services.ITransferenciaService;
+import co.edu.usbcali.cloudbank.services.IUsuarioService;
 import co.edu.usbcali.cloudbank.util.CloudBankException;
 import co.edu.usbcali.cloudbank.util.Constantes;
 import co.edu.usbcali.cloudbank.util.ResourceBundles;
@@ -45,6 +50,9 @@ import org.apache.logging.log4j.Logger;
  */
 @Stateless
 public class CuentaClienteIntegrator implements ICuentaClienteIntegrator {
+    
+    @EJB
+    private IUsuarioService usuarioService;
 
     private static final Logger logger = LogManager.getLogger(CuentaClienteIntegrator.class);
 
@@ -329,6 +337,82 @@ public class CuentaClienteIntegrator implements ICuentaClienteIntegrator {
         } catch (Exception e) {
             estado.setExitoso(false);
             estado.setDescripcion(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.INTEGRADOR_CUENTA, "errorRealizandoTransferencia"));
+            return logger.exit(estado);
+        }
+    }
+
+    @Override
+    public RespuestaConsultaUsuarioDTO consultarUsuarioPorLogin(String login) {
+        logger.entry();
+
+        //Configuracion de la salida
+        RespuestaConsultaUsuarioDTO respuestaConsultaUsuarioDTO = new RespuestaConsultaUsuarioDTO();
+        EstadoDTO estado = new EstadoDTO();
+        respuestaConsultaUsuarioDTO.setEstado(estado);
+
+        //Se consulta el usuario        
+        try {
+            logger.info("Consultando usuario");
+            Usuarios usuario = usuarioService.consultarPorLogin(login);
+            
+            if(usuario != null){
+                logger.info("Usuario existe... Hidrantando DTO");
+                UsuarioDTO usuarioDTO = new UsuarioDTO();
+                usuarioDTO.setIdentificacion(usuario.getUsuCedula());
+                usuarioDTO.setNombre(usuario.getUsuNombre());
+                usuarioDTO.setLogin(usuario.getUsuLogin());
+                TipoUsuarioDTO tipoUsuarioDTO = new TipoUsuarioDTO();
+                tipoUsuarioDTO.setCodigo(usuario.getTusuCodigo().getTusuCodigo());
+                tipoUsuarioDTO.setDescripcion(usuario.getTusuCodigo().getTusuNombre());
+                usuarioDTO.setTipoUsuario(tipoUsuarioDTO);
+                respuestaConsultaUsuarioDTO.setUsuario(usuarioDTO);
+            }
+
+            estado.setExitoso(true);
+            estado.setDescripcion(Constantes.OPERACION_EXITOSA);
+            return logger.exit(respuestaConsultaUsuarioDTO);
+
+        } catch (CloudBankException cbe) {
+            estado.setExitoso(false);
+            estado.setDescripcion(cbe.getMessage());
+            return logger.exit(respuestaConsultaUsuarioDTO);
+        } catch (Exception e) {
+            estado.setExitoso(false);
+            estado.setDescripcion(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.INTEGRADOR_CUENTA, "errorConsultandoUsuario"));
+            return logger.exit(respuestaConsultaUsuarioDTO);
+        }
+    }
+
+    @Override
+    public EstadoDTO agregarUsuario(long identificacion, long tipoUsuario, String nombre, String login, String clave) {
+        logger.entry();
+
+        //Configuracion de la salida
+        EstadoDTO estado = new EstadoDTO();
+
+        //Se realiza la creacion:        
+        try {
+
+            logger.info("Creando Usuario");
+            
+            //Hidratando objeto:
+            Usuarios usuarioCrear = new Usuarios(identificacion, nombre, login, clave);
+            usuarioCrear.setTusuCodigo(new TiposUsuarios(tipoUsuario));
+            
+            //Creando usuario:
+            usuarioService.crear(usuarioCrear);
+
+            estado.setExitoso(true);
+            estado.setDescripcion(Constantes.OPERACION_EXITOSA);
+            return logger.exit(estado);
+
+        } catch (CloudBankException cbe) {
+            estado.setExitoso(false);
+            estado.setDescripcion(cbe.getMessage());
+            return logger.exit(estado);
+        } catch (Exception e) {
+            estado.setExitoso(false);
+            estado.setDescripcion(UtilBundle.obtenerMensaje(ResourceBundles.RB_MENSAJES.INTEGRADOR_CUENTA, "errorCreandoUsuario"));
             return logger.exit(estado);
         }
     }

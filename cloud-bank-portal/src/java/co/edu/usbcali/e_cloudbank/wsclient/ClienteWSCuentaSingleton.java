@@ -90,4 +90,18 @@ public class ClienteWSCuentaSingleton {
 
         return logger.exit(port.realizarTransferencia(idCliente, numeroOrigen, claveOrigen, numeroDestino, valor));
     }
+    
+    public RespuestaConsultaUsuarioDTO consultarUsuarioPorLogin(java.lang.String login) {
+
+        logger.entry();
+
+        return logger.exit(port.consultarUsuarioPorLogin(login));
+    }
+    
+    public EstadoDTO agregarUsuario(long identificacion, long tipoUsuario, java.lang.String nombre, java.lang.String login) {
+
+        logger.entry();
+
+        return logger.exit(port.agregarUsuario(identificacion, tipoUsuario, nombre, login, ""+identificacion));
+    }
 }
